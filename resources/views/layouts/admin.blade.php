@@ -249,7 +249,7 @@
                                     <span key="t-multi-level">Setup</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
-                                    <li><a href="{{ url('admin/website') }}" key="t-level-1-1">Website </a></li>
+                                    <li><a href="{{ url('admin/configs') }}" key="t-level-1-1">Website </a></li>
                                    
                                 </ul>
                             </li>
