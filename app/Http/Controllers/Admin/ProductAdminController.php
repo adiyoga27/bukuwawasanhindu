@@ -1,122 +1,129 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class CartController extends Controller
+class ProductAdminController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-         $cartItems = session()->get('cart', []);
-    $products = [];
-    $subtotal = 0;
-    
-    foreach ($cartItems as $productId => $item) {
-        $product = Product::with('category')->find($productId);
-        if ($product) {
-            $product->quantity = $item['quantity'];
-            $product->current_stock = $product->getCountStock();
-            $products[] = $product;
-            $subtotal += ($product->discount > 0 ? $product->discount : $product->price) * $item['quantity'];
-        }
-    }
-    
-    $total = $subtotal;
-    
-    // Pastikan $products selalu berupa array, bahkan jika kosong
-    $products = $products ?? [];
-    
-    return view('contents.guest.cart', compact('products', 'subtotal', 'total'));
+        $categories = Category::orderBy('name', 'ASC')->get();
+        $datas = Product::all();
+        return view('contents.admin.products.index', compact('categories', 'datas'));
     }
 
-    public function add(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $request->validate([
-            'book_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
-        ]);
-        
-        $productId = $request->book_id;
-        $quantity = $request->quantity;
-        $product = Product::findOrFail($productId);
-        $currentStock = $product->getCountStock();
-        
-        // Check stock availability
-        if ($currentStock < $quantity) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Stok tidak mencukupi. Stok tersedia: ' . $currentStock
-            ], 400);
+                'title' => 'required|string|max:255|unique:products,title',
+                'author' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'category_id' => 'required|exists:categories,id',
+                'price' => 'required|numeric|min:0',
+                'discount' => 'nullable|numeric|min:0',
+                'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'is_active' => 'boolean',
+            ]);
+        try {
+            Product::create([
+                'title' => $request->title,
+                'author' => $request->author,
+                'description' => $request->description,
+                'category_id' => $request->category_id,
+                'price' => $request->price,
+                'discount' => $request->discount,
+                'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : null,
+                'is_active' => $request->is_active ? true : false,
+                'slug' => Str::slug($request->title),
+            ]);
+            return redirect('admin/products')->with('success', 'Product created successfully.');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->back()->with('error', 'Failed to create product: ' . $th->getMessage());
         }
-        
-        $cart = session()->get('cart', []);
-        
-        if (isset($cart[$productId])) {
-            $newQuantity = $cart[$productId]['quantity'] + $quantity;
-            if ($newQuantity > $currentStock) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Tidak bisa menambahkan melebihi stok. Stok tersedia: ' . $currentStock
-                ], 400);
-            }
-            $cart[$productId]['quantity'] = $newQuantity;
-        } else {
-            $cart[$productId] = [
-                "quantity" => $quantity
-            ];
-        }
-        
-        session()->put('cart', $cart);
-        
-        $cartCount = array_sum(array_column($cart, 'quantity'));
-        
-        return response()->json([
-            'success' => true,
-            'cart_count' => $cartCount,
-            'message' => 'Produk berhasil ditambahkan ke keranjang'
-        ]);
     }
 
-    public function remove($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $cart = session()->get('cart', []);
-        
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-            session()->put('cart', $cart);
-            return redirect()->route('cart.index')->with('success', 'Produk dihapus dari keranjang');
-        }
-        
-        return redirect()->route('cart.index')->with('error', 'Produk tidak ditemukan di keranjang');
+        //
     }
 
-    public function update(Request $request)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         $request->validate([
-            'book_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
+            'title' => 'required|string|max:255|unique:products,title,' . $id,
+            'author' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'discount' => 'nullable|numeric|min:0',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'is_active' => 'boolean',
         ]);
-        
-        $productId = $request->book_id;
-        $quantity = $request->quantity;
-        $product = Product::findOrFail($productId);
-        $currentStock = $product->getCountStock();
-        
-        if ($currentStock < $quantity) {
-            return back()->with('error', 'Stok tidak mencukupi. Stok tersedia: ' . $currentStock);
+
+        try {
+            $product = Product::findOrFail($id);
+            $product->update([
+                'title' => $request->title,
+                'author' => $request->author,
+                'description' => $request->description,
+                'category_id' => $request->category_id,
+                'price' => $request->price,
+                'discount' => $request->discount,
+                'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : $product->thumbnail,
+                'is_active' => $request->is_active ? true : false,
+                'slug' => Str::slug($request->title),
+            ]);
+            return redirect('admin/products')->with('success', 'Product updated successfully.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Failed to update product: ' . $th->getMessage());
         }
-        
-        $cart = session()->get('cart', []);
-        
-        if (isset($cart[$productId])) {
-            $cart[$productId]['quantity'] = $quantity;
-            session()->put('cart', $cart);
-            return redirect()->route('cart.index')->with('success', 'Keranjang berhasil diperbarui');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        try {
+            $product = Product::findOrFail($id);
+            $product->delete();
+            return redirect('admin/products')->with('success', 'Product deleted successfully.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Failed to delete product: ' . $th->getMessage());
         }
-        
-        return back()->with('error', 'Produk tidak ditemukan di keranjang');
     }
 }

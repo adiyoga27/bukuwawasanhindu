@@ -312,7 +312,7 @@
                         <span class="discount-badge">Save {{ ($book->price - $book->discount)/$book->price * 100 }}%</span>
                     </div>
                     
-                    <p>{{ $book['description'] }}</p>
+                    {!! $book['description'] !!}
                          
                 {{-- <div class="quantity-selector">
                     <button class="quantity-btn minus-btn" type="button">-</button>
@@ -339,10 +339,10 @@
                 </div>
             </div>
             
-            <div class="book-description">
+            {{-- <div class="book-description">
                 <h3 class="mb-4">Description</h3>
                 <p>{{ $book['long_description'] }}</p>
-            </div>
+            </div> --}}
             
             <div class="related-books">
                 <h3 class="mb-4">Related Books</h3>

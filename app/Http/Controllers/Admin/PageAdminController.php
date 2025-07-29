@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class PageAdminController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource.a
      */
     public function index()
     {
