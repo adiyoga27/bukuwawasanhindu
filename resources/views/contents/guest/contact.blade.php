@@ -1,4 +1,3 @@
-
 @extends('layouts/guest')
 @section('css')
     <title>Kontak - Buku Wawasan Hindu</title>
@@ -142,13 +141,13 @@
                 <!-- Contact Card 1 -->
                 <div class="col-md-4">
                     <div class="contact-card card h-100 p-4 text-center">
-                        <div class="contact-icon bg-primary text-white mx-auto">
-                            <i class="fas fa-phone-alt"></i>
+                        <div class="contact-icon bg-success text-white mx-auto">
+                            <i class="fab fa-whatsapp"></i>
                         </div>
-                        <h3>Telepon/WhatsApp</h3>
-                        <p class="text-muted">Hubungi kami melalui telepon atau WhatsApp</p>
+                        <h3>WhatsApp</h3>
+                        <p class="text-muted">Hubungi kami melalui WhatsApp</p>
                         <div class="mt-3">
-                            <a href="https://wa.me/{{ $configs->phone }}" class="btn btn-outline-primary rounded-pill px-4">
+                            <a href="https://wa.me/{{ $configs->phone }}" class="btn btn-outline-success rounded-pill px-4">
                                 <i class="fas fa-phone-alt me-2"></i>+{{ $configs->phone }}
                             </a>
                         </div>
@@ -158,13 +157,13 @@
                 <!-- Contact Card 2 -->
                 <div class="col-md-4">
                     <div class="contact-card card h-100 p-4 text-center">
-                        <div class="contact-icon bg-success text-white mx-auto">
+                        <div class="contact-icon bg-primary text-white mx-auto">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <h3>Email</h3>
                         <p class="text-muted">Kirim pesan melalui email</p>
                         <div class="mt-3">
-                            <a href="admin@bukuwawasanhindu.com" class="btn btn-outline-success rounded-pill px-4">
+                            <a href="admin@bukuwawasanhindu.com" class="btn btn-outline-primary rounded-pill px-4">
                                 <i class="fas fa-envelope me-2"></i>{{ $configs->email }}
                             </a>
                         </div>
