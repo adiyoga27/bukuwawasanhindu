@@ -285,35 +285,20 @@
             </div>
 
             <!-- Share Section -->
-            <div class="share-section">
-                <h3 class="share-title">Bagikan Artikel Ini</h3>
-                <div class="share-buttons">
-                    <a href="#" class="share-button facebook">
-                        <i class="fab fa-facebook-f"></i>
-                        Facebook
-                    </a>
-                    <a href="#" class="share-button twitter">
-                        <i class="fab fa-twitter"></i>
-                        Twitter
-                    </a>
-                    <a href="#" class="share-button whatsapp">
-                        <i class="fab fa-whatsapp"></i>
-                        WhatsApp
-                    </a>
-                </div>
+           <div class="share-section">
+            <h3 class="share-title">Bagikan Artikel Ini</h3>
+            <div class="share-buttons">
+                <a href="#" onclick="shareFacebook()" class="share-button facebook">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+                <a href="#" onclick="shareX()" class="share-button twitter">
+                    <i class="fab fa-x-twitter"></i> X ( Twitter )
+                </a>
+                <a href="#" onclick="shareWhatsApp()" class="share-button whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
             </div>
-
-            <!-- Author Bio -->
-            {{-- <div class="author-card">
-                <div class="author-header">
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($article->author) }}&background=4f6cec&color=fff" alt="{{ $article->author }}" class="author-avatar">
-                    <div>
-                        <h3 class="author-name">{{ $article->author }}</h3>
-                        <p class="author-title">{{ $article->author_title }}</p>
-                    </div>
-                </div>
-                <p>{{ $article->author_bio }}</p>
-            </div> --}}
+        </div>
         </article>
 
         <!-- Related Articles -->
@@ -341,4 +326,24 @@
         </section>
     </main>
 
+@endsection
+@section('js')
+    <script>
+    function shareFacebook() {
+        const url = encodeURIComponent(window.location.href);
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+
+    function shareX() {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent(document.title);
+        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+
+    function shareWhatsApp() {
+        const url = encodeURIComponent(window.location.href);
+        const text = encodeURIComponent(document.title);
+        window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+    }
+</script>
 @endsection

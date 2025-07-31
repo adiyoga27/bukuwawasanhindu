@@ -487,6 +487,8 @@
 
   gtag('config', 'G-R8F2CPYZ6L');
 </script>
+
+@yield('js')
 </body>
 
 </html>
