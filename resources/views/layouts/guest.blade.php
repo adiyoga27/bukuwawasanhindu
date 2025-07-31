@@ -418,23 +418,12 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('book') }}">Buku Hindu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('articles') }}">Artikel</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('about') }}">Tentang Kami</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('how-to-purchase') }}">Cara Pembelian</a>
-                </li>
-
-                <!-- Marketplace Dropdown -->
+                <li class="nav-item"><a class="nav-link" href="/">Home</a> </li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Tentang Kami</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('book') }}">Buku Hindu</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('how-to-purchase') }}">Cara Pembelian</a></li>
+                
+                                <!-- Marketplace Dropdown -->
               <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         Marketplace
@@ -460,11 +449,9 @@
         </li>
     </ul>
 </li>
-
-
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ url('contact') }}">Kontak</a>
-                </li>
+              
+                <li class="nav-item"><a class="nav-link" href="{{ url('articles') }}">Artikel</a></li>
+                <li class="nav-item"><a class="nav-link active" href="{{ url('contact') }}">Kontak Kami</a></li>
             </ul>
         </div>
     </div>
