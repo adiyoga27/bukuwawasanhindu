@@ -255,18 +255,18 @@
             <header class="article-header">
                 <h1 class="article-title">{{ $article->title }}</h1>
                 <div class="article-meta">
-                    <div class="article-meta-item">
+                    {{-- <div class="article-meta-item">
                         <i class="far fa-user"></i>
                         <span>{{ $article->author }}</span>
-                    </div>
+                    </div> --}}
                     <div class="article-meta-item">
                         <i class="far fa-calendar-alt"></i>
                         <span>{{ $article->created_at->format('d M Y') }}</span>
                     </div>
-                    <div class="article-meta-item">
+                    {{-- <div class="article-meta-item">
                         <i class="far fa-clock"></i>
                         <span>{{ $article->reading_time }} min read</span>
-                    </div>
+                    </div> --}}
                 </div>
                 <img src="{{ url('storage') }}/{{ $article->featured_image }}" alt="{{ $article->title }}" class="article-image">
             </header>
@@ -304,7 +304,7 @@
             </div>
 
             <!-- Author Bio -->
-            <div class="author-card">
+            {{-- <div class="author-card">
                 <div class="author-header">
                     <img src="https://ui-avatars.com/api/?name={{ urlencode($article->author) }}&background=4f6cec&color=fff" alt="{{ $article->author }}" class="author-avatar">
                     <div>
@@ -313,7 +313,7 @@
                     </div>
                 </div>
                 <p>{{ $article->author_bio }}</p>
-            </div>
+            </div> --}}
         </article>
 
         <!-- Related Articles -->

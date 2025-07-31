@@ -433,10 +433,6 @@
                     <div class="footer-column">
                         <h3>Bantuan</h3>
                         <ul class="footer-links">
-                            <li><a href="#">Pesanan Saya</a></li>
-                            <li><a href="#">Pengiriman</a></li>
-                            <li><a href="#">Pembayaran</a></li>
-                            <li><a href="#">Pengembalian</a></li>
                             <li><a href="#">FAQ</a></li>
                         </ul>
                     </div>
