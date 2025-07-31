@@ -452,6 +452,12 @@
                                 class="marketplace-logo"> &nbsp; Tokopedia
             </a>
         </li>
+        <li>
+            <a class="dropdown-item d-flex align-items-center" href="{{ $configs->lazada }}" target="_blank">
+                <img width="20" src="{{ url('assets/images/lazada.webp') }}" alt="Tokopedia"
+                                class="marketplace-logo"> &nbsp; Lazada
+            </a>
+        </li>
     </ul>
 </li>
 
