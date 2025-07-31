@@ -407,32 +407,62 @@
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-book-open me-2"></i>Buku Wawasan Hindu
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-book-open me-2"></i>Buku Wawasan Hindu
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('book') }}">Buku Hindu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('articles') }}">Artikel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('tentang') }}">Tentang Kami</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('cara-pembelian') }}">Cara Pembelian</a>
+                </li>
+
+                <!-- Marketplace Dropdown -->
+              <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Marketplace
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="marketplaceDropdown">
+        <li>
+            <a class="dropdown-item d-flex align-items-center" href="https://shopee.co.id/nama-toko-kamu" target="_blank">
+                 <img  src="{{ url('assets/images/shopee.svg') }}" alt="Shopee" width="20"
+                                class="marketplace-logo">&nbsp; Shopee
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('book') }}">Buku Hindu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('articles') }}">Artikel</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('contact') }}">Kontak</a>
-                    </li>
-                </ul>
-            </div>
+        </li>
+        <li>
+            <a class="dropdown-item d-flex align-items-center" href="https://tokopedia.com/nama-toko-kamu" target="_blank">
+                <img width="20" src="{{ url('assets/images/tokopedia.svg') }}" alt="Tokopedia"
+                                class="marketplace-logo"> &nbsp; Tokopedia
+            </a>
+        </li>
+    </ul>
+</li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url('contact') }}">Kontak</a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
     @yield('content')
    
     <!-- Footer -->
