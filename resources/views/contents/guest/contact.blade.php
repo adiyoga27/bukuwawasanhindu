@@ -163,7 +163,7 @@
                         <p class="text-muted">Kirim pesan melalui email</p>
                         <div class="mt-3">
                             <a href="admin@bukuwawasanhindu.com" class="btn btn-outline-success rounded-pill px-4">
-                                <i class="fas fa-envelope me-2"></i>admin@bukuwawasanhindu.com
+                                <i class="fas fa-envelope me-2"></i>{{ $configs->email }}
                             </a>
                         </div>
                     </div>
