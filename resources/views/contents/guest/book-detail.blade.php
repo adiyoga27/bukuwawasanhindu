@@ -11,15 +11,15 @@
     <meta name="ima"
 
     <meta property="og:title" content="{{ $book->title }} | SantoBook">
-<meta property="og:description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">
-<meta property="og:image" content="{{ url('storage/') }}/{{ $book->thumbnail }}">
-<meta property="og:url" content="{{ url('product/'.$book->slug) }}">
+    <meta property="og:description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">
+    <meta property="og:image" content="{{ url('storage/') }}/{{ $book->thumbnail }}">
+    <meta property="og:url" content="{{ url('product/'.$book->slug) }}">
 
-<!-- Twitter Card Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ $book->title }} | SantoBook">
-<meta name="twitter:description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">
-<meta name="twitter:image" content="{{ url('path/to/book-image.jpg') }}">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $book->title }} | SantoBook">
+    <meta name="twitter:description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">
+    <meta name="twitter:image" content="{{ url('path/to/book-image.jpg') }}">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

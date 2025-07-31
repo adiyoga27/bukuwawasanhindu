@@ -8,7 +8,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+       <link rel="canonical" href="{{ url('articles/'.$article->slug) }}">
+    <meta name="description" content="{{ Str::limit(strip_tags($article->description), 225, '...') }}">
+    <meta name="keywords" content="Ebook, SantoBook, Kandapat">
+    <meta name="author" content="{{ $article->author }}">
+    <meta name="ima"
+
+    <meta property="og:title" content="{{ $article->title }} | SantoBook">
+    <meta property="og:description" content="{{ Str::limit(strip_tags($article->description), 225, '...') }}">
+    <meta property="og:image" content="{{ url('storage/') }}/{{ $article->thumbnail }}">
+    <meta property="og:url" content="{{ url('articles/'.$article->slug) }}">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $article->title }} | SantoBook">
+    <meta name="twitter:description" content="{{ Str::limit(strip_tags($article->description), 225, '...') }}">
+    <meta name="twitter:image" content="{{ url('storage/') }}/{{ $article->thumbnail }}">
     <style>
         :root {
             --primary: #4f6cec;
@@ -356,7 +371,7 @@
             <div class="row">
                 @foreach($relatedArticles as $related)
                 <div class="col-md-4">
-                    <a href="{{ url('article/'.$related->slug) }}" class="text-decoration-none text-dark">
+                    <a href="{{ url('articles/'.$related->slug) }}" class="text-decoration-none text-dark">
                         <div class="related-card">
                             <img src="{{ url('storage') }}/{{ $related->featured_image }}" class="related-image" alt="{{ $related->title }}">
                             <div class="related-body">
