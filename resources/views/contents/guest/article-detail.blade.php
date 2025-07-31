@@ -326,7 +326,7 @@
                         <div class="related-card">
                             <img src="{{ url('storage') }}/{{ $related->featured_image }}" class="related-image" alt="{{ $related->title }}">
                             <div class="related-body">
-                                <span class="related-category">{{ $related->category }}</span>
+                                <span class="related-category">{{ $related->category->name }}</span>
                                 <h4 class="related-title">{{ $related->title }}</h4>
                                 <div class="related-date">
                                     <i class="far fa-calendar-alt me-1"></i>
