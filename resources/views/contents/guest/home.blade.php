@@ -118,7 +118,7 @@
                                         </div>
                                         <h5 class="card-title">{{ $art->title }}</h5>
                                         <p class="card-text text-muted">{{ Str::limit(strip_tags($art->content), 100) }}</p>
-                                        <a href="#" class="btn btn-link text-primary mt-auto ps-0 text-decoration-none">
+                                        <a href="{{ url('articles/'.$art->slug) }}" class="btn btn-link text-primary mt-auto ps-0 text-decoration-none">
                                             Baca Selengkapnya <i class="fas fa-arrow-right ms-2"></i>
                                         </a>
                                     </div>
