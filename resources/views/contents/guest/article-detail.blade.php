@@ -13,6 +13,7 @@
     <meta name="keywords" content="Ebook, SantoBook, Kandapat">
     <meta name="author" content="{{ $article->author }}">
     <meta name="image" content="{{ url('storage/') }}/{{ $article->featured_image }}">
+    <meta name="title" content="{{ $article->title }} ">
 
     <meta property="og:title" content="{{ $article->title }} | SantoBook">
     <meta property="og:description" content="{{ Str::limit(strip_tags($article->content), 225, '...') }}">
