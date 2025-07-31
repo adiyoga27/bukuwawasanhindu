@@ -443,6 +443,7 @@
                         <h3>Hubungi Kami</h3>
                         <p><i class="fas fa-envelope me-2"></i> {{ $configs->email }}</p>
                         <p><i class="fas fa-phone me-2"></i>+ {{ $configs->phone }}</p>
+                        <p><i class="fas fa-home me-2"></i> {{ $configs->address }}</p>
                         <div class="social-links mt-3">
                             <a href="{{ $configs->facebook }}"><i class="fab fa-facebook-f"></i></a>
                             <a href="{{ $configs->instagram }}"><i class="fab fa-instagram"></i></a>

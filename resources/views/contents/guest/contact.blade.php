@@ -148,8 +148,8 @@
                         <h3>Telepon/WhatsApp</h3>
                         <p class="text-muted">Hubungi kami melalui telepon atau WhatsApp</p>
                         <div class="mt-3">
-                            <a href="tel:+6287762225026" class="btn btn-outline-primary rounded-pill px-4">
-                                <i class="fas fa-phone-alt me-2"></i>+62 877-6222-5026
+                            <a href="https://wa.me/{{ $configs->phone }}" class="btn btn-outline-primary rounded-pill px-4">
+                                <i class="fas fa-phone-alt me-2"></i>+{{ $configs->phone }}
                             </a>
                         </div>
                     </div>
@@ -222,7 +222,7 @@
                     <h2 class="mb-4">Lokasi Toko Kami</h2>
                     <p class="lead">Kunjungi toko fisik kami untuk melihat koleksi buku secara langsung dan bertemu dengan tim kami.</p>
                     <div class="mt-4">
-                        <p><i class="fas fa-map-marker-alt text-primary me-2"></i> Jl. Kebijaksanaan No. 123, Denpasar, Bali, Indonesia</p>
+                        <p><i class="fas fa-map-marker-alt text-primary me-2"></i> {{ $configs->address }}</p>
                         <p><i class="fas fa-clock text-primary me-2"></i> Buka setiap hari: 09.00 - 17.00 WITA</p>
                     </div>
                 </div>
