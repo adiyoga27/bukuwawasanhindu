@@ -337,6 +337,24 @@
             </div>
             
             {!! $book['description'] !!}
+
+             <!-- Marketplace Links Section -->
+            <div class="marketplace-links">
+                <h3> Link Pembelian </h3>
+                @if($book->shopee)
+                <a  href="{{ $book->shopee }}" target="_blank" class="marketplace-link shopee-link">
+                    <img width="45px"  src="{{ url('assets/images/shopee.svg') }}" alt="Shopee" class="marketplace-logo">
+                      <span> Klik Untuk Pembelian di Shopee</span>
+                </a>
+                @endif
+                <div class="mt-2"></div>
+                
+                @if($book->tokopedia)
+                <a href="{{ $book->tokopedia }}" target="_blank" class="marketplace-link tokopedia-link">
+                    <img width="50px" src="{{ url('assets/images/tokopedia.svg') }}" alt="Tokopedia" class="marketplace-logo">
+                    <span> Klik Untuk Pembelian di Tokopedia</span>
+                </a>
+                @endif
             
             <div class="d-flex mt-4">
                 <button class="btn btn-add-to-whatsapp"

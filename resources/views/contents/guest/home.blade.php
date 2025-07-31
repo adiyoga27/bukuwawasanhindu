@@ -35,7 +35,11 @@
                                     <img src="{{ url('storage') }}/{{ $b->thumbnail }}" class="card-img-top" alt="{{ $b->title }}">
                                 </div>
                                 <div class="card-body">
+                        <a href="{{ url('product') }}/{{ $b->slug }}" style="text-decoration:none">
+
                                     <h5 class="card-title">{{ $b->title }}</h5>
+                        </a>
+
                                     <p class="card-text text-muted small">oleh {{ $b->author }}</p>
                                     
                                     <div class="d-flex align-items-center mb-2">
