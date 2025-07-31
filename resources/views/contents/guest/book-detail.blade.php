@@ -149,18 +149,33 @@
         .related-books {
             margin-top: 50px;
         }
+.related-books .card.related-book-card {
+    padding: 10px;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 
-        .related-book-card {
-            transition: all 0.3s;
-            border: none;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-        }
+.related-books .card.related-book-card .card-img-top {
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+}
 
-        .related-book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
+.related-books .card.related-book-card .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.related-books .card.related-book-card .card-text {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.related-books .card.related-book-card .btn {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+}
 
         /* Add these new styles for the gallery */
         .product-gallery {
@@ -310,6 +325,8 @@
     </style>
 @endsection
 @section('content')
+    <!-- Hero Section -->
+    <div class="mt-4"></div>
     <div class="container">
         <div class="row">
             <!-- Product Gallery Column - Now side by side -->
@@ -343,16 +360,16 @@
                     </div>
 
                     <!-- Thumbnails -->
-                 <!-- Thumbnails -->
-<div class="mt-3 d-flex justify-content-center gap-2 flex-wrap">
-    <img src="{{ Storage::url($book->thumbnail) }}" class="thumbnail-img "
-        data-bs-target="#mainCarousel" data-bs-slide-to="0">
+                    <!-- Thumbnails -->
+                    <div class="mt-3 d-flex justify-content-center gap-2 flex-wrap">
+                        <img src="{{ Storage::url($book->thumbnail) }}" class="thumbnail-img "
+                            data-bs-target="#mainCarousel" data-bs-slide-to="0">
 
-    @foreach ($book->galleries as $index => $gallery)
-        <img src="{{ Storage::url($gallery->image_path) }}" class="thumbnail-img"
-            data-bs-target="#mainCarousel" data-bs-slide-to="{{ $index + 1 }}">
-    @endforeach
-</div>
+                        @foreach ($book->galleries as $index => $gallery)
+                            <img src="{{ Storage::url($gallery->image_path) }}" class="thumbnail-img"
+                                data-bs-target="#mainCarousel" data-bs-slide-to="{{ $index + 1 }}">
+                        @endforeach
+                    </div>
                 </div>
 
 
@@ -437,124 +454,125 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @section('js')
-        <!-- Then load Slick slider -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@section('js')
+    <!-- Then load Slick slider -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            // Tambahkan efek aktif pada thumbnail
-            const thumbnails = document.querySelectorAll('.thumbnail-img');
-            const carousel = document.querySelector('#mainCarousel');
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Tambahkan efek aktif pada thumbnail
+        const thumbnails = document.querySelectorAll('.thumbnail-img');
+        const carousel = document.querySelector('#mainCarousel');
 
-            thumbnails.forEach((thumb, index) => {
-                thumb.addEventListener('click', () => {
-                    thumbnails.forEach(t => t.classList.remove('active'));
-                    thumb.classList.add('active');
-                });
-            });
-
-            // Update thumbnail aktif saat slide berubah
-            const bsCarousel = new bootstrap.Carousel(carousel);
-            carousel.addEventListener('slid.bs.carousel', function(e) {
+        thumbnails.forEach((thumb, index) => {
+            thumb.addEventListener('click', () => {
                 thumbnails.forEach(t => t.classList.remove('active'));
-                thumbnails[e.to].classList.add('active');
+                thumb.classList.add('active');
             });
-        </script>
-        <script>
-            $(document).ready(function() {
+        });
+
+        // Update thumbnail aktif saat slide berubah
+        const bsCarousel = new bootstrap.Carousel(carousel);
+        carousel.addEventListener('slid.bs.carousel', function(e) {
+            thumbnails.forEach(t => t.classList.remove('active'));
+            thumbnails[e.to].classList.add('active');
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
 
 
-                // Quantity selector logic
-                $('.minus-btn').click(function() {
+            // Quantity selector logic
+            $('.minus-btn').click(function() {
 
-                    var input = $('#quantity');
-                    var value = parseInt(input.val());
-                    if (value > 1) {
-                        input.val(value - 1);
-                    }
-                });
-
-                $('.plus-btn').click(function() {
-                    var input = $('#quantity');
-                    var value = parseInt(input.val());
-
-                    var max = parseInt(input.attr('max'));
-
-                    if (value < max) {
-                        input.val(value + 1);
-                    }
-                });
-
-                // Add to cart functionality
-                $('#add-to-cart').click(function() {
-                    var bookId = $(this).data('book-id');
-                    var quantity = $('#quantity').val();
-
-                    $.ajax({
-                        url: window.location.origin + '/cart/add',
-                        type: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            book_id: bookId,
-                            quantity: quantity
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                $('#cart-success').fadeIn().delay(3000).fadeOut();
-                                // Update cart count in navbar if you have one
-                                if (response.cart_count) {
-                                    $('.cart-count').text(response.cart_count);
-                                }
-                            }
-                        },
-                        error: function(xhr) {
-                            alert('Error: ' + xhr.responseJSON.message);
-                        }
-                    });
-                });
-
-
-            });
-            // Animasi ketika item ditambahkan ke cart
-            document.addEventListener('DOMContentLoaded', function() {
-                // Fungsi untuk update counter
-                function updateCartCounter(count) {
-                    const counter = document.querySelector('.cart-counter');
-                    counter.textContent = count;
-
-                    // Tambahkan animasi
-                    counter.classList.add('cart-pulse');
-                    setTimeout(() => {
-                        counter.classList.remove('cart-pulse');
-                    }, 500);
+                var input = $('#quantity');
+                var value = parseInt(input.val());
+                if (value > 1) {
+                    input.val(value - 1);
                 }
+            });
 
-                // Jika menggunakan AJAX untuk add to cart
-                $(document).on('click', '#add-to-cart', function() {
-                    // Setelah AJAX success, update counter
-                    // Contoh:
-                    // updateCartCounter(newCount);
+            $('.plus-btn').click(function() {
+                var input = $('#quantity');
+                var value = parseInt(input.val());
+
+                var max = parseInt(input.attr('max'));
+
+                if (value < max) {
+                    input.val(value + 1);
+                }
+            });
+
+            // Add to cart functionality
+            $('#add-to-cart').click(function() {
+                var bookId = $(this).data('book-id');
+                var quantity = $('#quantity').val();
+
+                $.ajax({
+                    url: window.location.origin + '/cart/add',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        book_id: bookId,
+                        quantity: quantity
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#cart-success').fadeIn().delay(3000).fadeOut();
+                            // Update cart count in navbar if you have one
+                            if (response.cart_count) {
+                                $('.cart-count').text(response.cart_count);
+                            }
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Error: ' + xhr.responseJSON.message);
+                    }
                 });
             });
-        </script>
-        <script>
-            document.getElementById('add-to-whatsapp').addEventListener('click', function() {
-                const title = this.getAttribute('data-book-title');
-                const price = this.getAttribute('data-price');
 
-                const message =
-                    `Halo, saya tertarik dengan buku "${title}" seharga Rp${parseInt(price).toLocaleString('id-ID')}. Apakah masih tersedia?`;
 
-                // Ganti nomor berikut dengan nomor admin Anda (tanpa 0 di awal, pakai 62)
-                const phoneNumber = "6287762225026";
+        });
+        // Animasi ketika item ditambahkan ke cart
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk update counter
+            function updateCartCounter(count) {
+                const counter = document.querySelector('.cart-counter');
+                counter.textContent = count;
 
-                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                // Tambahkan animasi
+                counter.classList.add('cart-pulse');
+                setTimeout(() => {
+                    counter.classList.remove('cart-pulse');
+                }, 500);
+            }
 
-                // Buka WhatsApp
-                window.open(whatsappURL, '_blank');
+            // Jika menggunakan AJAX untuk add to cart
+            $(document).on('click', '#add-to-cart', function() {
+                // Setelah AJAX success, update counter
+                // Contoh:
+                // updateCartCounter(newCount);
             });
-        </script>
-    @endsection
+        });
+    </script>
+    <script>
+        document.getElementById('add-to-whatsapp').addEventListener('click', function() {
+            const title = this.getAttribute('data-book-title');
+            const price = this.getAttribute('data-price');
+
+            const message =
+                `Halo, saya tertarik dengan buku "${title}" seharga Rp${parseInt(price).toLocaleString('id-ID')}. Apakah masih tersedia?`;
+
+            // Ganti nomor berikut dengan nomor admin Anda (tanpa 0 di awal, pakai 62)
+            const phoneNumber = "6287762225026";
+
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+            // Buka WhatsApp
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+@endsection
