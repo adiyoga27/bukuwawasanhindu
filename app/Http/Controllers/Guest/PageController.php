@@ -28,6 +28,14 @@ class PageController extends Controller
         $configs = Website::first();
          return view('contents.guest.contact', compact('configs'));
     }
+      public function about(){
+        $configs = Website::first();
+         return view('contents.guest.about', compact('configs'));
+    }
+     public function howToPurchase(){
+        $configs = Website::first();
+         return view('contents.guest.how-to-purchase', compact('configs'));
+    }
     public function articles(){
         $articles = Article::paginate(10);
         $categories = CategoryArticle::get();

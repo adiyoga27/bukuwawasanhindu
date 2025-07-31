@@ -30,6 +30,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::get('contact',[PageController::class, 'contact']);
+Route::get('about',[PageController::class, 'about']);
+Route::get('how-to-purchase',[PageController::class, 'howToPurchase']);
 Route::get('articles', [PageController::class, 'articles']);
 Route::get('articles/{slug}', [PageController::class, 'articlesDetail']);
 Route::prefix('admin')->middleware('auth')->group(function () {
@@ -38,12 +40,19 @@ Route::prefix('admin')->middleware('auth')->group(function () {
    Route::resource('products', ProductAdminController::class);
    Route::get('configs', [WebsiteController::class,'index']);
    Route::post('configs', [WebsiteController::class,'store']);
+      Route::get('configs/how-to-purchase', [WebsiteController::class, 'howToPurchase']);
+   Route::post('configs/how-to-purchase', [WebsiteController::class, 'howToPurchaseStore']);
+   Route::get('configs/about', [WebsiteController::class, 'about']);
+   Route::post('configs/about', [WebsiteController::class, 'aboutStore']);
+
    Route::resource('category-article', CategoryArticleController::class);
    Route::resource('articles', ArticleController::class);
    Route::get('report/google-analytics', [ReportController::class, 'googleAnalytics']);
    Route::get('report/google-analytics/data', [ReportController::class, 'getAnalyticsData']);
    Route::post('/products/gallery', [ProductGalleryController::class, 'store'])->name('product.gallery.store');
-Route::post('/products/gallery/delete', [ProductGalleryController::class, 'destroy'])->name('product.gallery.destroy');
+   Route::post('/products/gallery/delete', [ProductGalleryController::class, 'destroy'])->name('product.gallery.destroy');
+
+
 });
 
 

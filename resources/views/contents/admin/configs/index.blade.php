@@ -62,6 +62,14 @@
                             <label for="tiktok" class="form-label">Tiktok</label>
                             <input type="text" class="form-control" name="tiktok" placeholder="Masukkan tiktok website" value="{{ $config?->tiktok }}">
                         </div>
+                           <div class="mb-3">
+                            <label for="shopee" class="form-label">Shopee Market Place</label>
+                            <input type="text" class="form-control" name="shopee" placeholder="Masukkan shopee website" value="{{ $config?->shopee }}">
+                        </div>
+                           <div class="mb-3">
+                            <label for="tokopedia" class="form-label">Tokopedia Market Place</label>
+                            <input type="text" class="form-control" name="tokopedia" placeholder="Masukkan tokopedia website" value="{{ $config?->tokopedia }}">
+                        </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>   
                     </form>
                  

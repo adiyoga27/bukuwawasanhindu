@@ -261,6 +261,8 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
                                     <li><a href="{{ url('admin/configs') }}" key="t-level-1-1">Website </a></li>
+                                    <li><a href="{{ url('admin/configs/about') }}" key="t-level-1-1">Tentang Kami </a></li>
+                                    <li><a href="{{ url('admin/configs/how-to-purchase') }}" key="t-level-1-1">Cara Pembelian </a></li>
                                    
                                 </ul>
                             </li>

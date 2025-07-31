@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Website extends Model
 {
     protected $table='website';
-     protected $fillable = ['app_name', 'address', 'phone','email','facebook','tiktok','youtube','instagram'];
+     protected $fillable = ['app_name', 'address', 'phone','email','facebook','tiktok','youtube','instagram', 'shopee','tokopedia','how_to_purchase','about'];
 }

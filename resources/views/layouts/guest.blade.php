@@ -428,10 +428,10 @@
                     <a class="nav-link" href="{{ url('articles') }}">Artikel</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('tentang') }}">Tentang Kami</a>
+                    <a class="nav-link" href="{{ url('about') }}">Tentang Kami</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('cara-pembelian') }}">Cara Pembelian</a>
+                    <a class="nav-link" href="{{ url('how-to-purchase') }}">Cara Pembelian</a>
                 </li>
 
                 <!-- Marketplace Dropdown -->
