@@ -13,12 +13,11 @@ class ArticleController extends Controller
 {
    public function index()
     {
-        $datas = Article::with('category', 'tags', 'user')
-            ->published()
-            ->latest('published_at')
+        $datas = Article::with('category', 'user')
             ->paginate(10);
+            $categories = CategoryArticle::get();
 
-        return view('contents.admin.articles.index', compact('datas'));
+        return view('contents.admin.articles.index', compact('datas', 'categories'));
     }
 
     public function show($slug)
@@ -45,9 +44,7 @@ class ArticleController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
-            'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|array',
-            'tags.*' => 'exists:tags,id',
+            'category_id' => 'nullable|exists:category_articles,id',
             'excerpt' => 'nullable|string',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'meta_title' => 'nullable|string|max:255',
@@ -67,16 +64,14 @@ class ArticleController extends Controller
 
         $article = Article::create($data);
 
-        if ($request->has('tags')) {
-            $article->tags()->sync($request->tags);
-        }
-
-        return redirect()->route('articles.show', $article->slug)
+      
+        return redirect()->back()
             ->with('success', 'Artikel berhasil dibuat!');
     }
 
     public function edit(Article $article)
     {
+        
         $categories = CategoryArticle::all();
         return view('articles.edit', compact('article', 'categories'));
     }
@@ -86,9 +81,7 @@ class ArticleController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
-            'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|array',
-            'tags.*' => 'exists:tags,id',
+            'category_id' => 'nullable|exists:category_articles,id',
             'excerpt' => 'nullable|string',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'meta_title' => 'nullable|string|max:255',
@@ -115,7 +108,7 @@ class ArticleController extends Controller
             $article->tags()->sync($request->tags);
         }
 
-        return redirect()->route('articles.show', $article->slug)
+        return redirect()->back()
             ->with('success', 'Artikel berhasil diperbarui!');
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
      use HasFactory;
-
+    protected $table = "articles";
     protected $fillable = [
         'title', 'slug', 'content', 'excerpt', 'featured_image', 
         'is_published', 'published_at', 'meta_description', 

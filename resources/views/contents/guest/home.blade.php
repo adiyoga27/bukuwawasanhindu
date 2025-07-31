@@ -6,131 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookland - Wawasan Hindu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Add Slick Slider CSS -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    
     <style>
- :root {
+        :root {
             --primary: #4f6cec;
             --secondary: #121f5a;
             --dark: #292f36;
             --light: #f7fff7;
             --accent: #ffd166;
             --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --card-spacing: 20px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
         }
 
         body {
+            font-family: 'Poppins', sans-serif;
             background-color: #f9f9f9;
             color: var(--dark);
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
+        .navbar {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1rem 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
         }
 
-        /* Navigation */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
+        .navbar-brand {
             font-size: 1.8rem;
             font-weight: 700;
-            display: flex;
-            align-items: center;
         }
 
-        .logo i {
-            margin-right: 10px;
+        .navbar-brand i {
             color: var(--accent);
         }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 2rem;
-            position: relative;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
+        .nav-link {
             font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 5px 0;
+            position: relative;
+            padding: 0.5rem 1rem;
         }
 
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .nav-links a::after {
+        .nav-link::after {
             content: '';
             position: absolute;
             width: 0;
             height: 2px;
             bottom: 0;
-            left: 0;
+            left: 1rem;
             background-color: var(--accent);
-            transition: width 0.3s ease;
+            transition: var(--transition);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
+        .nav-link:hover::after {
+            width: calc(100% - 2rem);
         }
 
-        .mobile-menu {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
+        .hero-section {
             background: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
             height: 500px;
-            display: flex;
-            align-items: center;
             position: relative;
             color: white;
             margin-bottom: 4rem;
         }
 
-        .hero::before {
-            content: '';
+        .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -143,54 +84,8 @@
             position: relative;
             z-index: 1;
             max-width: 600px;
-            animation: fadeInUp 1s ease;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h1 {
-            font-size: 2.8rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--secondary);
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 209, 102, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 209, 102, 0.4);
-            background: #ffc747;
-        }
-
-        /* Featured Books */
         .section-title {
             text-align: center;
             margin: 4rem 0 3rem;
@@ -212,197 +107,82 @@
             border-radius: 2px;
         }
 
-        /* Slider Styles with Spacing */
-        .books-slider,
-        .articles-slider {
-            padding: 30px 0 50px;
-            margin: 0 -15px;
-        }
-
-        .books-slider .slick-slide,
-        .articles-slider .slick-slide {
-            padding: 0 15px;
-            margin-bottom: var(--card-spacing);
-        }
-
-        .book-card {
-            background: white;
-            border-radius: 12px;
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
             overflow: hidden;
-            transition: 0.4s ease;
+            transition: var(--transition);
             box-shadow: var(--card-shadow);
-            margin-bottom: var(--card-spacing);
+            margin-bottom: 20px;
+            height: 100%;
         }
 
-        .book-card:hover {
+        .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
-        .book-img {
+        .book-img, .article-img {
             height: 320px;
             overflow: hidden;
-            position: relative;
         }
 
-        .book-img img {
+        .book-img img, .article-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
 
-        .book-card:hover .book-img img {
+        .card:hover .book-img img, 
+        .card:hover .article-img img {
             transform: scale(1.05);
         }
 
-        .book-info {
-            padding: 1.8rem;
+        .article-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(2px);
         }
 
-        .book-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-            color: var(--dark);
-            line-height: 1.4;
-        }
-
-        .book-author {
-            color: #666;
-            margin-bottom: 1.2rem;
-            font-size: 0.95rem;
-        }
-
-        .book-rating {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .book-rating .stars {
-            color: #FFD700;
-            margin-right: 8px;
-        }
-
-        .book-rating .rating-value {
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .book-price {
-            font-weight: 700;
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .book-price .original-price {
-            font-size: 0.9rem;
-            color: #999;
-            text-decoration: line-through;
-            margin-left: 8px;
-        }
-
-        .btn-small {
-            padding: 0.6rem 1.5rem;
-            font-size: 0.9rem;
-            width: 100%;
-        }
-
-        /* Articles Section */
-        .articles {
-            background: #f1f1f1;
-            padding: 5rem 0;
-            margin-top: 4rem;
-        }
-
-        .article-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: 0.4s ease;
-            margin-bottom: var(--card-spacing);
-        }
-
-        .article-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-
-        .article-img {
-            height: 220px;
-            overflow: hidden;
-        }
-
-        .article-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .article-card:hover .article-img img {
-            transform: scale(1.1);
-        }
-
-        .article-content {
-            padding: 1.8rem;
-        }
-
-        .article-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .article-excerpt {
-            color: #666;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .read-more {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .read-more:hover {
+        .btn-accent {
+            background: var(--accent);
             color: var(--secondary);
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 0.8rem 2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(255, 209, 102, 0.3);
         }
 
-        .read-more i {
-            margin-left: 5px;
-            transition: transform 0.3s ease;
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 209, 102, 0.4);
+            background: #ffc747;
         }
 
-        .read-more:hover i {
-            transform: translateX(3px);
-        }
-
-        /* Newsletter */
-        .newsletter {
+        .newsletter-section {
             background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: white;
             padding: 5rem 0;
             text-align: center;
-            margin-top: 4rem;
-            border-radius: 12px;
+            margin: 4rem auto;
+            border-radius: var(--border-radius);
             position: relative;
             overflow: hidden;
-            margin: 4rem auto;
-            max-width: 1200px;
             box-shadow: var(--card-shadow);
         }
 
-        .newsletter::before {
+        .newsletter-section::before {
             content: '';
             position: absolute;
             top: -50px;
@@ -413,7 +193,7 @@
             border-radius: 50%;
         }
 
-        .newsletter::after {
+        .newsletter-section::after {
             content: '';
             position: absolute;
             bottom: -80px;
@@ -424,66 +204,22 @@
             border-radius: 50%;
         }
 
-        .newsletter h2 {
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .newsletter p {
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-
-        .newsletter-form {
-            display: flex;
-            max-width: 500px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .newsletter-form input {
-            flex: 1;
+        .newsletter-form .form-control {
+            border-radius: 50px 0 0 50px;
             padding: 1rem 1.5rem;
             border: none;
-            border-radius: 50px 0 0 50px;
-            font-size: 1rem;
-            outline: none;
         }
 
-        .newsletter-form button {
-            background: var(--accent);
-            color: var(--secondary);
-            border: none;
-            padding: 0 2rem;
+        .newsletter-form .btn {
             border-radius: 0 50px 50px 0;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            padding: 0 2rem;
         }
 
-        .newsletter-form button:hover {
-            background: #ffc747;
-        }
-
-        /* Footer */
         footer {
             background: var(--dark);
             color: white;
             padding: 5rem 0 2rem;
             margin-top: 4rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
         }
 
         .footer-column h3 {
@@ -505,6 +241,7 @@
 
         .footer-links {
             list-style: none;
+            padding-left: 0;
         }
 
         .footer-links li {
@@ -514,20 +251,12 @@
         .footer-links a {
             color: #ccc;
             text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-            display: inline-block;
+            transition: var(--transition);
         }
 
         .footer-links a:hover {
             color: var(--accent);
             transform: translateX(5px);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
         }
 
         .social-links a {
@@ -536,10 +265,11 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            margin-right: 0.5rem;
         }
 
         .social-links a:hover {
@@ -555,442 +285,354 @@
             font-size: 0.9rem;
         }
 
-        /* Slider Navigation */
-        .slick-prev:before,
-        .slick-next:before {
-            color: var(--primary);
-            font-size: 30px;
+        /* Carousel controls */
+        .carousel-control-prev, 
+        .carousel-control-next {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 1;
         }
 
-        .slick-prev {
-            left: -40px;
+        .carousel-control-prev {
+            left: -20px;
         }
 
-        .slick-next {
-            right: -40px;
+        .carousel-control-next {
+            right: -20px;
         }
 
-        .slick-dots li button:before {
-            font-size: 12px;
-            color: var(--primary);
+        .carousel-indicators button {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 5px;
+            background-color: rgba(79, 108, 236, 0.5);
+            border: none;
         }
 
-        .slick-dots li.slick-active button:before {
-            color: var(--primary);
+        .carousel-indicators button.active {
+            background-color: var(--primary);
         }
 
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-
+        /* Responsive adjustments */
         @media (max-width: 992px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background: var(--secondary);
-                flex-direction: column;
-                padding: 1rem 0;
-                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links li {
-                margin: 0;
-                padding: 0.8rem 2rem;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .mobile-menu {
-                display: block;
-            }
-
-            .hero {
+            .hero-section {
                 height: 400px;
                 text-align: center;
             }
-
-            .hero h1 {
-                font-size: 2.2rem;
+            
+            .hero-content {
+                max-width: 100%;
             }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
+            
             .newsletter-form {
                 flex-direction: column;
             }
-
-            .newsletter-form input {
+            
+            .newsletter-form .form-control {
                 border-radius: 50px;
                 margin-bottom: 1rem;
             }
-
-            .newsletter-form button {
+            
+            .newsletter-form .btn {
                 border-radius: 50px;
                 padding: 1rem;
-            }
-
-            .slick-prev {
-                left: -20px;
-            }
-
-            .slick-next {
-                right: -20px;
             }
         }
 
         @media (max-width: 768px) {
-            .books-slider,
-            .articles-slider {
-                margin: 0 -10px;
+            .book-img, .article-img {
+                height: 250px;
             }
-
-            .books-slider .slick-slide,
-            .articles-slider .slick-slide {
-                padding: 0 10px;
+            
+            .carousel-control-prev {
+                left: 0;
+            }
+            
+            .carousel-control-next {
+                right: 0;
             }
         }
 
         @media (max-width: 576px) {
-            .hero {
+            .hero-section {
                 height: 350px;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
             }
             
             .section-title {
                 font-size: 1.8rem;
             }
             
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-
-            .slick-prev {
-                left: -15px;
-            }
-
-            .slick-next {
-                right: -15px;
+            .book-img, .article-img {
+                height: 200px;
             }
         }
     </style>
 </head>
 
 <body>
-    <header>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
-            <nav>
-                <div class="logo">
-                    <i class="fas fa-book-open"></i>
-                    <span>Bookland</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="{{ url('book') }}">Buku Hindu</a></li>
-                    <li><a href="{{ url('article') }}">Artikel</a></li>
-                    <li><a href="{{ url('contact') }}">Kontak</a></li>
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-book-open me-2"></i>Bookland
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('book') }}">Buku Hindu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('article') }}">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('contact') }}">Kontak</a>
+                    </li>
                 </ul>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </nav>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <section class="hero">
+    <!-- Hero Section -->
+    <section class="hero-section d-flex align-items-center">
+        <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
-                <h1>Jelajahi Wawasan Hindu</h1>
-                <p>Temukan kebijaksanaan kuno dalam koleksi buku dan artikel kami yang lengkap tentang agama Hindu,
-                    filosofi, dan budaya.</p>
-                <a href="#" class="btn">Jelajahi Sekarang</a>
+                <h1 class="display-4 fw-bold mb-4">Jelajahi Wawasan Hindu</h1>
+                <p class="lead mb-4">Temukan kebijaksanaan kuno dalam koleksi buku dan artikel kami yang lengkap tentang agama Hindu, filosofi, dan budaya.</p>
+                <a href="#" class="btn btn-accent">Jelajahi Sekarang</a>
             </div>
         </div>
     </section>
 
+    <!-- Popular Books Section -->
     <section class="container">
-        <h2 class="section-title">Buku Populer</h2>
-        <div class="books-slider">
-            @foreach ($books as $b)
-                <div class="book-card">
-                    <div class="book-img">
-                        <img src="{{ url('storage') }}/{{ $b->thumbnail }}" alt="{{ $b->title }}">
-                    </div>
-
-                    <div class="book-info">
-                        <h3 class="book-title">{{ $b->title }}</h3>
-                        <p class="book-author">oleh {{ $b->author }}</p>
-                        
-                        <div class="book-rating">
-                            <div class="stars">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $b->rating)
-                                        <i class="fas fa-star"></i>
-                                    @elseif ($i - 0.5 <= $b->rating)
-                                        <i class="fas fa-star-half-alt"></i>
+        <h2 class="section-title">Buku Terbaru</h2>
+        
+        <div id="booksCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @php $chunks = $books->take(10)->chunk(4); @endphp
+                @foreach($chunks as $chunk)
+                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                    <div class="row g-4">
+                        @foreach($chunk as $b)
+                        <div class="col-md-3">
+                            <div class="card h-100">
+                                <div class="book-img">
+                                    <img src="{{ url('storage') }}/{{ $b->thumbnail }}" class="card-img-top" alt="{{ $b->title }}">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $b->title }}</h5>
+                                    <p class="card-text text-muted small">oleh {{ $b->author }}</p>
+                                    
+                                    <div class="d-flex align-items-center mb-2">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $b->rating)
+                                                <i class="fas fa-star text-warning me-1"></i>
+                                            @elseif ($i - 0.5 <= $b->rating)
+                                                <i class="fas fa-star-half-alt text-warning me-1"></i>
+                                            @else
+                                                <i class="far fa-star text-warning me-1"></i>
+                                            @endif
+                                        @endfor
+                                        <span class="ms-1 small">{{ number_format($b->rating, 1) }}</span>
+                                    </div>
+                                    
+                                    @if ($b->discount > 0)
+                                        <p class="h5 text-primary mb-3">
+                                            Rp {{ number_format($b->discount, 0, ',', '.') }}
+                                            <span class="text-decoration-line-through text-muted small ms-2">
+                                                Rp {{ number_format($b->price, 0, ',', '.') }}
+                                            </span>
+                                        </p>
                                     @else
-                                        <i class="far fa-star"></i>
+                                        <p class="h5 text-primary mb-3">
+                                            Rp {{ number_format($b->price, 0, ',', '.') }}
+                                        </p>
                                     @endif
-                                @endfor
+                                    
+                                    <button class="btn btn-primary w-100" id="add-to-whatsapp" 
+                                        data-book-id="{{ $b->id }}"
+                                        data-book-title="{{ $b->title }}"
+                                        data-price="{{ $b->discount > 0 ? $b->discount : $b->price }}">
+                                        Beli Sekarang
+                                    </button>
+                                </div>
                             </div>
-                            <span class="rating-value">{{ number_format($b->rating, 1) }}</span>
                         </div>
-                        
-                        @if ($b->discount > 0)
-                            <p class="book-price">
-                                Rp {{ number_format($b->discount, 0, ',', '.') }}
-                                <span class="original-price">
-                                    Rp {{ number_format($b->price, 0, ',', '.') }}
-                                </span>
-                            </p>
-                        @else
-                            <p class="book-price">
-                                Rp {{ number_format($b->price, 0, ',', '.') }}
-                            </p>
-                        @endif
-
-                        <button class="btn btn-small" id="add-to-whatsapp" data-book-id="{{ $b->id }}"
-                            data-book-title="{{ $b->title }}"
-                            data-price="{{ $b->discount > 0 ? $b->discount : $b->price }}">Beli Sekarang</button>
+                        @endforeach
                     </div>
                 </div>
-            @endforeach
+                @endforeach
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#booksCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#booksCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            <div class="carousel-indicators position-static mt-4">
+                @foreach($chunks as $chunk)
+                <button type="button" data-bs-target="#booksCarousel" data-bs-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></button>
+                @endforeach
+            </div>
         </div>
     </section>
 
-    <section class="articles">
+    <!-- Popular Articles Section -->
+    <section class="bg-light py-5 my-5">
         <div class="container">
             <h2 class="section-title">Artikel Terbaru</h2>
-            <div class="articles-slider">
-                <div class="article-card">
-                    <div class="article-img">
-                        <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                            alt="Makna Om">
+            
+            <div id="articlesCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @php $articleChunks = $articles->take(10)->chunk(3); @endphp
+                    @foreach($articleChunks as $chunk)
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                        <div class="row g-4">
+                            @foreach($chunk as $art)
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    <div class="article-img position-relative">
+                                        <img src="{{ url('storage') }}/{{ $art->featured_image }}" class="card-img-top" alt="{{ $art->title }}">
+                                        <span class="article-category">Philosophy</span>
+                                    </div>
+                                    <div class="card-body d-flex flex-column">
+                                        <div class="d-flex align-items-center text-muted small mb-2">
+                                            <i class="far fa-calendar-alt me-2"></i>
+                                            {{ $art->created_at->format('M d, Y') }}
+                                        </div>
+                                        <h5 class="card-title">{{ $art->title }}</h5>
+                                        <p class="card-text text-muted">{{ Str::limit(strip_tags($art->content), 100) }}</p>
+                                        <a href="#" class="btn btn-link text-primary mt-auto ps-0 text-decoration-none">
+                                            Baca Selengkapnya <i class="fas fa-arrow-right ms-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
                     </div>
-                    <div class="article-content">
-                        <h3 class="article-title">Makna Spiritual dari Om dalam Hindu</h3>
-                        <p class="article-excerpt">Temukan makna mendalam di balik suku kata suci Om dan bagaimana
-                            menggunakannya dalam meditasi sehari-hari...</p>
-                        <a href="#" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
-                    </div>
+                    @endforeach
                 </div>
-
-                <div class="article-card">
-                    <div class="article-img">
-                        <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                            alt="Karma">
-                    </div>
-                    <div class="article-content">
-                        <h3 class="article-title">Memahami Hukum Karma dalam Hindu</h3>
-                        <p class="article-excerpt">Bagaimana hukum sebab-akibat membentuk kehidupan kita menurut
-                            filosofi Hindu...</p>
-                        <a href="#" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="article-card">
-                    <div class="article-img">
-                        <img src="https://images.unsplash.com/photo-1542272201-b1ca555f8505?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                            alt="Diwali">
-                    </div>
-                    <div class="article-content">
-                        <h3 class="article-title">Makna Filosofis di Balik Festival Diwali</h3>
-                        <p class="article-excerpt">Temukan simbolisme spiritual dalam festival cahaya yang terkenal
-                            ini...</p>
-                        <a href="#" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="article-card">
-                    <div class="article-img">
-                        <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                            alt="Meditasi">
-                    </div>
-                    <div class="article-content">
-                        <h3 class="article-title">Teknik Meditasi dalam Tradisi Hindu</h3>
-                        <p class="article-excerpt">Pelajari berbagai metode meditasi yang berasal dari tradisi Hindu
-                            kuno...</p>
-                        <a href="#" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <div class="article-card">
-                    <div class="article-img">
-                        <img src="https://images.unsplash.com/photo-1542272201-b1ca555f8505?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                            alt="Dewa">
-                    </div>
-                    <div class="article-content">
-                        <h3 class="article-title">Memahami Trinitas Hindu: Brahma, Wisnu, Siwa</h3>
-                        <p class="article-excerpt">Eksplorasi mendalam tentang tiga dewa utama dalam kosmologi Hindu...
-                        </p>
-                        <a href="#" class="read-more">Baca Selengkapnya <i class="fas fa-arrow-right"></i></a>
-                    </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#articlesCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#articlesCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                <div class="carousel-indicators position-static mt-4">
+                    @foreach($articleChunks as $chunk)
+                    <button type="button" data-bs-target="#articlesCarousel" data-bs-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></button>
+                    @endforeach
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Newsletter Section -->
     <section class="container">
-        <div class="newsletter">
-            <h2>Berlangganan Newsletter</h2>
-            <p>Dapatkan update terbaru tentang buku-buku Hindu, artikel, dan promo menarik langsung ke email Anda.</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Masukkan alamat email Anda">
-                <button type="submit">Berlangganan</button>
-            </form>
+        <div class="newsletter-section position-relative overflow-hidden">
+            <div class="position-relative z-index-1">
+                <h2 class="mb-4">Berlangganan Newsletter</h2>
+                <p class="mb-5 mx-auto" style="max-width: 600px;">Dapatkan update terbaru tentang buku-buku Hindu, artikel, dan promo menarik langsung ke email Anda.</p>
+                
+                <form class="newsletter-form d-flex justify-content-center">
+                    <div class="input-group" style="max-width: 500px;">
+                        <input type="email" class="form-control" placeholder="Masukkan alamat email Anda">
+                        <button class="btn btn-accent" type="submit">Berlangganan</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Tentang Bookland</h3>
-                    <p>Bookland adalah toko buku online yang berfokus pada literatur Hindu, menyediakan buku-buku
-                        berkualitas tentang filosofi, budaya, dan spiritualitas Hindu.</p>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-column">
+                        <h3>Tentang Bookland</h3>
+                        <p>Bookland adalah toko buku online yang berfokus pada literatur Hindu, menyediakan buku-buku berkualitas tentang filosofi, budaya, dan spiritualitas Hindu.</p>
+                    </div>
                 </div>
-
-                <div class="footer-column">
-                    <h3>Kategori</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Kitab Suci Hindu</a></li>
-                        <li><a href="#">Filosofi Hindu</a></li>
-                        <li><a href="#">Sejarah Hindu</a></li>
-                        <li><a href="#">Yoga & Meditasi</a></li>
-                        <li><a href="#">Anak-anak Hindu</a></li>
-                    </ul>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-column">
+                        <h3>Kategori</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Kitab Suci Hindu</a></li>
+                            <li><a href="#">Filosofi Hindu</a></li>
+                            <li><a href="#">Sejarah Hindu</a></li>
+                            <li><a href="#">Yoga & Meditasi</a></li>
+                            <li><a href="#">Anak-anak Hindu</a></li>
+                        </ul>
+                    </div>
                 </div>
-
-                <div class="footer-column">
-                    <h3>Bantuan</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Pesanan Saya</a></li>
-                        <li><a href="#">Pengiriman</a></li>
-                        <li><a href="#">Pembayaran</a></li>
-                        <li><a href="#">Pengembalian</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-column">
+                        <h3>Bantuan</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Pesanan Saya</a></li>
+                            <li><a href="#">Pengiriman</a></li>
+                            <li><a href="#">Pembayaran</a></li>
+                            <li><a href="#">Pengembalian</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
                 </div>
-
-                <div class="footer-column">
-                    <h3>Hubungi Kami</h3>
-                    <p>Email: info@bookland.com</p>
-                    <p>Telepon: (021) 1234-5678</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-column">
+                        <h3>Hubungi Kami</h3>
+                        <p><i class="fas fa-envelope me-2"></i> {{ $configs->email }}</p>
+                        <p><i class="fas fa-phone me-2"></i>+ {{ $configs->phone }}</p>
+                        <div class="social-links mt-3">
+                            <a href="{{ $configs->facebook }}"><i class="fab fa-facebook-f"></i></a>
+                            <a href="{{ $configs->instagram }}"><i class="fab fa-instagram"></i></a>
+                            <a href="{{ $configs->tiktok }}"><i class="fab fa-tiktok"></i></a>
+                            <a href="{{ $configs->youtube }}"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="copyright">
-                <p>&copy; 2023 Bookland. All Rights Reserved.</p>
+            
+            <div class="copyright mt-5">
+                <p>&copy; {{ date('Y') }} Bookland. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Add jQuery and Slick Slider JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-          // Mobile menu toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
-
-        // Initialize book slider
-        $(document).ready(function() {
-            $('.books-slider').slick({
-                dots: true,
-                infinite: true,
-                speed: 300,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                responsive: [
-                    {
-                        breakpoint: 1200,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 992,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 576,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            });
-
-            $('.articles-slider').slick({
-                dots: true,
-                infinite: true,
-                speed: 300,
-                slidesToShow: 3,
-                slidesToScroll: 1,
-                responsive: [
-                    {
-                        breakpoint: 992,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 1
-                        }
-                    },
-                    {
-                        breakpoint: 576,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            });
-        });
-
         // WhatsApp button functionality
         document.querySelectorAll('#add-to-whatsapp').forEach(button => {
             button.addEventListener('click', function() {
                 const title = this.getAttribute('data-book-title');
                 const price = this.getAttribute('data-price');
 
-                const message =
-                    `Halo, saya tertarik dengan buku "${title}" seharga Rp${parseInt(price).toLocaleString('id-ID')}. Apakah masih tersedia?`;
-
-                // Ganti nomor berikut dengan nomor admin Anda (tanpa 0 di awal, pakai 62)
+                const message = `Halo, saya tertarik dengan buku "${title}" seharga Rp${parseInt(price).toLocaleString('id-ID')}. Apakah masih tersedia?`;
                 const phoneNumber = "6287762225026";
-
                 const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
-                // Buka WhatsApp
                 window.open(whatsappURL, '_blank');
             });
         });

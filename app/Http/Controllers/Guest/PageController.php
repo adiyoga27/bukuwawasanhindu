@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Website;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -16,8 +18,9 @@ class PageController extends Controller
             ->get();
         $featuredBooks = Product::take(3)
             ->get();
-            $articles = [];
-        return view('contents.guest.home', compact('categories', 'books','featuredBooks','articles'));
+            $articles = Article::take(6)->get();
+            $configs = Website::first();
+        return view('contents.guest.home', compact('categories', 'books','featuredBooks','articles','configs'));
     }
 
     
