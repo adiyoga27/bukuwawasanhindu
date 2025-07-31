@@ -42,6 +42,7 @@ class ProductAdminController extends Controller
                 'discount' => 'nullable|numeric|min:0',
                 'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'is_active' => 'boolean',
+                'rating' => 'required|numeric|min:0'
             ]);
         try {
             Product::create([
@@ -51,6 +52,7 @@ class ProductAdminController extends Controller
                 'category_id' => $request->category_id,
                 'price' => $request->price,
                 'discount' => $request->discount,
+                'rating' => $request->rating,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : null,
                 'is_active' => $request->is_active ? true : false,
                 'slug' => Str::slug($request->title),
@@ -89,6 +91,7 @@ class ProductAdminController extends Controller
             'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
+            'rating' => 'required|numeric|min:0',
             'discount' => 'nullable|numeric|min:0',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'is_active' => 'boolean',
@@ -102,6 +105,8 @@ class ProductAdminController extends Controller
                 'description' => $request->description,
                 'category_id' => $request->category_id,
                 'price' => $request->price,
+                'rating' => $request->rating,
+
                 'discount' => $request->discount,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : $product->thumbnail,
                 'is_active' => $request->is_active ? true : false,

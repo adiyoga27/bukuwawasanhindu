@@ -107,7 +107,12 @@
                                                                     placeholder="Masukkan nama pengarang buku ..."
                                                                     value="{{ $item->author }}" required>
                                                             </div>
-
+                                                        <div class="mb-3">
+                                                                                    <label for="categoryName" class="form-label">Bintang</label>
+                                                                                    <input class="form-control" name="rating" id="rating" value="{{ $item->rating }}" 
+                                                                                        placeholder="Masukkan jumlah bintang ..." required>
+                                                                                        <p>contoh : 0.0 s/d 5.0</p>
+                                                                                </div>
                                                             <div class="mb-3">
                                                                 <div class="row">
                                                                     <div class="col-md-6">
@@ -117,6 +122,7 @@
                                                                             name="price" id="price"
                                                                             placeholder="Masukkan harga buku ..."
                                                                             value="{{ $item->price }}" required>
+                                                                            <p>Contoh : 100000</p>
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <label for="categoryName" class="form-label">Diskon
@@ -125,6 +131,7 @@
                                                                             name="discount" id="discount"
                                                                             placeholder="Masukkan harga diskon buku ..."
                                                                             value="{{ $item->discount }}">
+                                                                            <p>Contoh : 100000</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -216,6 +223,12 @@
                             <input type="text" class="form-control" name="author" id="author"
                                 placeholder="Masukkan nama pengarang buku ..." required>
                         </div>
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Bintang</label>
+                            <input type="number" min="1" max="5" class="form-control" name="rating" id="rating"
+                                placeholder="Masukkan jumlah bintang ..." required>
+                                <p>contoh : 0.0 s/d 5.0</p>
+                        </div>
 
                         <div class="mb-3">
                             <div class="row">
@@ -223,11 +236,13 @@
                                     <label for="categoryName" class="form-label">Harga</label>
                                     <input type="number" class="form-control" name="price" id="price"
                                         placeholder="Masukkan harga buku ..." required>
+                                        <p>Contoh : 100000</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="categoryName" class="form-label">Diskon Harga</label>
                                     <input type="number" class="form-control" name="discount" id="discount"
                                         placeholder="Masukkan harga diskon buku ...">
+                                        <p>Contoh : 100000</p>
                                 </div>
                             </div>
                         </div>

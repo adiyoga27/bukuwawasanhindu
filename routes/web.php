@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryArticleController;
 use App\Http\Controllers\Admin\PageAdminController;
 use App\Http\Controllers\Admin\ProductAdminController;
 use App\Http\Controllers\Admin\WebsiteController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Guest\BookController;
 use App\Http\Controllers\Guest\CartController;
 use App\Http\Controllers\Guest\PageController;
@@ -21,13 +22,15 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 
-Route::prefix('admin')->group(function () {
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'verify']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::prefix('admin')->middleware('auth')->group(function () {
    Route::get('/', [PageAdminController::class, 'index'])->name('admin.home');
    Route::resource('categories', CategoryAdminController::class);
    Route::resource('products', ProductAdminController::class);
    Route::get('configs', [WebsiteController::class,'index']);
    Route::post('configs', [WebsiteController::class,'store']);
-
    Route::resource('category-article', CategoryArticleController::class);
    Route::resource('articles', ArticleController::class);
 });

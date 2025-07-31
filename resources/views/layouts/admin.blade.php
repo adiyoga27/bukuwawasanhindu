@@ -180,7 +180,10 @@
                                 <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">Settings</span></a> --}}
                                 <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i> <span key="t-lock-screen">Lock screen</span></a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" href="#"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Logout</span></a>
+                                <form action="{{ url('logout') }}" method="post">
+@csrf
+                                    <button class="dropdown-item text-danger" href="#" type="submit"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Logout</span></button>
+                                </form>
                             </div>
                         </div>
 
@@ -229,7 +232,6 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ url('admin/categories') }}" key="t-product-detail">Kategori</a></li>
                                     <li><a href="{{ url('admin/products') }}" key="t-products">Buku</a></li>
-                                    <li><a href="{{ url('admin/stock') }}" key="t-products">Stock</a></li>
                                 </ul>
                             </li>
                             <li>
