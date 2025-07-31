@@ -25,6 +25,16 @@ class WebsiteController extends Controller
                 'tiktok' => $request->tiktok,
                 'youtube' => $request->youtube
             ]);
+               Website::first()->update([
+                'app_name' => $request->name,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'facebook' => $request->facebook,
+                'instagram' => $request->instagram,
+                'tiktok' => $request->tiktok,
+                'youtube' => $request->youtube
+            ]);
                return redirect()->back()->with('success', 'Berhasil merubah config !.');
         } catch (\Throwable $th) {
             throw $th;

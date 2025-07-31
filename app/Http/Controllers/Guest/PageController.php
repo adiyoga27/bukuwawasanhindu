@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\CategoryArticle;
 use App\Models\Product;
 use App\Models\Website;
 use Illuminate\Http\Request;
@@ -29,8 +30,9 @@ class PageController extends Controller
     }
     public function articles(){
         $articles = Article::paginate(10);
+        $categories = CategoryArticle::get();
         $configs = Website::first();
-         return view('contents.guest.articles', compact('articles','configs'));
+         return view('contents.guest.articles', compact('articles','configs','categories'));
     }
 
     public function articlesDetail(Request $request, $slug){

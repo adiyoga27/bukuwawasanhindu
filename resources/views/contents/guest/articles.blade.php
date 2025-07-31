@@ -175,10 +175,11 @@
                 </div>
                 <div class="d-flex flex-wrap justify-content-center gap-2">
                     <a href="#" class="category-badge">Semua</a>
-                    <a href="#" class="category-badge bg-secondary">Filosofi</a>
-                    <a href="#" class="category-badge bg-success">Sejarah</a>
-                    <a href="#" class="category-badge bg-warning text-dark">Praktik</a>
-                    <a href="#" class="category-badge bg-info">Budaya</a>
+                    @foreach ($categories as $item)
+                        
+                    <a href="#" class="category-badge bg-secondary">{{ $item->name }}</a>
+                    @endforeach
+                   
                 </div>
             </div>
 
