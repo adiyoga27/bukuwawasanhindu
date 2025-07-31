@@ -8,7 +8,8 @@
     <meta name="description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">
     <meta name="keywords" content="Ebook, SantoBook, Kandapat">
     <meta name="author" content="{{ $book->author }}">
-    <meta name="ima"
+   
+    <meta name="image" content="{{ url('storage/') }}/{{ $book->thumbnail }}">
 
     <meta property="og:title" content="{{ $book->title }} | SantoBook">
     <meta property="og:description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">
