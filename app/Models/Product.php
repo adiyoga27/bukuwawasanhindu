@@ -40,5 +40,9 @@ class Product extends Model
         // check table stock dengan product_id lalu sum (in-out) maka mendapatkan jumlah stock saat ini
         return $this->hasMany(Stock::class)->sum('in') - $this->hasMany(Stock::class)->sum('out');
     }
+    public function galleries()
+    {
+        return $this->hasMany(ProductGallery::class,  'id','product_id');
+    }
       
 }

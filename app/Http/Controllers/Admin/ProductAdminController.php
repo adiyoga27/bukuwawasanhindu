@@ -40,7 +40,7 @@ class ProductAdminController extends Controller
                 'category_id' => 'required|exists:categories,id',
                 'price' => 'required|numeric|min:0',
                 'discount' => 'nullable|numeric|min:0',
-                'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
                 'is_active' => 'boolean',
                 'rating' => 'required|numeric|min:0'
             ]);
@@ -93,7 +93,7 @@ class ProductAdminController extends Controller
             'price' => 'required|numeric|min:0',
             'rating' => 'required|numeric|min:0',
             'discount' => 'nullable|numeric|min:0',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'is_active' => 'boolean',
         ]);
 

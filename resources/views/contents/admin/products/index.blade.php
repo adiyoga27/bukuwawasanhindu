@@ -60,6 +60,62 @@
                                         @endif
                                     </td>
                                     <td>
+                                           <!-- Add this new button for gallery -->
+    <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal"
+        data-bs-target="#galleryModal{{ $item->id }}">
+        <i class="fas fa-images"></i> Gallery
+    </a>
+    <div class="modal fade" id="galleryModal{{ $item->id }}" tabindex="-1"
+    aria-labelledby="galleryModalLabel{{ $item->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="galleryModalLabel{{ $item->id }}">
+                    Gallery Produk: {{ $item->title }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="galleryUploadForm{{ $item->id }}" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $item->id }}">
+                    <div class="mb-3">
+                        <label for="images{{ $item->id }}" class="form-label">Upload Gambar (JPEG, PNG, JPG, GIF, WEBP)</label>
+                        <input class="form-control" type="file" id="images{{ $item->id }}" 
+                               name="images[]" multiple accept="image/jpeg,image/png,image/jpg,image/gif,image/webp">
+                    </div>
+                    <div class="progress mb-3 d-none" id="uploadProgress{{ $item->id }}">
+                        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+                
+                <div class="mt-4">
+                    <h6>Gambar Gallery</h6>
+                    <div class="row" id="imageList{{ $item->id }}">
+                        @foreach($item->galleries as $gallery)
+                        <div class="col-md-3 mb-3">
+                            <div class="card">
+                                <img src="{{ Storage::url($gallery->image_path) }}" class="card-img-top" alt="Gallery image">
+                                <div class="card-body p-2">
+                                    <button class="btn btn-danger btn-sm delete-image" 
+                                            data-id="{{ $gallery->id }}" data-product="{{ $item->id }}">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
                                         <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#editFormModal{{ $item->id }}">
                                             <i class="fas fa-edit"></i> Edit
@@ -251,6 +307,9 @@
                             <textarea class="form-control elm1"  name="description" required>
                           </textarea>
                         </div>
+                           <div class="mb-3">
+                               <img src="{{ url('storage/') }}/{{ $item->thumbnail }}" width="100px">
+                            </div>
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Upload Gambar</label>
                             <input type="file" class="form-control" name="thumbnail" id="thumbnail" required>
@@ -268,6 +327,8 @@
             </div>
         </div>
     </div>
+    <!-- Gallery Modal -->
+
 @endsection
 @section('js')
     <!-- Required datatable js -->
@@ -317,5 +378,100 @@
       ]
     });
   }
+  // Gallery Upload Script
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all gallery modals
+    document.querySelectorAll('[id^="galleryUploadForm"]').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formId = this.id.replace('galleryUploadForm', '');
+            const formData = new FormData(this);
+            const progressBar = document.getElementById('uploadProgress' + formId);
+            const progressBarInner = progressBar.querySelector('.progress-bar');
+            const imageList = document.getElementById('imageList' + formId);
+            
+            progressBar.classList.remove('d-none');
+            
+            fetch(window.location.origin+"/admin/products/gallery", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                progressBar.classList.add('d-none');
+                if (data.success) {
+                    // Clear file input
+                    this.querySelector('input[type="file"]').value = '';
+                    
+                    // Add new images to preview
+                    data.images.forEach(image => {
+                        const col = document.createElement('div');
+                        col.className = 'col-md-3 mb-3';
+                        col.innerHTML = `
+                            <div class="card">
+                                <img src="${image.path}" class="card-img-top" alt="Gallery image">
+                                <div class="card-body p-2">
+                                    <button class="btn btn-danger btn-sm delete-image" 
+                                            data-id="${image.id}" data-product="${data.product_id}">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        imageList.appendChild(col);
+                        
+                        // Add delete event to new image
+                        col.querySelector('.delete-image').addEventListener('click', deleteGalleryImage);
+                    });
+                } else {
+                    alert('Error: ' + (data.message || 'Gagal mengupload gambar'));
+                }
+            })
+            .catch(error => {
+                progressBar.classList.add('d-none');
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat mengupload gambar');
+            });
+        });
+    });
+    
+    // Delete gallery image
+    function deleteGalleryImage() {
+        if (confirm('Apakah Anda yakin ingin menghapus gambar ini?')) {
+            const imageId = this.dataset.id;
+            const productId = this.dataset.product;
+            const button = this;
+            
+            fetch('{{ route("product.gallery.destroy") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    image_id: imageId,
+                    product_id: productId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    button.closest('.col-md-3').remove();
+                } else {
+                    alert('Error: ' + (data.message || 'Gagal menghapus gambar'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat menghapus gambar');
+            });
+        }
+    }
+    
+    // Initialize delete buttons
+    document.querySelectorAll('.delete-image').forEach(button => {
+        button.addEventListener('click', deleteGalleryImage);
+    });
+});
         </script>
 @endsection

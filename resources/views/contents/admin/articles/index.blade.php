@@ -104,6 +104,9 @@
                                                                 <p>Contoh: buku, alam semesta, tips trik</p>
                                                             </div>
                                                             <div class="mb-3">
+                                                                <img src="{{ url('storage/') }}/{{ $item->featured_image }}" width="100px">
+                                                            </div>
+                                                            <div class="mb-3">
                                                                 <label for="featured_image" class="form-label">Upload
                                                                     Thumbnail</label>
                                                                 <input type="file" class="form-control" name="featured_image"
