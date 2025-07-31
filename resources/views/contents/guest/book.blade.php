@@ -199,7 +199,7 @@
 
         .empty-state {
             text-align: center;
-            padding: 3rem;
+            padding: 1rem;
             background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--card-shadow);
