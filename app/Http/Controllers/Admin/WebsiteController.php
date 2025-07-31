@@ -26,7 +26,8 @@ class WebsiteController extends Controller
                 'tiktok' => $request->tiktok,
                 'youtube' => $request->youtube,
                 'shopee' => $request->shopee,
-                'tokopedia' => $request->tokopedia
+                'tokopedia' => $request->tokopedia,
+                'lazada' => $request->lazada
             ]);
             Website::first()->update([
                 'app_name' => $request->name,
@@ -38,7 +39,8 @@ class WebsiteController extends Controller
                 'tiktok' => $request->tiktok,
                 'youtube' => $request->youtube,
                 'shopee' => $request->shopee,
-                'tokopedia' => $request->tokopedia
+                'tokopedia' => $request->tokopedia,
+                'lazada' => $request->lazada
             ]);
             return redirect()->back()->with('success', 'Berhasil merubah Website');
         } catch (\Throwable $th) {

@@ -70,6 +70,10 @@
                             <label for="tokopedia" class="form-label">Tokopedia Market Place</label>
                             <input type="text" class="form-control" name="tokopedia" placeholder="Masukkan tokopedia website" value="{{ $config?->tokopedia }}">
                         </div>
+                          <div class="mb-3">
+                            <label for="lazada" class="form-label">Lazada Market Place</label>
+                            <input type="text" class="form-control" name="lazada" placeholder="Masukkan lazada website" value="{{ $config?->lazada }}">
+                        </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>   
                     </form>
                  

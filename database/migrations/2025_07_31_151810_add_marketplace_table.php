@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('website', function (Blueprint $table) {
             $table->string('shopee')->nullable();
             $table->string('tokopedia')->nullable();
+            $table->string('lazada')->nullable();
             $table->text('how_to_purchase')->nullable();
             $table->text('about')->nullable();
         });
@@ -25,7 +26,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('website', function (Blueprint $table) {
-            $table->dropColumn(['shopee','tokopedia', 'about','how_to_purchase']);
+            $table->dropColumn(['shopee','tokopedia', 'about','how_to_purchase','lazada']);
         });
     }
 };
