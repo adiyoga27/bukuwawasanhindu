@@ -25,7 +25,10 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+   
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+   <style>
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #34495e;
@@ -138,18 +141,6 @@
             color: white;
         }
         
-        .btn-wishlist {
-            background-color: white;
-            color: var(--primary-color);
-            padding: 12px 30px;
-            font-weight: 600;
-            border: 1px solid #ddd;
-        }
-        
-        .btn-wishlist:hover {
-            background-color: var(--light-color);
-        }
-        
         .book-description {
             margin: 50px 0;
             line-height: 1.8;
@@ -171,94 +162,101 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
-        .quantity-selector {
-    display: flex;
-    align-items: center; /* Ini yang paling penting untuk vertical alignment */
-    margin-bottom: 20px;
-}
-
-.quantity-btn {
-    width: 40px;
-    height: 40px;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0; /* Pastikan tidak ada padding yang mengganggu */
-    line-height: 1; /* Untuk teks di dalam button */
-}
-
-.quantity-input {
-    width: 60px;
-    height: 40px; /* Pastikan sama dengan height button */
-    text-align: center;
-    border: 1px solid #dee2e6;
-    margin: 0 5px;
-    font-size: 1rem;
-    padding: 0.375rem 0.75rem; /* Padding standar Bootstrap */
-    -moz-appearance: textfield; /* Hilangkan spinner di Firefox */
-}
-
-/* Hilangkan spinner di Chrome, Safari, Edge */
-.quantity-input::-webkit-outer-spin-button,
-.quantity-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.quantity-btn:focus,
-.quantity-input:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-}
-
-   /* Floating Cart Button Styles */
-    .floating-cart-container {
-         position: fixed;
-    bottom: 30px;
-    right: 10px; /* INI YANG UTAMA */
-    left: auto; /* Backup */
-    z-index: 9999; /* dinaikkan untuk jaga-jaga */
-    }
-    
-    .floating-cart-btn {
-      display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    background-color: #2c3e50;
-    color: white;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    text-decoration: none;
-    position: relative;
-    transition: all 0.3s ease;
-    }
-    
-    .floating-cart-btn:hover {
-        background-color: #e74c3c;
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-    }
-   .cart-counter {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #e74c3c;
-    color: white;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
+ /* Add these new styles for the gallery */
+        .product-gallery {
+            position: relative;
+        }
+        
+        .main-image-container {
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .main-product-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: zoom-in;
+        }
+           /* Add these styles for the gallery */
+        .product-gallery-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-image-wrapper {
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .main-product-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .thumbnail-slider-container {
+            position: relative;
+        }
+        
+        .thumbnail-slider {
+            margin: 0 30px;
+        }
+        
+        .thumbnail-slide {
+            padding: 0 5px;
+            cursor: pointer;
+        }
+        
+        .thumbnail-image {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .thumbnail-slide.slick-current .thumbnail-image,
+        .thumbnail-image:hover {
+            border-color: #e74c3c;
+        }
+        
+        .slick-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .slick-prev {
+            left: 0;
+        }
+        
+        .slick-next {
+            right: 0;
+        }
+        
+        .slick-arrow:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        
+        
+       
 
 /* Animasi */
 @keyframes pulse {
@@ -291,100 +289,142 @@
     </style>
 @endsection
 @section('content')
-    
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5">
-                    <img src="{{ url('storage/'.$book->thumbnail) }}" class="img-fluid book-cover" alt="{{ $book['title'] }}">
+    <div class="container">
+    <div class="row">
+        <!-- Product Gallery Column - Now side by side -->
+        <div class="col-lg-5">
+            <div class="product-gallery-container">
+                <!-- Main Image -->
+                <div class="main-image-wrapper">
+                    <img src="{{ url('storage/'.$book->thumbnail) }}" class="main-product-image" alt="{{ $book['title'] }}" id="mainProductImage">
                 </div>
-                <div class="col-lg-7">
-                    <h1 class="book-title">{{ $book['title'] }}</h1>
-                    <p class="book-author">By {{ $book['author'] }}</p>
-                    
-                    <div class="rating mb-3">
-                        <span class="badge bg-warning text-dark me-2">
-                            <i class="fas fa-star"></i> {{ $book['rating'] }}
-                        </span>
-                        <span class="text-muted">(120 reviews)</span>
-                    </div>
-                    
-                    <div class="price-section">
-                        <span class="current-price">Rp {{ number_format(($book->discount > 0 ? $book->discount : $book->price), 0, ',', '.') }}</span>
-                        <span class="original-price">Rp {{ number_format($book['price'], 0, ',', '.') }}</span>
-                        <span class="discount-badge">Save {{ ($book->price - $book->discount)/$book->price * 100 }}%</span>
-                    </div>
-                    
-                    {!! $book['description'] !!}
-                         
-                {{-- <div class="quantity-selector">
-                    <button class="quantity-btn minus-btn" type="button">-</button>
-                    <input type="number" class="quantity-input" id="quantity" name="quantity" value="1" min="1" max="{{ $book->getCountStock() }}">
-                    <button class="quantity-btn plus-btn" type="button">+</button>
-                    <span class="ms-2">(Max {{ $book->getCountStock() }} available)</span>
-                </div> --}}
-                    
-               
-                     <div class="d-flex mt-4">
-                         <button
-                                class="btn btn-add-to-whatsapp"
-                                id="add-to-whatsapp"
-                                data-book-id="{{ $book->id }}"
-                                data-book-title="{{ $book->title }}"
-                                data-price="{{ $book->discount > 0 ? $book->discount : $book->price }}">
-                                <i class="fab fa-whatsapp text-success me-2"></i> WhatsApp
-                            </button>
-                    {{-- <button class="btn btn-add-to-cart" id="add-to-cart" data-book-id="{{ $book->id }}">
-                        <i class="fas fa-shopping-cart me-2"></i> Add to Cart
-                    </button> --}}
-                 
-                </div>
-                </div>
-            </div>
-            
-            {{-- <div class="book-description">
-                <h3 class="mb-4">Description</h3>
-                <p>{{ $book['long_description'] }}</p>
-            </div> --}}
-            
-            <div class="related-books">
-                <h3 class="mb-4">Related Books</h3>
-                <div class="row">
-                    @foreach($relatedBooks as $relatedBook)
-                        <div class="col-md-4">
-                            <div class="card related-book-card">
-                                <img src="{{ url('storage/') }}/{{ $relatedBook['thumbnail'] }}" class="card-img-top" alt="{{ $relatedBook['title'] }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $relatedBook['title'] }}</h5>
-                                    <p class="card-text text-muted">{{ $relatedBook['author'] }}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="fw-bold">Rp {{ number_format($relatedBook['price'], 0, ',', '.') }}</span>
-                                        <span class="badge bg-warning text-dark">
-                                            <i class="fas fa-star"></i> {{ $relatedBook['rating'] }}
-                                        </span>
-                                    </div>
-                                    <a href="{{ url('product/'.$relatedBook['slug']) }}" class="btn btn-primary mt-3 w-100">View Details</a>
-                                </div>
-                            </div>
+                
+                <!-- Thumbnail Slider -->
+                <div class="thumbnail-slider-container">
+                    <div class="thumbnail-slider">
+                        <!-- Include thumbnail as first image -->
+                        <div class="thumbnail-slide">
+                            <img src="{{ url('storage/'.$book->thumbnail) }}" class="thumbnail-image" alt="Thumbnail">
                         </div>
-                    @endforeach
+                        
+                        <!-- Gallery Images -->
+                        @foreach($book->galleries as $gallery)
+                        <div class="thumbnail-slide">
+                            <img src="{{ Storage::url($gallery->image_path) }}" class="thumbnail-image" alt="Gallery Image {{ $loop->iteration }}">
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
-
-
-
+        
+        <!-- Product Info Column -->
+        <div class="col-lg-7">
+            <h1 class="book-title">{{ $book['title'] }}</h1>
+            <p class="book-author">By {{ $book['author'] }}</p>
+            
+            <div class="rating mb-3">
+                <span class="badge bg-warning text-dark me-2">
+                    <i class="fas fa-star"></i> {{ $book['rating'] }}
+                </span>
+                <span class="text-muted">(120 reviews)</span>
+            </div>
+            
+            <div class="price-section">
+                <span class="current-price">Rp {{ number_format(($book->discount > 0 ? $book->discount : $book->price), 0, ',', '.') }}</span>
+                <span class="original-price">Rp {{ number_format($book['price'], 0, ',', '.') }}</span>
+                <span class="discount-badge">Save {{ ($book->price - $book->discount)/$book->price * 100 }}%</span>
+            </div>
+            
+            {!! $book['description'] !!}
+            
+            <div class="d-flex mt-4">
+                <button class="btn btn-add-to-whatsapp"
+                    id="add-to-whatsapp"
+                    data-book-id="{{ $book->id }}"
+                    data-book-title="{{ $book->title }}"
+                    data-price="{{ $book->discount > 0 ? $book->discount : $book->price }}">
+                    <i class="fab fa-whatsapp text-success me-2"></i> WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Related Books Section -->
+    <div class="related-books mt-5">
+        <h3 class="mb-4">Related Books</h3>
+        <div class="row">
+            @foreach($relatedBooks as $relatedBook)
+                <div class="col-md-4 mb-4">
+                    <div class="card related-book-card">
+                        <img src="{{ url('storage/') }}/{{ $relatedBook['thumbnail'] }}" class="card-img-top" alt="{{ $relatedBook['title'] }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $relatedBook['title'] }}</h5>
+                            <p class="card-text text-muted">{{ $relatedBook['author'] }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">Rp {{ number_format($relatedBook['price'], 0, ',', '.') }}</span>
+                                <span class="badge bg-warning text-dark">
+                                    <i class="fas fa-star"></i> {{ $relatedBook['rating'] }}
+                                </span>
+                            </div>
+                            <a href="{{ url('product/'.$relatedBook['slug']) }}" class="btn btn-primary mt-3 w-100">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
         @endsection
-                <!-- Tambahkan di bagian sebelum </body> atau di section scripts -->
-{{-- <div class="floating-cart-container">
-    <a href="{{ route('cart.index') }}" class="floating-cart-btn">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-counter">{{ count(session('cart', [])) }}</span>
-    </a>
-</div> --}}
+
 @section('js')
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Then load Slick slider -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Then load Slick slider -->
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
       <script>
         $(document).ready(function() {
+              // Initialize thumbnail slider
+    $('.thumbnail-slider').slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        infinite: true,
+        arrows: true,
+        prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
+        nextArrow: '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>',
+        responsive: [
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1
+                }
+            }
+        ]
+    });
+    
+    // Change main image when thumbnail is clicked
+    $('.thumbnail-image').click(function(){
+        const newSrc = $(this).attr('src');
+        $('#mainProductImage').attr('src', newSrc);
+        
+        // Update active state
+        $('.thumbnail-slide').removeClass('slick-current');
+        $(this).closest('.thumbnail-slide').addClass('slick-current');
+    });
+
             // Quantity selector logic
             $('.minus-btn').click(function() {
                 
@@ -433,6 +473,8 @@
                     }
                 });
             });
+
+    
         });
     // Animasi ketika item ditambahkan ke cart
     document.addEventListener('DOMContentLoaded', function() {

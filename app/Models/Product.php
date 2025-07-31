@@ -17,7 +17,9 @@ class Product extends Model
         'stars',
         'slug',
         'is_active',
-        'thumbnail'
+        'thumbnail',
+        'tokopedia',
+        'shopee'
     ];
 
     /**
@@ -42,7 +44,7 @@ class Product extends Model
     }
     public function galleries()
     {
-        return $this->hasMany(ProductGallery::class,  'id','product_id');
+        return $this->hasMany(ProductGallery::class,  'product_id','id');
     }
       
 }

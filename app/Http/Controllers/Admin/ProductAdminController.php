@@ -42,7 +42,11 @@ class ProductAdminController extends Controller
                 'discount' => 'nullable|numeric|min:0',
                 'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
                 'is_active' => 'boolean',
-                'rating' => 'required|numeric|min:0'
+                'rating' => 'required|numeric|min:0',
+                'tokopedia' => 'string',
+                'shopee' => 'string',
+
+
             ]);
         try {
             Product::create([
@@ -53,6 +57,9 @@ class ProductAdminController extends Controller
                 'price' => $request->price,
                 'discount' => $request->discount,
                 'rating' => $request->rating,
+
+                'tokopedia'=> $request->tokopedia,
+                'shopee'=> $request->shopee,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : null,
                 'is_active' => $request->is_active ? true : false,
                 'slug' => Str::slug($request->title),
@@ -95,6 +102,8 @@ class ProductAdminController extends Controller
             'discount' => 'nullable|numeric|min:0',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'is_active' => 'boolean',
+              'tokopedia' => 'string',
+                'shopee' => 'string',
         ]);
 
         try {
@@ -106,7 +115,8 @@ class ProductAdminController extends Controller
                 'category_id' => $request->category_id,
                 'price' => $request->price,
                 'rating' => $request->rating,
-
+                'tokopedia'=> $request->tokopedia,
+                'shopee'=> $request->shopee,
                 'discount' => $request->discount,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : $product->thumbnail,
                 'is_active' => $request->is_active ? true : false,

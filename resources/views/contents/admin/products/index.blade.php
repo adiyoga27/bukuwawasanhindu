@@ -60,62 +60,73 @@
                                         @endif
                                     </td>
                                     <td>
-                                           <!-- Add this new button for gallery -->
-    <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal"
-        data-bs-target="#galleryModal{{ $item->id }}">
-        <i class="fas fa-images"></i> Gallery
-    </a>
-    <div class="modal fade" id="galleryModal{{ $item->id }}" tabindex="-1"
-    aria-labelledby="galleryModalLabel{{ $item->id }}" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="galleryModalLabel{{ $item->id }}">
-                    Gallery Produk: {{ $item->title }}
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="galleryUploadForm{{ $item->id }}" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="product_id" value="{{ $item->id }}">
-                    <div class="mb-3">
-                        <label for="images{{ $item->id }}" class="form-label">Upload Gambar (JPEG, PNG, JPG, GIF, WEBP)</label>
-                        <input class="form-control" type="file" id="images{{ $item->id }}" 
-                               name="images[]" multiple accept="image/jpeg,image/png,image/jpg,image/gif,image/webp">
-                    </div>
-                    <div class="progress mb-3 d-none" id="uploadProgress{{ $item->id }}">
-                        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Upload</button>
-                </form>
-                
-                <div class="mt-4">
-                    <h6>Gambar Gallery</h6>
-                    <div class="row" id="imageList{{ $item->id }}">
-                        @foreach($item->galleries as $gallery)
-                        <div class="col-md-3 mb-3">
-                            <div class="card">
-                                <img src="{{ Storage::url($gallery->image_path) }}" class="card-img-top" alt="Gallery image">
-                                <div class="card-body p-2">
-                                    <button class="btn btn-danger btn-sm delete-image" 
-                                            data-id="{{ $gallery->id }}" data-product="{{ $item->id }}">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-            </div>
-        </div>
-    </div>
-</div>
+                                        <!-- Add this new button for gallery -->
+                                        <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#galleryModal{{ $item->id }}">
+                                            <i class="fas fa-images"></i> Gallery
+                                        </a>
+                                        <div class="modal fade" id="galleryModal{{ $item->id }}" tabindex="-1"
+                                            aria-labelledby="galleryModalLabel{{ $item->id }}" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="galleryModalLabel{{ $item->id }}">
+                                                            Gallery Produk: {{ $item->title }}
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="galleryUploadForm{{ $item->id }}"
+                                                            enctype="multipart/form-data">
+                                                            @csrf
+                                                            <input type="hidden" name="product_id"
+                                                                value="{{ $item->id }}">
+                                                            <div class="mb-3">
+                                                                <label for="images{{ $item->id }}"
+                                                                    class="form-label">Upload Gambar (JPEG, PNG, JPG, GIF,
+                                                                    WEBP)</label>
+                                                                <input class="form-control" type="file"
+                                                                    id="images{{ $item->id }}" name="images[]" multiple
+                                                                    accept="image/jpeg,image/png,image/jpg,image/gif,image/webp">
+                                                            </div>
+                                                            <div class="progress mb-3 d-none"
+                                                                id="uploadProgress{{ $item->id }}">
+                                                                <div class="progress-bar" role="progressbar"
+                                                                    style="width: 0%"></div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">Upload</button>
+                                                        </form>
+
+                                                        <div class="mt-4">
+                                                            <h6>Gambar Gallery</h6>
+                                                            <div class="row" id="imageList{{ $item->id }}">
+                                                                @foreach ($item->galleries as $gallery)
+                                                                    <div class="col-md-3 mb-3">
+                                                                        <div class="card">
+                                                                            <img src="{{ url('storage') }}/{{ $gallery->image_path }}"
+                                                                                class="card-img-top" alt="Gallery image">
+                                                                            <div class="card-body p-2">
+                                                                                <button
+                                                                                    class="btn btn-danger btn-sm delete-image"
+                                                                                    data-id="{{ $gallery->id }}"
+                                                                                    data-product="{{ $item->id }}">
+                                                                                    <i class="fas fa-trash"></i> Hapus
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Tutup</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#editFormModal{{ $item->id }}">
                                             <i class="fas fa-edit"></i> Edit
@@ -132,8 +143,8 @@
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form action="{{ url('admin/products/' . $item->id) }}" method="POST"
-                                                            enctype="multipart/form-data">
+                                                        <form action="{{ url('admin/products/' . $item->id) }}"
+                                                            method="POST" enctype="multipart/form-data">
                                                             @csrf
                                                             @method('PUT')
                                                             @csrf
@@ -163,12 +174,14 @@
                                                                     placeholder="Masukkan nama pengarang buku ..."
                                                                     value="{{ $item->author }}" required>
                                                             </div>
-                                                        <div class="mb-3">
-                                                                                    <label for="categoryName" class="form-label">Bintang</label>
-                                                                                    <input class="form-control" name="rating" id="rating" value="{{ $item->rating }}" 
-                                                                                        placeholder="Masukkan jumlah bintang ..." required>
-                                                                                        <p>contoh : 0.0 s/d 5.0</p>
-                                                                                </div>
+                                                            <div class="mb-3">
+                                                                <label for="categoryName"
+                                                                    class="form-label">Bintang</label>
+                                                                <input class="form-control" name="rating" id="rating"
+                                                                    value="{{ $item->rating }}"
+                                                                    placeholder="Masukkan jumlah bintang ..." required>
+                                                                <p>contoh : 0.0 s/d 5.0</p>
+                                                            </div>
                                                             <div class="mb-3">
                                                                 <div class="row">
                                                                     <div class="col-md-6">
@@ -178,16 +191,17 @@
                                                                             name="price" id="price"
                                                                             placeholder="Masukkan harga buku ..."
                                                                             value="{{ $item->price }}" required>
-                                                                            <p>Contoh : 100000</p>
+                                                                        <p>Contoh : 100000</p>
                                                                     </div>
                                                                     <div class="col-md-6">
-                                                                        <label for="categoryName" class="form-label">Diskon
+                                                                        <label for="categoryName"
+                                                                            class="form-label">Diskon
                                                                             Harga</label>
                                                                         <input type="number" class="form-control"
                                                                             name="discount" id="discount"
                                                                             placeholder="Masukkan harga diskon buku ..."
                                                                             value="{{ $item->discount }}">
-                                                                            <p>Contoh : 100000</p>
+                                                                        <p>Contoh : 100000</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -199,8 +213,24 @@
                                                             <div class="mb-3">
                                                                 <label for="categoryName" class="form-label">Upload
                                                                     Gambar</label>
-                                                                <input type="file" class="form-control" name="thumbnail"
-                                                                    id="thumbnail">
+                                                                <input type="file" class="form-control"
+                                                                    name="thumbnail" id="thumbnail">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="tokopedia" class="form-label">Link
+                                                                    Tokopedia</label>
+                                                                <input type="text" class="form-control"
+                                                                    name="tokopedia" id="tokopedia"
+                                                                    placeholder="Masukkan tokopedia buku pembelian ..."
+                                                                    value="{{ $item->tokopedia }}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="shopee" class="form-label">Link
+                                                                    Shopee</label>
+                                                                <input type="text" class="form-control" name="shopee"
+                                                                    id="shopee" value="{{ $item->shopee }}"
+                                                                    placeholder="Masukkan shopee buku pembelian ..."
+                                                                    required>
                                                             </div>
 
                                                             <div class="mb-3">
@@ -281,9 +311,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Bintang</label>
-                            <input type="number" min="1" max="5" class="form-control" name="rating" id="rating"
-                                placeholder="Masukkan jumlah bintang ..." required>
-                                <p>contoh : 0.0 s/d 5.0</p>
+                            <input type="number" min="1" max="5" class="form-control" name="rating"
+                                id="rating" placeholder="Masukkan jumlah bintang ..." required>
+                            <p>contoh : 0.0 s/d 5.0</p>
                         </div>
 
                         <div class="mb-3">
@@ -292,27 +322,37 @@
                                     <label for="categoryName" class="form-label">Harga</label>
                                     <input type="number" class="form-control" name="price" id="price"
                                         placeholder="Masukkan harga buku ..." required>
-                                        <p>Contoh : 100000</p>
+                                    <p>Contoh : 100000</p>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="categoryName" class="form-label">Diskon Harga</label>
                                     <input type="number" class="form-control" name="discount" id="discount"
                                         placeholder="Masukkan harga diskon buku ...">
-                                        <p>Contoh : 100000</p>
+                                    <p>Contoh : 100000</p>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Deskripsi</label>
-                            <textarea class="form-control elm1"  name="description" required>
+                            <textarea class="form-control elm1" name="description" required>
                           </textarea>
                         </div>
-                           <div class="mb-3">
-                               <img src="{{ url('storage/') }}/{{ $item->thumbnail }}" width="100px">
-                            </div>
+                        <div class="mb-3">
+                            <img src="{{ url('storage/') }}/{{ $item->thumbnail }}" width="100px">
+                        </div>
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Upload Gambar</label>
                             <input type="file" class="form-control" name="thumbnail" id="thumbnail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tokopedia" class="form-label">Link Tokopedia</label>
+                            <input type="text" class="form-control" name="tokopedia" id="tokopedia"
+                                placeholder="Masukkan tokopedia buku pembelian ..." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shopee" class="form-label">Link Shopee</label>
+                            <input type="text" class="form-control" name="shopee" id="shopee"
+                                placeholder="Masukkan shopee buku pembelian ..." required>
                         </div>
                         <div class="mb-3">
                             <label for="categoryStatus" class="form-label">Status</label>
@@ -328,7 +368,6 @@
         </div>
     </div>
     <!-- Gallery Modal -->
-
 @endsection
 @section('js')
     <!-- Required datatable js -->
@@ -347,67 +386,95 @@
     <!-- Responsive examples -->
     <script src="{{ url('assets') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ url('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-       <!--tinymce js-->
-        <script src="{{ url('assets') }}/libs/tinymce/tinymce.min.js"></script>
+    <!--tinymce js-->
+    <script src="{{ url('assets') }}/libs/tinymce/tinymce.min.js"></script>
 
-        <!-- init js -->
-        {{-- <script src="{{ url('assets') }}/js/pages/form-editor.init.js"></script> --}}
+    <!-- init js -->
+    {{-- <script src="{{ url('assets') }}/js/pages/form-editor.init.js"></script> --}}
 
     <!-- Datatable init js -->
     <script src="{{ url('assets') }}/js/pages/datatables.init.js"></script>
 
     <script>
- if ($(".elm1").length > 0) {
-    tinymce.init({
-      selector: "textarea.elm1",
-      height: 300,
-      plugins: [
-        "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
-        "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-        "save table contextmenu directionality emoticons template paste textcolor"
-      ],
-      toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
-      style_formats: [
-        { title: "Bold text", inline: "b" },
-        { title: "Red text", inline: "span", styles: { color: "#ff0000" } },
-        { title: "Red header", block: "h1", styles: { color: "#ff0000" } },
-        { title: "Example 1", inline: "span", classes: "example1" },
-        { title: "Example 2", inline: "span", classes: "example2" },
-        { title: "Table styles" },
-        { title: "Table row 1", selector: "tr", classes: "tablerow1" }
-      ]
-    });
-  }
-  // Gallery Upload Script
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all gallery modals
-    document.querySelectorAll('[id^="galleryUploadForm"]').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formId = this.id.replace('galleryUploadForm', '');
-            const formData = new FormData(this);
-            const progressBar = document.getElementById('uploadProgress' + formId);
-            const progressBarInner = progressBar.querySelector('.progress-bar');
-            const imageList = document.getElementById('imageList' + formId);
-            
-            progressBar.classList.remove('d-none');
-            
-            fetch(window.location.origin+"/admin/products/gallery", {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                progressBar.classList.add('d-none');
-                if (data.success) {
-                    // Clear file input
-                    this.querySelector('input[type="file"]').value = '';
-                    
-                    // Add new images to preview
-                    data.images.forEach(image => {
-                        const col = document.createElement('div');
-                        col.className = 'col-md-3 mb-3';
-                        col.innerHTML = `
+        if ($(".elm1").length > 0) {
+            tinymce.init({
+                selector: "textarea.elm1",
+                height: 300,
+                plugins: [
+                    "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                    "save table contextmenu directionality emoticons template paste textcolor"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
+                style_formats: [{
+                        title: "Bold text",
+                        inline: "b"
+                    },
+                    {
+                        title: "Red text",
+                        inline: "span",
+                        styles: {
+                            color: "#ff0000"
+                        }
+                    },
+                    {
+                        title: "Red header",
+                        block: "h1",
+                        styles: {
+                            color: "#ff0000"
+                        }
+                    },
+                    {
+                        title: "Example 1",
+                        inline: "span",
+                        classes: "example1"
+                    },
+                    {
+                        title: "Example 2",
+                        inline: "span",
+                        classes: "example2"
+                    },
+                    {
+                        title: "Table styles"
+                    },
+                    {
+                        title: "Table row 1",
+                        selector: "tr",
+                        classes: "tablerow1"
+                    }
+                ]
+            });
+        }
+        // Gallery Upload Script
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize all gallery modals
+            document.querySelectorAll('[id^="galleryUploadForm"]').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formId = this.id.replace('galleryUploadForm', '');
+                    const formData = new FormData(this);
+                    const progressBar = document.getElementById('uploadProgress' + formId);
+                    const progressBarInner = progressBar.querySelector('.progress-bar');
+                    const imageList = document.getElementById('imageList' + formId);
+
+                    progressBar.classList.remove('d-none');
+
+                    fetch(window.location.origin + "/admin/products/gallery", {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            progressBar.classList.add('d-none');
+                            if (data.success) {
+                                // Clear file input
+                                this.querySelector('input[type="file"]').value = '';
+
+                                // Add new images to preview
+                                data.images.forEach(image => {
+                                    const col = document.createElement('div');
+                                    col.className = 'col-md-3 mb-3';
+                                    col.innerHTML = `
                             <div class="card">
                                 <img src="${image.path}" class="card-img-top" alt="Gallery image">
                                 <div class="card-body p-2">
@@ -418,60 +485,61 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                             </div>
                         `;
-                        imageList.appendChild(col);
-                        
-                        // Add delete event to new image
-                        col.querySelector('.delete-image').addEventListener('click', deleteGalleryImage);
-                    });
-                } else {
-                    alert('Error: ' + (data.message || 'Gagal mengupload gambar'));
+                                    imageList.appendChild(col);
+
+                                    // Add delete event to new image
+                                    col.querySelector('.delete-image').addEventListener(
+                                        'click', deleteGalleryImage);
+                                });
+                            } else {
+                                alert('Error: ' + (data.message || 'Gagal mengupload gambar'));
+                            }
+                        })
+                        .catch(error => {
+                            progressBar.classList.add('d-none');
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan saat mengupload gambar');
+                        });
+                });
+            });
+
+            // Delete gallery image
+            function deleteGalleryImage() {
+                if (confirm('Apakah Anda yakin ingin menghapus gambar ini?')) {
+                    const imageId = this.dataset.id;
+                    const productId = this.dataset.product;
+                    const button = this;
+
+                    fetch(window.location.origin + "/admin/products/gallery/delete", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                image_id: imageId,
+                                product_id: productId
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                button.closest('.col-md-3').remove();
+                            } else {
+                                alert('Error: ' + (data.message || 'Gagal menghapus gambar'));
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan saat menghapus gambar');
+                        });
                 }
-            })
-            .catch(error => {
-                progressBar.classList.add('d-none');
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat mengupload gambar');
+            }
+
+            // Initialize delete buttons
+            document.querySelectorAll('.delete-image').forEach(button => {
+                button.addEventListener('click', deleteGalleryImage);
             });
         });
-    });
-    
-    // Delete gallery image
-    function deleteGalleryImage() {
-        if (confirm('Apakah Anda yakin ingin menghapus gambar ini?')) {
-            const imageId = this.dataset.id;
-            const productId = this.dataset.product;
-            const button = this;
-            
-            fetch('{{ route("product.gallery.destroy") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    image_id: imageId,
-                    product_id: productId
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    button.closest('.col-md-3').remove();
-                } else {
-                    alert('Error: ' + (data.message || 'Gagal menghapus gambar'));
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat menghapus gambar');
-            });
-        }
-    }
-    
-    // Initialize delete buttons
-    document.querySelectorAll('.delete-image').forEach(button => {
-        button.addEventListener('click', deleteGalleryImage);
-    });
-});
-        </script>
+    </script>
 @endsection
