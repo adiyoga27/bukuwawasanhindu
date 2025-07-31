@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kontak - Bookland</title>
+    <title>Kontak - Buku Wawasan Hindu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -381,7 +381,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <i class="fas fa-book-open me-2"></i>Bookland
+                <i class="fas fa-book-open me-2"></i>Buku Wawasan Hindu
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -412,8 +412,8 @@
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-column">
-                        <h3>Tentang Bookland</h3>
-                        <p>Bookland adalah toko buku online yang berfokus pada literatur Hindu, menyediakan buku-buku berkualitas tentang filosofi, budaya, dan spiritualitas Hindu.</p>
+                        <h3>Tentang Buku Wawasan Hindu</h3>
+                        <p>Buku Wawasan Hindu adalah toko buku online yang berfokus pada literatur Hindu, menyediakan buku-buku berkualitas tentang filosofi, budaya, dan spiritualitas Hindu.</p>
                     </div>
                 </div>
                 
@@ -459,7 +459,7 @@
             </div>
             
             <div class="copyright mt-5">
-                <p>&copy; {{ date('Y') }} Bookland. All Rights Reserved.</p>
+                <p>&copy; {{ date('Y') }} Buku Wawasan Hindu. All Rights Reserved.</p>
             </div>
         </div>
     </footer>

@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $article->title }} - Bookland</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="canonical" href="{{ url('articles/'.$article->slug) }}">
-    
-    <meta name="description" content="{{ Str::limit(strip_tags($article->content), 225, '...') }}">
+@extends('layouts.guest')
+@section('css')
+  <meta name="description" content="{{ Str::limit(strip_tags($article->content), 225, '...') }}">
     <meta name="keywords" content="{{ $article->meta_keywords }}">
-    <meta name="author" content="{{ $article->author }}">
+    <meta name="author" content="Buku Wawasan Hindu">
     <meta name="image" content="{{ url('storage/') }}/{{ $article->featured_image }}">
     <meta name="title" content="{{ $article->title }} ">
 
@@ -26,26 +17,9 @@
     <meta name="twitter:title" content="{{ $article->title }} | SantoBook">
     <meta name="twitter:description" content="{{ Str::limit(strip_tags($article->content), 225, '...') }}">
     <meta name="twitter:image" content="{{ url('storage/') }}/{{ $article->featured_image }}">
-    <style>
-        :root {
-            --primary: #4f6cec;
-            --secondary: #121f5a;
-            --dark: #292f36;
-            --light: #f7fff7;
-            --accent: #ffd166;
-        }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            color: var(--dark);
-            line-height: 1.8;
-        }
-
-        .navbar {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
+        <style>
+        
         .article-container {
             max-width: 800px;
             margin: 0 auto;
@@ -263,36 +237,9 @@
         }
 
     </style>
-</head>
-
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-book-open me-2"></i>Bookland
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('book') }}">Buku Hindu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('article') }}">Artikel</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('contact') }}">Kontak</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+@endsection
+@section('content')
+    
     <!-- Hero Section -->
     <section class="articles-hero d-flex align-items-center justify-content-center text-white">
         <div class="container text-center">
@@ -392,50 +339,4 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4 mb-md-0">
-                    <h3 class="h5 mb-3">Bookland</h3>
-                    <p>Menjadi sumber pengetahuan Hindu terpercaya sejak 2023.</p>
-                </div>
-                <div class="col-md-2 mb-4 mb-md-0">
-                    <h3 class="h5 mb-3">Menu</h3>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="/" class="text-white text-decoration-none">Home</a></li>
-                        <li class="mb-2"><a href="{{ url('book') }}" class="text-white text-decoration-none">Buku</a></li>
-                        <li class="mb-2"><a href="{{ url('article') }}" class="text-white text-decoration-none">Artikel</a></li>
-                        <li><a href="{{ url('contact') }}" class="text-white text-decoration-none">Kontak</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 mb-4 mb-md-0">
-                    <h3 class="h5 mb-3">Kontak</h3>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-phone-alt me-2"></i> +62 877-6222-5026</li>
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@bookland.com</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i> Denpasar, Bali</li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h3 class="h5 mb-3">Media Sosial</h3>
-                    <div class="d-flex gap-3">
-                        <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-tiktok"></i></a>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-4 bg-light">
-            <div class="text-center">
-                <p class="mb-0 small">&copy; 2023 Bookland. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+@endsection

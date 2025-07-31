@@ -7,7 +7,7 @@
     <link rel="canonical" href="{{ url('product/'.$book->slug) }}">
     <meta name="description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">
     <meta name="keywords" content="Ebook, SantoBook, Kandapat">
-    <meta name="author" content="{{ $book->author }}">
+    <meta name="author" content="Buku Wawasan Hindu">
     <meta name="title" content="{{ $book->title }} ">
     <meta name="image" content="{{ url('storage/') }}/{{ $book->thumbnail }}">
 
