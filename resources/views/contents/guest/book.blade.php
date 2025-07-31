@@ -1,5 +1,7 @@
 @extends('layouts.guest')
 @section('css')
+    <title>Buku - Buku Wawasan Hindu</title>
+
     <style>
         :root {
             --primary: #4f6cec;

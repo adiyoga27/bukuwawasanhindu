@@ -1,5 +1,6 @@
 @extends('layouts/guest')
 @section('css')
+    <title>Home - Buku Wawasan Hindu</title>
      
    
 @endsection

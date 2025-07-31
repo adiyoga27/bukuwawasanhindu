@@ -1,8 +1,9 @@
 @extends('layouts.guest')
 @section('css')
+
      <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $book->title }} | SantoBook</title>
+    <title>{{ $book->title }} | Buku Wawasan Hindu</title>
     {{-- Buatkan meta data untuk SEO, title, description, keywords, author, publisher, dan lain-lain . deskripsi ambil 100 kata saja dan isi titik titik ... --}} 
     <link rel="canonical" href="{{ url('product/'.$book->slug) }}">
     <meta name="description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">

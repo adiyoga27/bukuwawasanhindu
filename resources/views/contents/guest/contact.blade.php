@@ -1,6 +1,8 @@
 
 @extends('layouts/guest')
 @section('css')
+    <title>Kontak - Buku Wawasan Hindu</title>
+
       <style>
         :root {
             --primary: #4f6cec;

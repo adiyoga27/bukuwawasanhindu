@@ -1,6 +1,8 @@
 
 @extends('layouts.guest')
 @section('css')
+    <title>{{ $article->title }} - Buku Wawasan Hindu</title>
+
   <meta name="description" content="{{ Str::limit(strip_tags($article->content), 225, '...') }}">
     <meta name="keywords" content="{{ $article->meta_keywords }}">
     <meta name="author" content="Buku Wawasan Hindu">
