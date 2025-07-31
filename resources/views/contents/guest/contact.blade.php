@@ -194,16 +194,16 @@
         <div class="container text-center">
             <h2 class="mb-5">Ikuti Kami di Media Sosial</h2>
             <div class="d-flex justify-content-center flex-wrap">
-                <a href="#" class="social-icon facebook">
+                <a href="{{ $configs->facebook }}" class="social-icon facebook">
                     <i class="fab fa-facebook-f"></i>
                 </a>
-                <a href="#" class="social-icon instagram">
+                <a href="{{ $configs->instagram }}" class="social-icon instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="#" class="social-icon youtube">
+                <a href="{{ $configs->youtube }}" class="social-icon youtube">
                     <i class="fab fa-youtube"></i>
                 </a>
-                <a href="#" class="social-icon tiktok">
+                <a href="{{ $configs->tiktok }}" class="social-icon tiktok">
                     <i class="fab fa-tiktok"></i>
                 </a>
             </div>
