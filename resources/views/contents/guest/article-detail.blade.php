@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $article->title }} - Bookland</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #4f6cec;
+            --secondary: #121f5a;
+            --dark: #292f36;
+            --light: #f7fff7;
+            --accent: #ffd166;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            line-height: 1.8;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-header {
+            margin: 3rem 0;
+        }
+
+        .article-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            color: #666;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .article-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: #f8f9fa;
+            font-style: italic;
+        }
+
+        .author-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .author-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+        }
+
+        .author-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-title {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .share-section {
+            margin: 3rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .share-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .share-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .share-button.facebook {
+            background: #3b5998;
+            color: white;
+        }
+
+        .share-button.twitter {
+            background: #1da1f2;
+            color: white;
+        }
+
+        .share-button.whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .related-articles {
+            margin: 4rem 0;
+        }
+
+        .related-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .related-card {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .related-image {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .related-body {
+            padding: 1.5rem;
+        }
+
+        .related-category {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .related-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .related-date {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 1.8rem;
+            }
+            
+            .author-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+            }
+        }
+             .articles-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-book-open me-2"></i>Bookland
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('book') }}">Buku Hindu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url('article') }}">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('contact') }}">Kontak</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <section class="articles-hero d-flex align-items-center justify-content-center text-white">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-3">Artikel Hindu</h1>
+            <p class="lead">Temukan kebijaksanaan kuno dalam koleksi artikel kami</p>
+        </div>
+    </section>
+    <!-- Article Content -->
+    <main class="container py-5">
+        <article class="article-container">
+            <header class="article-header">
+                <h1 class="article-title">{{ $article->title }}</h1>
+                <div class="article-meta">
+                    <div class="article-meta-item">
+                        <i class="far fa-user"></i>
+                        <span>{{ $article->author }}</span>
+                    </div>
+                    <div class="article-meta-item">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>{{ $article->created_at->format('d M Y') }}</span>
+                    </div>
+                    <div class="article-meta-item">
+                        <i class="far fa-clock"></i>
+                        <span>{{ $article->reading_time }} min read</span>
+                    </div>
+                </div>
+                <img src="{{ url('storage') }}/{{ $article->featured_image }}" alt="{{ $article->title }}" class="article-image">
+            </header>
+
+            <div class="article-content">
+                {!! $article->content !!}
+            </div>
+
+            <!-- Tags -->
+            <div class="tags mt-5">
+                <div class="d-flex flex-wrap gap-2">
+                    @foreach(explode(',', $article->tags) as $tag)
+                    <span class="badge bg-light text-dark">{{ trim($tag) }}</span>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Share Section -->
+            <div class="share-section">
+                <h3 class="share-title">Bagikan Artikel Ini</h3>
+                <div class="share-buttons">
+                    <a href="#" class="share-button facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Facebook
+                    </a>
+                    <a href="#" class="share-button twitter">
+                        <i class="fab fa-twitter"></i>
+                        Twitter
+                    </a>
+                    <a href="#" class="share-button whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Author Bio -->
+            <div class="author-card">
+                <div class="author-header">
+                    <img src="https://ui-avatars.com/api/?name={{ urlencode($article->author) }}&background=4f6cec&color=fff" alt="{{ $article->author }}" class="author-avatar">
+                    <div>
+                        <h3 class="author-name">{{ $article->author }}</h3>
+                        <p class="author-title">{{ $article->author_title }}</p>
+                    </div>
+                </div>
+                <p>{{ $article->author_bio }}</p>
+            </div>
+        </article>
+
+        <!-- Related Articles -->
+        <section class="related-articles">
+            <h2 class="related-title">Artikel Terkait</h2>
+            <div class="row">
+                @foreach($relatedArticles as $related)
+                <div class="col-md-4">
+                    <a href="{{ url('article/'.$related->slug) }}" class="text-decoration-none text-dark">
+                        <div class="related-card">
+                            <img src="{{ url('storage') }}/{{ $related->featured_image }}" class="related-image" alt="{{ $related->title }}">
+                            <div class="related-body">
+                                <span class="related-category">{{ $related->category }}</span>
+                                <h4 class="related-title">{{ $related->title }}</h4>
+                                <div class="related-date">
+                                    <i class="far fa-calendar-alt me-1"></i>
+                                    {{ $related->created_at->format('d M Y') }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h3 class="h5 mb-3">Bookland</h3>
+                    <p>Menjadi sumber pengetahuan Hindu terpercaya sejak 2023.</p>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h3 class="h5 mb-3">Menu</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="{{ url('book') }}" class="text-white text-decoration-none">Buku</a></li>
+                        <li class="mb-2"><a href="{{ url('article') }}" class="text-white text-decoration-none">Artikel</a></li>
+                        <li><a href="{{ url('contact') }}" class="text-white text-decoration-none">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h3 class="h5 mb-3">Kontak</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-phone-alt me-2"></i> +62 877-6222-5026</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@bookland.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Denpasar, Bali</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h3 class="h5 mb-3">Media Sosial</h3>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p class="mb-0 small">&copy; 2023 Bookland. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

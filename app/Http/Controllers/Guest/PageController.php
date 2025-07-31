@@ -23,5 +23,22 @@ class PageController extends Controller
         return view('contents.guest.home', compact('categories', 'books','featuredBooks','articles','configs'));
     }
 
+    public function contact(){
+        $configs = Website::first();
+         return view('contents.guest.contact', compact('configs'));
+    }
+    public function articles(){
+        $articles = Article::paginate(10);
+        $configs = Website::first();
+         return view('contents.guest.articles', compact('articles','configs'));
+    }
+
+    public function articlesDetail(Request $request, $slug){
+        $configs = Website::first();
+        $article = Article::where('slug', $slug)->first();
+        $relatedArticles = Article::paginate(10);
+        return view('contents.guest.article-detail', compact('article','relatedArticles','configs'));
+    }
+
     
 }

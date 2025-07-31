@@ -25,6 +25,11 @@ Route::post('/cart/update', [CartController::class, 'update'])->name('cart.updat
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'verify']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::get('contact',[PageController::class, 'contact']);
+Route::get('articles', [PageController::class, 'articles']);
+Route::get('articles/{slug}', [PageController::class, 'articlesDetail']);
 Route::prefix('admin')->middleware('auth')->group(function () {
    Route::get('/', [PageAdminController::class, 'index'])->name('admin.home');
    Route::resource('categories', CategoryAdminController::class);
