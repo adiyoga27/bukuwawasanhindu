@@ -337,9 +337,9 @@
                             <textarea class="form-control elm1" name="description" required>
                           </textarea>
                         </div>
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <img src="{{ url('storage/') }}/{{ $item->thumbnail }}" width="100px">
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Upload Gambar</label>
                             <input type="file" class="form-control" name="thumbnail" id="thumbnail" required>
