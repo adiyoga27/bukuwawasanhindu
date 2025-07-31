@@ -441,13 +441,13 @@
     </a>
     <ul class="dropdown-menu" aria-labelledby="marketplaceDropdown">
         <li>
-            <a class="dropdown-item d-flex align-items-center" href="https://shopee.co.id/nama-toko-kamu" target="_blank">
+            <a class="dropdown-item d-flex align-items-center" href="{{ $configs->shopee }}" target="_blank">
                  <img  src="{{ url('assets/images/shopee.svg') }}" alt="Shopee" width="20"
                                 class="marketplace-logo">&nbsp; Shopee
             </a>
         </li>
         <li>
-            <a class="dropdown-item d-flex align-items-center" href="https://tokopedia.com/nama-toko-kamu" target="_blank">
+            <a class="dropdown-item d-flex align-items-center" href="{{ $configs->tokopedia }}" target="_blank">
                 <img width="20" src="{{ url('assets/images/tokopedia.svg') }}" alt="Tokopedia"
                                 class="marketplace-logo"> &nbsp; Tokopedia
             </a>
