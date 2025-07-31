@@ -189,7 +189,7 @@
                     <div class="article-card card">
                         <div class="article-img">
                             <img src="{{ url('storage') }}/{{ $article->featured_image }}" class="card-img-top" alt="{{ $article->title }}">
-                            <span class="article-category">{{ $article->category }}</span>
+                            <span class="article-category">{{ $article->category->name }}</span>
                         </div>
                         <div class="card-body">
                             <div class="article-date mb-2">

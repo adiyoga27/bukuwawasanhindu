@@ -114,7 +114,7 @@
                                 <div class="card h-100">
                                     <div class="article-img position-relative">
                                         <img src="{{ url('storage') }}/{{ $art->featured_image }}" class="card-img-top" alt="{{ $art->title }}">
-                                        <span class="article-category">Philosophy</span>
+                                        <span class="article-category">{{ $art->category?->name }}</span>
                                     </div>
                                     <div class="card-body d-flex flex-column">
                                         <div class="d-flex align-items-center text-muted small mb-2">

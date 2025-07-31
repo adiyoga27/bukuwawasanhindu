@@ -18,7 +18,7 @@ class PageController extends Controller
             ->get();
         $featuredBooks = Product::take(3)
             ->get();
-            $articles = Article::take(6)->get();
+            $articles = Article::with('category')->take(10)->get();
             $configs = Website::first();
         return view('contents.guest.home', compact('categories', 'books','featuredBooks','articles','configs'));
     }
