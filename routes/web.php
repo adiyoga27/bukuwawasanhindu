@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryAdminController;
 use App\Http\Controllers\Admin\CategoryArticleController;
 use App\Http\Controllers\Admin\PageAdminController;
 use App\Http\Controllers\Admin\ProductAdminController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\WebsiteController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Guest\BookController;
@@ -38,6 +39,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
    Route::post('configs', [WebsiteController::class,'store']);
    Route::resource('category-article', CategoryArticleController::class);
    Route::resource('articles', ArticleController::class);
+   Route::get('report/google-analytics', [ReportController::class, 'googleAnalytics']);
+   Route::get('report/google-analytics/data', [ReportController::class, 'getAnalyticsData']);
 });
 
 

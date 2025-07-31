@@ -244,6 +244,15 @@
                                     <li><a href="{{ url('admin/articles') }}" key="t-products">Artikel</a></li>
                                 </ul>
                             </li>
+                              <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="fas fa-newspaper"></i>
+                                    <span key="t-ecommerce">Report</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{ url('admin/report/google-analytics') }}" key="t-product-detail">Google Analytics</a></li>
+                                </ul>
+                            </li>
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
