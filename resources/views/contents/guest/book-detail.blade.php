@@ -322,6 +322,84 @@
         .thumbnail-img.active {
             border-color: #0d6efd;
         }
+
+        .marketplace-links {
+    margin-top: 1.5rem;
+}
+
+.marketplace-links h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.marketplace-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.marketplace-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.marketplace-link span {
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+/* Warna khusus untuk setiap marketplace */
+.shopee-link {
+    background-color: #f5f5f5;
+    border-left: 4px solid #ee4d2d;
+}
+
+.tokopedia-link {
+    background-color: #f5f5f5;
+    border-left: 4px solid #42b549;
+}
+
+.lazada-link {
+    background-color: #f5f5f5;
+    border-left: 4px solid #0f146d;
+}
+
+/* Tombol WhatsApp */
+.btn-add-to-whatsapp {
+    background-color: #25D366;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-add-to-whatsapp:hover {
+    background-color: #128C7E;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .marketplace-link {
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .marketplace-logo {
+        width: 35px !important;
+    }
+}
     </style>
 @endsection
 @section('content')
@@ -397,42 +475,41 @@
                 {!! $book['description'] !!}
 
                 <!-- Marketplace Links Section -->
-                <div class="marketplace-links mt-4">
-                    <h3> Link Pembelian </h3>
-                    @if ($book->shopee)
-                        <a href="{{ $book->shopee }}" target="_blank" class="marketplace-link shopee-link">
-                            <img width="45px" src="{{ url('assets/images/shopee.svg') }}" alt="Shopee"
-                                class="marketplace-logo">
-                            <span> Klik Untuk Pembelian di Shopee</span>
-                        </a>
-                    @endif
-                    <div class="mt-2"></div>
+<div class="marketplace-links mt-4">
+    <h3 class="mb-3">Link Pembelian</h3>
+    
+    <div class="d-flex flex-column gap-2">
+        @if ($book->shopee)
+            <a href="{{ $book->shopee }}" target="_blank" class="marketplace-link shopee-link">
+                <img width="45" src="{{ url('assets/images/shopee.svg') }}" alt="Shopee" class="marketplace-logo">
+                <span>Beli di Shopee</span>
+            </a>
+        @endif
+        
+        @if ($book->tokopedia)
+            <a href="{{ $book->tokopedia }}" target="_blank" class="marketplace-link tokopedia-link">
+                <img width="45" src="{{ url('assets/images/tokopedia.svg') }}" alt="Tokopedia" class="marketplace-logo">
+                <span>Beli di Tokopedia</span>
+            </a>
+        @endif
+        
+        @if ($book->lazada)
+            <a href="{{ $book->lazada }}" target="_blank" class="marketplace-link lazada-link">
+                <img width="45" src="{{ url('assets/images/lazada.webp') }}" alt="Lazada" class="marketplace-logo">
+                <span>Beli di Lazada</span>
+            </a>
+        @endif
+    </div>
 
-                    @if ($book->tokopedia)
-                        <a href="{{ $book->tokopedia }}" target="_blank" class="marketplace-link tokopedia-link">
-                            <img width="50px" src="{{ url('assets/images/tokopedia.svg') }}" alt="Tokopedia"
-                                class="marketplace-logo">
-                            <span> Klik Untuk Pembelian di Tokopedia</span>
-                        </a>
-                    @endif
-                    <div class="mt-2"></div>
-
-                    @if ($book->lazada)
-                        <a href="{{ $book->lazada }}" target="_blank" class="marketplace-link lazada-link">
-                            <img width="50px" src="{{ url('assets/images/lazada.webp') }}" alt="Lazada"
-                                class="marketplace-logo">
-                            <span> Klik Untuk Pembelian di Lazada</span>
-                        </a>
-                    @endif
-
-                    <div class="d-flex mt-4">
-                        <button class="btn btn-add-to-whatsapp" id="add-to-whatsapp" data-book-id="{{ $book->id }}"
-                            data-book-title="{{ $book->title }}"
-                            data-price="{{ $book->discount > 0 ? $book->discount : $book->price }}">
-                            <i class="fab fa-whatsapp text-success me-2"></i> WhatsApp
-                        </button>
-                    </div>
-                </div>
+    <div class="mt-3">
+        <button class="btn btn-add-to-whatsapp w-100" id="add-to-whatsapp" 
+                data-book-id="{{ $book->id }}"
+                data-book-title="{{ $book->title }}"
+                data-price="{{ $book->discount > 0 ? $book->discount : $book->price }}">
+            <i class="fab fa-whatsapp me-2"></i> Hubungi via WhatsApp
+        </button>
+    </div>
+</div>
             </div>
 
             <!-- Related Books Section -->
