@@ -391,7 +391,7 @@
                     <span class="current-price">Rp
                         {{ number_format($book->discount > 0 ? $book->discount : $book->price, 0, ',', '.') }}</span>
                     <span class="original-price">Rp {{ number_format($book['price'], 0, ',', '.') }}</span>
-                    {{-- <span class="discount-badge">Save {{ (($book->price - $book->discount) / $book->price) * 100 }}%</span> --}}
+                    <span class="discount-badge">Diskon {{ number_format((($book->price - $book->discount) / $book->price) * 100, 0,',','.') }}%</span>
                 </div>
 
                 {!! $book['description'] !!}
