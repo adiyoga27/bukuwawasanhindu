@@ -232,6 +232,11 @@
                                                                     placeholder="Masukkan shopee buku pembelian ..."
                                                                     required>
                                                             </div>
+                                                    <div class="mb-3">
+                                                        <label for="lazada" class="form-label">Link Lazada</label>
+                                                        <input type="text" class="form-control" name="lazada" id="lazada" value="{{ $item->lazada }}"
+                                                            placeholder="Masukkan lazada buku pembelian ..." required>
+                                                    </div>
 
                                                             <div class="mb-3">
                                                                 <label for="categoryStatus{{ $item->id }}"
@@ -353,6 +358,11 @@
                             <label for="shopee" class="form-label">Link Shopee</label>
                             <input type="text" class="form-control" name="shopee" id="shopee"
                                 placeholder="Masukkan shopee buku pembelian ..." required>
+                        </div>
+                         <div class="mb-3">
+                            <label for="lazada" class="form-label">Link Lazada</label>
+                            <input type="text" class="form-control" name="lazada" id="lazada"
+                                placeholder="Masukkan lazada buku pembelian ..." required>
                         </div>
                         <div class="mb-3">
                             <label for="categoryStatus" class="form-label">Status</label>

@@ -415,7 +415,13 @@
                             <span> Klik Untuk Pembelian di Tokopedia</span>
                         </a>
                     @endif
-
+                    @if ($book->lazada)
+                        <a href="{{ $book->lazada }}" target="_blank" class="marketplace-link tokopedia-link">
+                            <img width="50px" src="{{ url('assets/images/lazada.webp') }}" alt="Lazada"
+                                class="marketplace-logo">
+                            <span> Klik Untuk Pembelian di Lazada</span>
+                        </a>
+                    @endif
                     <div class="d-flex mt-4">
                         <button class="btn btn-add-to-whatsapp" id="add-to-whatsapp" data-book-id="{{ $book->id }}"
                             data-book-title="{{ $book->title }}"

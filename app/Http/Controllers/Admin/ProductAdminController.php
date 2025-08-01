@@ -44,6 +44,7 @@ class ProductAdminController extends Controller
                 'is_active' => 'boolean',
                 'rating' => 'required|numeric|min:0',
                 'tokopedia' => 'string',
+                'lazada' => 'string',
                 'shopee' => 'string',
 
 
@@ -57,7 +58,7 @@ class ProductAdminController extends Controller
                 'price' => $request->price,
                 'discount' => $request->discount,
                 'rating' => $request->rating,
-
+                'lazada' => $request->lazada,
                 'tokopedia'=> $request->tokopedia,
                 'shopee'=> $request->shopee,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : null,
@@ -103,6 +104,7 @@ class ProductAdminController extends Controller
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'is_active' => 'boolean',
               'tokopedia' => 'string',
+              'lazada' => 'string',
                 'shopee' => 'string',
         ]);
 
@@ -117,6 +119,8 @@ class ProductAdminController extends Controller
                 'rating' => $request->rating,
                 'tokopedia'=> $request->tokopedia,
                 'shopee'=> $request->shopee,
+                'lazada' => $request->lazada,
+
                 'discount' => $request->discount,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : $product->thumbnail,
                 'is_active' => $request->is_active ? true : false,

@@ -19,7 +19,8 @@ class Product extends Model
         'is_active',
         'thumbnail',
         'tokopedia',
-        'shopee'
+        'shopee',
+        'lazada'
     ];
 
     /**

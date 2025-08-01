@@ -40,7 +40,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
    Route::resource('products', ProductAdminController::class);
    Route::get('configs', [WebsiteController::class,'index']);
    Route::post('configs', [WebsiteController::class,'store']);
-      Route::get('configs/how-to-purchase', [WebsiteController::class, 'howToPurchase']);
+   Route::get('configs/how-to-purchase', [WebsiteController::class, 'howToPurchase']);
    Route::post('configs/how-to-purchase', [WebsiteController::class, 'howToPurchaseStore']);
    Route::get('configs/about', [WebsiteController::class, 'about']);
    Route::post('configs/about', [WebsiteController::class, 'aboutStore']);
