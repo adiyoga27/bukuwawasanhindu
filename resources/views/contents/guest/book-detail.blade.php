@@ -384,7 +384,7 @@
                     <span class="badge bg-warning text-dark me-2">
                         <i class="fas fa-star"></i> {{ $book['rating'] }}
                     </span>
-                    <span class="text-muted">(120 reviews)</span>
+                    <span class="text-muted">(Sisa Stock : {{ $book->getCountStock() }} pcs)</span>
                 </div>
 
                 <div class="price-section">
