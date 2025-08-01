@@ -397,7 +397,7 @@
                 {!! $book['description'] !!}
 
                 <!-- Marketplace Links Section -->
-                <div class="marketplace-links">
+                <div class="marketplace-links mt-4">
                     <h3> Link Pembelian </h3>
                     @if ($book->shopee)
                         <a href="{{ $book->shopee }}" target="_blank" class="marketplace-link shopee-link">
