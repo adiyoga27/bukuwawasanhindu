@@ -232,6 +232,7 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{{ url('admin/categories') }}" key="t-product-detail">Kategori</a></li>
                                     <li><a href="{{ url('admin/products') }}" key="t-products">Buku</a></li>
+                                    <li><a href="{{ url('admin/stocks') }}" key="t-products">Stock</a></li>
                                 </ul>
                             </li>
                             <li>

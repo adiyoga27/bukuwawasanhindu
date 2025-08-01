@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PageAdminController;
 use App\Http\Controllers\Admin\ProductAdminController;
 use App\Http\Controllers\Admin\ProductGalleryController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\WebsiteController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Guest\BookController;
@@ -51,7 +52,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
    Route::get('report/google-analytics/data', [ReportController::class, 'getAnalyticsData']);
    Route::post('/products/gallery', [ProductGalleryController::class, 'store'])->name('product.gallery.store');
    Route::post('/products/gallery/delete', [ProductGalleryController::class, 'destroy'])->name('product.gallery.destroy');
-
+   Route::resource('stocks', StockController::class);
+   
 
 });
 
