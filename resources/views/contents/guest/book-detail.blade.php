@@ -400,6 +400,43 @@
         width: 35px !important;
     }
 }
+ /* Add these styles to your existing CSS */
+    .carousel-indicators-right {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 2;
+    }
+
+    /* Adjust navigation arrows */
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 40px;
+        height: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+    }
+
+    .carousel-control-prev {
+        left: 15px;
+    }
+
+    .carousel-control-next {
+        right: 15px;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
     </style>
 @endsection
 @section('content')
@@ -409,46 +446,49 @@
         <div class="row">
             <!-- Product Gallery Column - Now side by side -->
             <div class="col-lg-5">
-
-
-                <div class="container py-4">
-                    <!-- Carousel -->
-                    <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="{{ Storage::url($book->thumbnail) }}" class="d-block w-100"
-                                    alt="Thumbnail Utama">
-                            </div>
-                            @foreach ($book->galleries as $gallery)
-                                <div class="carousel-item">
-                                    <img src="{{ Storage::url($gallery->image_path) }}" class="d-block w-100"
-                                        alt="Gallery Image">
-                                </div>
-                            @endforeach
-                        </div>
-
-                        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </button>
-                    </div>
-
-                    <!-- Thumbnails -->
-                    <!-- Thumbnails -->
-                    <div class="mt-3 d-flex justify-content-center gap-2 flex-wrap">
-                        <img src="{{ Storage::url($book->thumbnail) }}" class="thumbnail-img "
-                            data-bs-target="#mainCarousel" data-bs-slide-to="0">
-
-                        @foreach ($book->galleries as $index => $gallery)
-                            <img src="{{ Storage::url($gallery->image_path) }}" class="thumbnail-img"
-                                data-bs-target="#mainCarousel" data-bs-slide-to="{{ $index + 1 }}">
-                        @endforeach
-                    </div>
+<div class="container py-4">
+    <!-- Carousel -->
+    <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{ Storage::url($book->thumbnail) }}" class="d-block w-100" alt="Thumbnail Utama">
+            </div>
+            @foreach ($book->galleries as $gallery)
+                <div class="carousel-item">
+                    <img src="{{ Storage::url($gallery->image_path) }}" class="d-block w-100" alt="Gallery Image">
                 </div>
+            @endforeach
+        </div>
+
+        <!-- Custom right-aligned indicators -->
+        {{-- <div class="carousel-indicators-right">
+            @foreach ($book->galleries as $index => $gallery)
+                <button type="button" data-bs-target="#mainCarousel" 
+                        data-bs-slide-to="{{ $index }}" 
+                        class="{{ $loop->first ? 'active' : '' }}">
+                </button>
+            @endforeach
+        </div> --}}
+
+        <!-- Navigation arrows -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="mt-3 d-flex justify-content-center gap-2 flex-wrap">
+        <img src="{{ Storage::url($book->thumbnail) }}" class="thumbnail-img" data-bs-target="#mainCarousel" data-bs-slide-to="0">
+        @foreach ($book->galleries as $index => $gallery)
+            <img src="{{ Storage::url($gallery->image_path) }}" class="thumbnail-img" data-bs-target="#mainCarousel" data-bs-slide-to="{{ $index + 1 }}">
+        @endforeach
+    </div>
+</div>
 
 
             </div>
@@ -566,6 +606,42 @@
             thumbnails.forEach(t => t.classList.remove('active'));
             thumbnails[e.to].classList.add('active');
         });
+document.addEventListener('DOMContentLoaded', function() {
+        const thumbnails = document.querySelectorAll('.thumbnail-img');
+        const indicators = document.querySelectorAll('.carousel-indicators-right button');
+        const carousel = document.querySelector('#mainCarousel');
+        
+        // Initialize first thumbnail and indicator as active
+        thumbnails[0].classList.add('active');
+        indicators[0].classList.add('active');
+        
+        thumbnails.forEach((thumb, index) => {
+            thumb.addEventListener('click', () => {
+                thumbnails.forEach(t => t.classList.remove('active'));
+                indicators.forEach(i => i.classList.remove('active'));
+                thumb.classList.add('active');
+                indicators[index].classList.add('active');
+            });
+        });
+        
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                thumbnails.forEach(t => t.classList.remove('active'));
+                indicators.forEach(i => i.classList.remove('active'));
+                thumbnails[index].classList.add('active');
+                indicator.classList.add('active');
+            });
+        });
+        
+        // Update active states when slide changes
+        const bsCarousel = new bootstrap.Carousel(carousel);
+        carousel.addEventListener('slid.bs.carousel', function(e) {
+            thumbnails.forEach(t => t.classList.remove('active'));
+            indicators.forEach(i => i.classList.remove('active'));
+            thumbnails[e.to].classList.add('active');
+            indicators[e.to].classList.add('active');
+        });
+    });
     </script>
     <script>
         $(document).ready(function() {
