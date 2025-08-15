@@ -11,10 +11,14 @@ class CategoryAdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Logic to display categories
+
+     
         $datas = Category::all();
+
+        
+        // Logic to display categories
         return view('contents.admin.categories.index', compact('datas')); // Assuming you have a view for listing categories
     }
 

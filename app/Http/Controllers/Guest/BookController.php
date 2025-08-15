@@ -10,12 +10,32 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        
+
+        if(isset($request->sort)){
+            $sort = $request->sort;
+            if($sort == 'latest'){
+                $books = Product::orderBy('id', 'DESC');
+            }else if($sort === 'price_asc'){
+                       $books = Product::orderBy('price', 'asc');
+
+
+            }else if($sort === 'price_desc'){
+                          $books = Product::orderBy('price', 'desc');
+
+
+            }else if($sort === 'rating'){
+                       $books = Product::orderBy('stars', 'desc');
+
+
+            }
+        }
+
+        $books = $books->paginate(10);
         $configs = Website::first();
         $categories  = Category::orderBy('name', 'ASC')->get();
-        $books = Product::paginate(10);
+        // $books = Product::paginate(10);
  
         return view('contents.guest.book', compact('categories', 'books', 'configs'));
     }

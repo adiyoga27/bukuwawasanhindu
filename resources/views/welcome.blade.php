@@ -253,7 +253,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Butuh Bantuan?</h5>
                         <p class="card-text">Hubungi kami untuk pertanyaan tentang produk atau pemesanan.</p>
-                        <button class="btn btn-primary btn-sm"><i class="fab fa-whatsapp me-1"></i> Chat Admin</button>
+                        <a class="btn btn-primary btn-sm" href="https://wa.me/{{ $configs->phone }}"><i class="fab fa-whatsapp me-1"></i> Chat Admin</a>
                     </div>
                 </div>
             </div>

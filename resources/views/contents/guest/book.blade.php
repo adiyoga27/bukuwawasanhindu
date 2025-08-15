@@ -279,7 +279,7 @@
         <!-- Book List -->
         <div class="col-lg-9">
             <div class="d-flex justify-content-end mb-4">
-                <form method="GET" action="{{ url('categories/'.$category->slug) }}" class="w-100">
+                <form method="GET" action="{{ url('book/') }}" class="w-100">
                     <div class="input-group">
                         <select class="form-select sort-select" name="sort" onchange="this.form.submit()">
                             <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Terbaru</option>
