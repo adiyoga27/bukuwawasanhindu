@@ -20,7 +20,8 @@ class Product extends Model
         'thumbnail',
         'tokopedia',
         'shopee',
-        'lazada'
+        'lazada',
+        'keyword'
     ];
 
     /**

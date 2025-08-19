@@ -232,6 +232,14 @@
                                                                     placeholder="Masukkan shopee buku pembelian ..."
                                                                     required>
                                                             </div>
+                                                            <div class="mb-3">
+                                                                <label for="shopee" class="form-label">Tags</label>
+                                                                <input type="text" class="form-control" name="keyword"
+                                                                    id="keyword" value="{{ $item->keyword }}"
+                                                                    placeholder="Masukkan tags keyword product ..."
+                                                                    required>
+                                                                    <p style="color:red"> Contoh: Agama, Yoga,</p>
+                                                            </div>
                                                     <div class="mb-3">
                                                         <label for="lazada" class="form-label">Link Lazada</label>
                                                         <input type="text" class="form-control" name="lazada" id="lazada" value="{{ $item->lazada }}"
@@ -363,6 +371,13 @@
                             <label for="lazada" class="form-label">Link Lazada</label>
                             <input type="text" class="form-control" name="lazada" id="lazada"
                                 placeholder="Masukkan lazada buku pembelian ..." required>
+                        </div>
+                            <div class="mb-3">
+                            <label for="lazada" class="form-label">Tags</label>
+                            <input type="text" class="form-control" name="keyword" id="keyword"
+                                placeholder="Masukkan tag keyword ..." required>
+                                                                    <p style="color:red"> Contoh: Agama, Yoga,</p>
+
                         </div>
                         <div class="mb-3">
                             <label for="categoryStatus" class="form-label">Status</label>

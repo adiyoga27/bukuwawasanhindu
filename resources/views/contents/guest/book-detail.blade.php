@@ -513,7 +513,9 @@
                 </div>
 
                 {!! $book['description'] !!}
-
+<div class="mt-4 ">
+    <p  class="fst-italic"> Tags : {{$book->keyword }}</p>
+</div>
                 <!-- Marketplace Links Section -->
 <div class="marketplace-links mt-4">
     <h3 class="mb-3">Link Pembelian</h3>

@@ -46,6 +46,7 @@ class ProductAdminController extends Controller
                 'tokopedia' => 'string',
                 'lazada' => 'string',
                 'shopee' => 'string',
+                'keyword' => 'nullable',
 
 
             ]);
@@ -61,6 +62,7 @@ class ProductAdminController extends Controller
                 'lazada' => $request->lazada,
                 'tokopedia'=> $request->tokopedia,
                 'shopee'=> $request->shopee,
+                'keyword'=> $request->keyword,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : null,
                 'is_active' => $request->is_active ? true : false,
                 'slug' => Str::slug($request->title),
@@ -106,6 +108,7 @@ class ProductAdminController extends Controller
               'tokopedia' => 'string',
               'lazada' => 'string',
                 'shopee' => 'string',
+                'keyword' => 'string|nullable',
         ]);
 
         try {
@@ -120,6 +123,7 @@ class ProductAdminController extends Controller
                 'tokopedia'=> $request->tokopedia,
                 'shopee'=> $request->shopee,
                 'lazada' => $request->lazada,
+                'keyword'=> $request->keyword,
 
                 'discount' => $request->discount,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : $product->thumbnail,
