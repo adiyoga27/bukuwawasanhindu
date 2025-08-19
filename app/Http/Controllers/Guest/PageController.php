@@ -15,7 +15,7 @@ class PageController extends Controller
     public function index()
     {
         $categories  = Category::orderBy('name', 'ASC')->get();
-        $books = Product::take(6)->orderBy('id', 'DESC')
+        $books = Product::take(8)->orderBy('id', 'DESC')
             ->get();
         $featuredBooks = Product::take(3)->orderBy('id', 'DESC')
             ->get();
