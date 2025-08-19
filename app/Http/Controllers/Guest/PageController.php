@@ -15,11 +15,11 @@ class PageController extends Controller
     public function index()
     {
         $categories  = Category::orderBy('name', 'ASC')->get();
-        $books = Product::take(6)
+        $books = Product::take(6)->orderBy('id', 'DESC')
             ->get();
-        $featuredBooks = Product::take(3)
+        $featuredBooks = Product::take(3)->orderBy('id', 'DESC')
             ->get();
-            $articles = Article::with('category')->take(10)->get();
+            $articles = Article::with('category')->take(10)->orderBy('id', 'DESC')->get();
             $configs = Website::first();
         return view('contents.guest.home', compact('categories', 'books','featuredBooks','articles','configs'));
     }
