@@ -56,7 +56,10 @@
                         <div class="col-md-3">
                             <div class="card h-100">
                                 <div class="book-img">
+                        <a href="{{ url('product') }}/{{ $b->slug }}" style="text-decoration:none">
+
                                     <img src="{{ url('storage') }}/{{ $b->thumbnail }}" class="card-img-top" alt="{{ $b->title }}">
+                        </a>
                                 </div>
                                 <div class="card-body">
                         <a href="{{ url('product') }}/{{ $b->slug }}" style="text-decoration:none">
