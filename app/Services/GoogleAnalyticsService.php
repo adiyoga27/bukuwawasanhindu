@@ -52,6 +52,8 @@ class GoogleAnalyticsService
 
     public function getReport($startDate = '30daysAgo', $endDate = 'today', $useCache = true)
     {
+        $startDate = $this->normalizeDate($startDate);
+$endDate   = $this->normalizeDate($endDate);
         $cacheKey = "ga4_report_{$startDate}_{$endDate}";
 
         if ($useCache && $this->cacheDuration > 0) {
@@ -157,6 +159,8 @@ class GoogleAnalyticsService
 
     public function getTrafficSources($startDate = '30daysAgo', $endDate = 'today', $useCache = true)
     {
+        $startDate = $this->normalizeDate($startDate);
+$endDate   = $this->normalizeDate($endDate);
         $cacheKey = "ga4_traffic_sources_{$startDate}_{$endDate}";
 
         if ($useCache && $this->cacheDuration > 0) {
@@ -219,4 +223,19 @@ class GoogleAnalyticsService
         }
         Cache::forget('ga4_cache_keys');
     }
+    private function normalizeDate($date)
+{
+    // Kalau sudah format yg valid (today, yesterday, NdaysAgo)
+    if (preg_match('/^\d+daysAgo$|^today$|^yesterday$/', $date)) {
+        return $date;
+    }
+
+    // Kalau format numeric Ymd (20250726)
+    if (preg_match('/^\d{8}$/', $date)) {
+        return substr($date, 0, 4) . '-' . substr($date, 4, 2) . '-' . substr($date, 6, 2);
+    }
+
+    // Kalau sudah format YYYY-MM-DD atau lainnya, langsung balikin
+    return $date;
+}
 }
