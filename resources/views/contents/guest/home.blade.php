@@ -183,7 +183,7 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section class="container">
+    {{-- <section class="container">
         <div class="newsletter-section position-relative overflow-hidden">
             <div class="position-relative z-index-1">
                 <h2 class="mb-4">Berlangganan Newsletter</h2>
@@ -197,5 +197,5 @@
                 </form>
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection

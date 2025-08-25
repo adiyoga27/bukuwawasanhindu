@@ -226,7 +226,7 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section class="py-5 bg-light">
+    {{-- <section class="py-5 bg-light">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
@@ -243,7 +243,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     
 
