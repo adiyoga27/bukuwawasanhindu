@@ -48,8 +48,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
    Route::resource('category-article', CategoryArticleController::class);
    Route::resource('articles', ArticleController::class);
-   Route::get('report/google-analytics', [ReportController::class, 'googleAnalytics']);
-   Route::get('report/google-analytics/data', [ReportController::class, 'getAnalyticsData']);
+ Route::get('/google-analytics', [ReportController::class, 'googleAnalytics'])->name('admin.reports.analytics');
+    Route::get('/google-analytics/data', [ReportController::class, 'getAnalyticsData'])->name('admin.reports.analytics.data');
    Route::post('/products/gallery', [ProductGalleryController::class, 'store'])->name('product.gallery.store');
    Route::post('/products/gallery/delete', [ProductGalleryController::class, 'destroy'])->name('product.gallery.destroy');
    Route::resource('stocks', StockController::class);

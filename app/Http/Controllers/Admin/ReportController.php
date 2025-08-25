@@ -12,27 +12,36 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-  
-     protected $analytics;
+    protected $analytics;
 
     public function __construct(GoogleAnalyticsService $analytics)
     {
         $this->analytics = $analytics;
     }
 
-      public function googleAnalytics(){
-          $data = $this->analytics->getReport();
-        return view('contents.admin.reports.index',[
-            'analyticsData' => $data
-        ]);
-    }
-   
-public function getAnalyticsData()
+    public function googleAnalytics()
     {
-        return response()->json($this->analytics->getReport());
+        return view('admin.reports.google-analytics');
     }
-    public function getData()
+
+    public function getAnalyticsData(Request $request)
     {
-        return response()->json($this->analytics->getReport());
+        try {
+            $startDate = $request->get('start_date', '30daysAgo');
+            $endDate = $request->get('end_date', 'today');
+            
+            $data = $this->analytics->getReport($startDate, $endDate);
+            
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch analytics data: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

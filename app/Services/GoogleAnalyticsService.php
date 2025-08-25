@@ -8,7 +8,6 @@ use Google\Analytics\Data\V1beta\Dimension;
 use Google\Analytics\Data\V1beta\Metric;
 use Google\Analytics\Data\V1beta\RunReportRequest;
 use Google\Analytics\Data\V1beta\RunReportResponse;
-
 class GoogleAnalyticsService
 {
     private $client;
@@ -17,46 +16,54 @@ class GoogleAnalyticsService
     public function __construct()
     {
         $this->propertyId = 'properties/' . env('GA4_PROPERTY_ID');
-        $credentials = storage_path('app/analytics/service-account.json');
         
+        // Pastikan file credentials ada
+        $credentialsPath = storage_path('app/analytics/service-account.json');
+        
+        if (!file_exists($credentialsPath)) {
+            throw new \Exception('Google Analytics credentials file not found');
+        }
+
         $this->client = new BetaAnalyticsDataClient([
-            'credentials' => $credentials
+            'credentials' => $credentialsPath
         ]);
     }
 
-    public function getReport()
+    public function getReport($startDate = '30daysAgo', $endDate = 'today')
     {
         try {
-            // Buat request object
-    $request = new RunReportRequest([
-        'property' => $this->propertyId,
-        'date_ranges' => [
-            new DateRange([
-                'start_date' => '30daysAgo',
-                'end_date' => 'today',
-            ]),
-        ],
-        'metrics' => [
-            new Metric(['name' => 'activeUsers']),
-            new Metric(['name' => 'screenPageViews']),
-        ],
-        'dimensions' => [
-            new Dimension(['name' => 'date']),
-        ],
-    ]);
+            // Request untuk data utama
+            $request = new RunReportRequest([
+                'property' => $this->propertyId,
+                'dateRanges' => [
+                    new DateRange([
+                        'start_date' => $startDate,
+                        'end_date' => $endDate,
+                    ]),
+                ],
+                'metrics' => [
+                    new Metric(['name' => 'activeUsers']),
+                    new Metric(['name' => 'sessions']),
+                    new Metric(['name' => 'averageSessionDuration']),
+                    new Metric(['name' => 'bounceRate']),
+                ],
+                'dimensions' => [
+                    new Dimension(['name' => 'date']),
+                ],
+                'limit' => 1000
+            ]);
 
-    // Eksekusi request
-    $response = $this->client->runReport($request);
+            $response = $this->client->runReport($request);
 
             return $this->formatResponse($response);
 
         } catch (\Exception $e) {
             logger()->error('GA4 API Error: ' . $e->getMessage());
-            return null;
+            throw new \Exception('Google Analytics API Error: ' . $e->getMessage());
         }
     }
 
-    private function formatResponse(RunReportResponse $response)
+    private function formatResponse($response)
     {
         $data = [
             'total_users' => 0,
@@ -66,25 +73,41 @@ class GoogleAnalyticsService
             'daily_data' => []
         ];
 
-        foreach ($response->getRows() as $row) {
-            $date = $row->getDimensionValues()[0]->getValue();
-            $users = $row->getMetricValues()[0]->getValue();
-            $views = $row->getMetricValues()[1]->getValue();
-            $duration = $row->getMetricValues()[2]->getValue();
-            $bounce = $row->getMetricValues()[3]->getValue();
+        if ($response->getRowCount() > 0) {
+            foreach ($response->getRows() as $row) {
+                $metrics = $row->getMetricValues();
+                
+                $date = $row->getDimensionValues()[0]->getValue();
+                $users = $metrics[0]->getValue();
+                $sessions = $metrics[1]->getValue();
+                $duration = $metrics[2]->getValue();
+                $bounceRate = $metrics[3]->getValue();
 
-            $data['daily_data'][] = [
-                'date' => $date,
-                'users' => $users,
-                'views' => $views
-            ];
+                $data['daily_data'][] = [
+                    'date' => $date,
+                    'users' => $users,
+                    'views' => $sessions
+                ];
 
-            $data['total_users'] += $users;
-            $data['total_views'] += $views;
-            $data['avg_duration'] = $duration;
-            $data['bounce_rate'] = $bounce;
+                $data['total_users'] += (int)$users;
+                $data['total_views'] += (int)$sessions;
+                $data['avg_duration'] = (float)$duration;
+                $data['bounce_rate'] = (float)$bounceRate;
+            }
+
+            // Hitung rata-rata
+            if ($data['total_views'] > 0) {
+                $data['avg_duration'] = $data['avg_duration'] / $response->getRowCount();
+            }
         }
 
         return $data;
+    }
+
+    // Method untuk data sebelumnya (comparison)
+    public function getPreviousPeriodData($startDate, $endDate)
+    {
+        // Implementasi untuk mendapatkan data periode sebelumnya
+        // ...
     }
 }

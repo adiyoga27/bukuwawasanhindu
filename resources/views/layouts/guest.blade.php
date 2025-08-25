@@ -486,7 +486,7 @@
                     <div class="footer-column">
                         <h3>Bantuan</h3>
                         <ul class="footer-links">
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="{{ url('about') }}">Tentang Kami</a></li>
                         </ul>
                     </div>
                 </div>
