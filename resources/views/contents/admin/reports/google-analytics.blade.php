@@ -230,6 +230,171 @@
 @section('scripts')
 <!-- Apex Charts -->
 <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    const $loadingIndicator = $('#loading-indicator');
+    const $errorMessage = $('#error-message');
+    const $analyticsContent = $('#analytics-content');
+    const $errorText = $('#error-text');
+
+    // Inisialisasi chart kosong
+    initEmptyCharts();
+
+    // Fetch data pertama kali saat page load
+    fetchAnalyticsData();
+
+    // Handler untuk apply date range
+    $('#apply-date-range').on('click', function () {
+        fetchAnalyticsData();
+    });
+
+    function fetchAnalyticsData() {
+        const startDate = $('#start-date').val();
+        const endDate = $('#end-date').val();
+
+        $loadingIndicator.removeClass('d-none');
+        $errorMessage.addClass('d-none');
+        $analyticsContent.addClass('d-none');
+
+        $.ajax({
+            url: `/admin/report/google-analytics/data`,
+            method: 'GET',
+            data: { start_date: startDate, end_date: endDate },
+            dataType: 'json',
+            success: function (result) {
+                if (result.success) {
+                    updateSummaryCards(result.data);
+                    initUsersSessionsChart(result.data.daily_data || []);
+                    initTrafficSourcesChart(result.data.traffic_sources || []);
+                    $analyticsContent.removeClass('d-none');
+                } else {
+                    showError(result.message || 'Failed to fetch data');
+                }
+            },
+            error: function (xhr) {
+                console.error('AJAX Error:', xhr.responseText);
+                showError('Failed to load analytics data.');
+            },
+            complete: function () {
+                $loadingIndicator.addClass('d-none');
+            }
+        });
+    }
+
+    function showError(message) {
+        $errorText.text(message);
+        $errorMessage.removeClass('d-none');
+    }
+
+    function initTrafficSourcesChart(trafficSources) {
+        const labels = trafficSources.map(item => item.source);
+        const series = trafficSources.map(item => item.sessions);
+
+        const options = {
+            series: series,
+            chart: { height: 350, type: 'donut' },
+            labels: labels,
+            colors: ['#4f6cec', '#2c3e50', '#e74c3c', '#3498db', '#2ecc71'],
+            legend: { position: 'bottom' },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: { width: 200 },
+                    legend: { position: 'bottom' }
+                }
+            }]
+        };
+
+        $("#traffic-sources-chart").empty();
+        new ApexCharts(document.querySelector("#traffic-sources-chart"), options).render();
+    }
+
+    function initEmptyCharts() {
+        const emptyOptions = {
+            series: [],
+            chart: { height: 350, type: 'line' },
+            xaxis: { categories: [] }
+        };
+        new ApexCharts(document.querySelector("#users-sessions-chart"), emptyOptions).render();
+        new ApexCharts(document.querySelector("#traffic-sources-chart"), {
+            series: [],
+            chart: { height: 350, type: 'donut' }
+        }).render();
+        new ApexCharts(document.querySelector("#devices-chart"), {
+            series: [],
+            chart: { height: 350, type: 'radialBar' }
+        }).render();
+    }
+
+    function updateSummaryCards(data) {
+        $('#total-users').text(data.total_users?.toLocaleString() || '0');
+        $('#prev-period-users').text(data.prev_users?.toLocaleString() || '0');
+
+        $('#total-sessions').text(data.total_views?.toLocaleString() || '0');
+        $('#prev-period-sessions').text(data.prev_views?.toLocaleString() || '0');
+
+        $('#avg-session-duration').text(formatDuration(data.avg_duration || 0));
+        $('#prev-period-duration').text(formatDuration(data.prev_avg_duration || 0));
+
+        $('#bounce-rate').text((data.bounce_rate || 0) + '%');
+        $('#prev-period-bounce').text((data.prev_bounce_rate || 0) + '%');
+    }
+
+    function formatDuration(seconds) {
+        if (!seconds) return '0s';
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+    }
+
+    function initUsersSessionsChart(dailyData) {
+        const dates = dailyData.map(item => {
+            const date = new Date(item.date);
+            return `${date.getDate()}/${date.getMonth() + 1}`;
+        });
+
+        const users = dailyData.map(item => parseInt(item.users || 0));
+        const sessions = dailyData.map(item => parseInt(item.views || 0));
+
+        const options = {
+            series: [
+                { name: 'Users', data: users },
+                { name: 'Sessions', data: sessions }
+            ],
+            chart: {
+                height: 350,
+                type: 'area',
+                toolbar: { show: false }
+            },
+            colors: ['#4f6cec', '#ffd166'],
+            stroke: { curve: 'smooth', width: 2 },
+            dataLabels: { enabled: false },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.45,
+                    opacityTo: 0.05,
+                    stops: [20, 100, 100, 100]
+                }
+            },
+            xaxis: { categories: dates },
+            tooltip: { shared: true }
+        };
+
+        $("#users-sessions-chart").empty();
+        new ApexCharts(document.querySelector("#users-sessions-chart"), options).render();
+    }
+});
+</script>
+@endsection
+
+{{-- 
+@section('scripts')
+<!-- Apex Charts -->
+<script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -386,5 +551,5 @@ function initTrafficSourcesChart(trafficSources) {
         new ApexCharts(chartElement, options).render();
     }
 });
-</script>
-@endsection
+</script> 
+@endsection --}}
