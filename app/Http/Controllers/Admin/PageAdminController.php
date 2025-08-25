@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\GoogleAnalyticsService;
 use Illuminate\Http\Request;
 
 class PageAdminController extends Controller
@@ -13,12 +12,11 @@ class PageAdminController extends Controller
      */
     public function index(GoogleAnalyticsService $ga)
     {
-          $propertyId = config('services.google_analytics.property_id');
+          $report = $ga->getReport('30daysAgo', 'today');
+        $trafficSources = $ga->getTrafficSources('30daysAgo', 'today');
 
-        $report = $ga->getReport('7daysAgo', 'today');
-        $trafficSources = $ga->getTrafficSources('7daysAgo', 'today');
         // Logic to display admin dashboard or page
-        return view('contents.admin.dashboard', compact('propertyId', 'report', 'trafficSources')); // Assuming you have a view for the admin dashboard
+        return view('contents.admin.dashboard', compact('report', 'trafficSources')); // Assuming you have a view for the admin dashboard
     }
 
     /**
