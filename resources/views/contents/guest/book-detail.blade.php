@@ -560,7 +560,9 @@
                 <h3 class="mb-4">Buku lainnya</h3>
                 <div class="row">
                     @foreach ($relatedBooks as $relatedBook)
+                    
                         <div class="col-md-4 mb-4">
+                              <a href="{{ url('product/' . $relatedBook['slug']) }}" style="color: inherit; text-decoration: none;">
                             <div class="card related-book-card">
                                 <img src="{{ url('storage/') }}/{{ $relatedBook['thumbnail'] }}" class="card-img-top"
                                     alt="{{ $relatedBook['title'] }}">
@@ -575,9 +577,10 @@
                                         </span>
                                     </div>
                                     <a href="{{ url('product/' . $relatedBook['slug']) }}"
-                                        class="btn btn-primary mt-3 w-100">View Details</a>
+                                        class="btn btn-primary mt-3 w-100">Lihat Detail</a>
                                 </div>
                             </div>
+                              </a>
                         </div>
                     @endforeach
                 </div>
