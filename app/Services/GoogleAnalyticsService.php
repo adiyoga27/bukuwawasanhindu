@@ -29,6 +29,7 @@ class GoogleAnalyticsService
 
     private function validateConfiguration()
     {
+
         if (empty(config('analytics.property_id'))) {
             throw new \Exception('Google Analytics Property ID is not configured. Please set GA4_PROPERTY_ID in your .env file.');
         }
@@ -89,12 +90,12 @@ class GoogleAnalyticsService
                 ->setLimit(1000);
 
             $response = $this->client->runReport($request);
+
             $formattedData = $this->formatResponse($response);
 
             if ($useCache && $this->cacheDuration > 0) {
                 Cache::put($cacheKey, $formattedData, now()->addMinutes($this->cacheDuration));
             }
-
             return $formattedData;
 
         } catch (\Exception $e) {

@@ -227,7 +227,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@section('js')
 <!-- Apex Charts -->
 <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
