@@ -46,7 +46,7 @@
                             <div class="col-md-3">
                                 <label for="start-date" class="form-label">Start Date</label>
                                 <input type="date" class="form-control" id="start-date"
-                                    value="{{ date('Y-m-d', strtotime('-30 days')) }}">
+                                    value="{{ date('Y-m-01') }}">
                             </div>
                             <div class="col-md-3">
                                 <label for="end-date" class="form-label">End Date</label>
@@ -280,10 +280,11 @@
                     dataType: 'json',
                     success: function(result) {
                         if (result.success) {
+                            console.log(result.data);
                             updateSummaryCards(result.data);
                             initUsersSessionsChart(result.data.daily_data || []);
                             initTrafficSourcesChart(result.data.traffic_sources || []);
-
+                            initDevicesChart(result.data.devices || []); // <== tambahin ini
                             renderTopPages(result.data.top_pages || []);
                             $analyticsContent.removeClass('d-none');
                         } else {
@@ -385,6 +386,33 @@
                 const secs = Math.floor(seconds % 60);
                 return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
             }
+function initDevicesChart(devices) {
+    const labels = devices.map(item => item.device);
+    const series = devices.map(item => item.sessions);
+
+    const options = {
+        series: series,
+        chart: {
+            height: 350,
+            type: 'donut'
+        },
+        labels: labels,
+        colors: ['#4f6cec', '#2ecc71', '#f39c12'],
+        legend: {
+            position: 'bottom'
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: { width: 200 },
+                legend: { position: 'bottom' }
+            }
+        }]
+    };
+
+    $("#devices-chart").empty();
+    new ApexCharts(document.querySelector("#devices-chart"), options).render();
+}
 
             function renderTopPages(topPages) {
                 const $table = $('#top-pages-table');

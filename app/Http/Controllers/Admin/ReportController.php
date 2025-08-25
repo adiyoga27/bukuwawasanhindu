@@ -50,6 +50,7 @@ class ReportController extends Controller
             $trafficSources = $this->analytics->getTrafficSources($startDate, $endDate, $useCache);
             $data['traffic_sources'] = $trafficSources;
              $data['top_pages'] = $this->analytics->getTopPages($startDate, $endDate);
+        $data['devices'] = $this->analytics->getDevices($startDate, $endDate);
             
             return response()->json([
                 'success' => true,

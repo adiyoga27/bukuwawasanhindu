@@ -49,7 +49,54 @@ class GoogleAnalyticsService
             throw new \Exception('Failed to initialize Google Analytics client: ' . $e->getMessage());
         }
     }
+public function getDevices($startDate, $endDate, $useCache = true)
+{
+        $startDate = $this->normalizeDate($startDate);
+    $endDate   = $this->normalizeDate($endDate);
+    $cacheKey = "ga4_devices_{$startDate}_{$endDate}";
+    
+    if ($useCache && Cache::has($cacheKey)) {
+        return Cache::get($cacheKey);
+    }
+    $dateRange = new DateRange([
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+            ]);
 
+     // Buat metrics
+            $metrics = [
+                new Metric(['name' => 'sessions']),
+            ];
+
+            // Buat dimensions
+            $dimensions = [
+                new Dimension(['name' => 'deviceCategory']),
+            ];
+
+
+            // Buat request dengan format yang benar
+            $request = (new RunReportRequest())
+                ->setProperty($this->propertyId)
+                ->setDateRanges([$dateRange])
+                ->setMetrics($metrics)
+                ->setDimensions($dimensions)
+                ->setLimit(1000);
+                
+            $response = $this->client->runReport($request);
+    
+
+    $devices = [];
+    foreach ($response->getRows() as $row) {
+        $devices[] = [
+            'device' => $row->getDimensionValues()[0]->getValue(),
+            'sessions' => (int) $row->getMetricValues()[0]->getValue(),
+        ];
+    }
+
+    Cache::put($cacheKey, $devices, now()->addMinutes(30));
+
+    return $devices;
+}
     public function getReport($startDate = '30daysAgo', $endDate = 'today', $useCache = true)
     {
         $startDate = $this->normalizeDate($startDate);

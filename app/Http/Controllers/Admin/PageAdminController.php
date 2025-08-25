@@ -19,7 +19,7 @@ class PageAdminController extends Controller
 
     public function index()
     {
-        return view('contents.admin.reports.google-analytics', [
+        return view('contents.admin.dashboard', [
             'propertyId' => config('analytics.property_id')
         ]);
     }
@@ -45,7 +45,8 @@ class PageAdminController extends Controller
             $trafficSources = $this->analytics->getTrafficSources($startDate, $endDate, $useCache);
             $data['traffic_sources'] = $trafficSources;
              $data['top_pages'] = $this->analytics->getTopPages($startDate, $endDate);
-            
+                // Get devices data
+        $data['devices'] = $this->analytics->getDevices($startDate, $endDate, $useCache);
             return response()->json([
                 'success' => true,
                 'data' => $data,
