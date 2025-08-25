@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="{{ url()->current() }}">
 <meta name="twitter:title" content="Buku Wawasan Hindu">
-<meta name="twitter:description" content="Temukan kebijaksanaan kuno dalam koleksi buku dan artikel kami tentang agama Hindu, filosofi, budaya, dan spiritualitas.">
+<meta name="twitter:description" content="Temukan kebijaksanaan dalam koleksi buku dan artikel kami tentang agama Hindu, filosofi, budaya, dan spiritualitas.">
 <meta name="twitter:image" content="{{ url('assets/images/logo.jpg') }}">
 
 {{-- Additional --}}
