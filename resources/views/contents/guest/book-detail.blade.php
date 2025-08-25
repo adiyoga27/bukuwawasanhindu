@@ -557,7 +557,7 @@
 
             <!-- Related Books Section -->
             <div class="related-books mt-5">
-                <h3 class="mb-4">Related Books</h3>
+                <h3 class="mb-4">Buku lainnya</h3>
                 <div class="row">
                     @foreach ($relatedBooks as $relatedBook)
                         <div class="col-md-4 mb-4">
