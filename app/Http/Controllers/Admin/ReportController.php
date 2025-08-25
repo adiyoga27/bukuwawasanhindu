@@ -27,7 +27,10 @@ class ReportController extends Controller
         ]);
     }
    
-
+public function getAnalyticsData()
+    {
+        return response()->json($this->analytics->getReport());
+    }
     public function getData()
     {
         return response()->json($this->analytics->getReport());
