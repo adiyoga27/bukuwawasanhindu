@@ -7,34 +7,59 @@ use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
 use Google\Analytics\Data\V1beta\Metric;
 use Google\Analytics\Data\V1beta\RunReportRequest;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class GoogleAnalyticsService
 {
     private $client;
     private $propertyId;
+    private $credentialsPath;
+    private $cacheDuration;
 
     public function __construct()
     {
-        $this->propertyId = 'properties/' . env('GA4_PROPERTY_ID');
+        $this->propertyId = 'properties/' . config('analytics.property_id');
+        $this->credentialsPath = config('analytics.credentials_path');
+        $this->cacheDuration = config('analytics.cache_duration', 60);
         
-        // Pastikan file credentials ada
-        $credentialsPath = storage_path('app/analytics/service-account.json');
-        
-        if (!file_exists($credentialsPath)) {
-            throw new \Exception('Google Analytics credentials file not found at: ' . $credentialsPath);
+        $this->validateConfiguration();
+        $this->initializeClient();
+    }
+
+    private function validateConfiguration()
+    {
+        if (empty(config('analytics.property_id'))) {
+            throw new \Exception('Google Analytics Property ID is not configured. Please set GA4_PROPERTY_ID in your .env file.');
         }
 
+        if (!file_exists($this->credentialsPath)) {
+            throw new \Exception('Google Analytics credentials file not found at: ' . $this->credentialsPath);
+        }
+    }
+
+    private function initializeClient()
+    {
         try {
             $this->client = new BetaAnalyticsDataClient([
-                'credentials' => $credentialsPath
+                'credentials' => $this->credentialsPath
             ]);
         } catch (\Exception $e) {
             throw new \Exception('Failed to initialize Google Analytics client: ' . $e->getMessage());
         }
     }
 
-    public function getReport($startDate = '30daysAgo', $endDate = 'today')
+    public function getReport($startDate = '30daysAgo', $endDate = 'today', $useCache = true)
     {
+        $cacheKey = "ga4_report_{$startDate}_{$endDate}";
+
+        if ($useCache && $this->cacheDuration > 0) {
+            $cachedData = Cache::get($cacheKey);
+            if ($cachedData) {
+                return $cachedData;
+            }
+        }
+
         try {
             // Buat date range object
             $dateRange = new DateRange([
@@ -64,11 +89,16 @@ class GoogleAnalyticsService
                 ->setLimit(1000);
 
             $response = $this->client->runReport($request);
+            $formattedData = $this->formatResponse($response);
 
-            return $this->formatResponse($response);
+            if ($useCache && $this->cacheDuration > 0) {
+                Cache::put($cacheKey, $formattedData, now()->addMinutes($this->cacheDuration));
+            }
+
+            return $formattedData;
 
         } catch (\Exception $e) {
-            logger()->error('GA4 API Error: ' . $e->getMessage());
+            Log::error('GA4 API Error: ' . $e->getMessage());
             throw new \Exception('Google Analytics API Error: ' . $e->getMessage());
         }
     }
@@ -97,7 +127,7 @@ class GoogleAnalyticsService
                 $duration = (float)$metrics[2]->getValue();
                 $bounceRate = (float)$metrics[3]->getValue();
 
-                // Format date untuk readable format
+                // Format date untuk readable format (YYYY-MM-DD)
                 $formattedDate = substr($date, 0, 4) . '-' . substr($date, 4, 2) . '-' . substr($date, 6, 2);
 
                 $data['daily_data'][] = [
@@ -124,9 +154,17 @@ class GoogleAnalyticsService
         return $data;
     }
 
-    // Method untuk mendapatkan data traffic sources
-    public function getTrafficSources($startDate = '30daysAgo', $endDate = 'today')
+    public function getTrafficSources($startDate = '30daysAgo', $endDate = 'today', $useCache = true)
     {
+        $cacheKey = "ga4_traffic_sources_{$startDate}_{$endDate}";
+
+        if ($useCache && $this->cacheDuration > 0) {
+            $cachedData = Cache::get($cacheKey);
+            if ($cachedData) {
+                return $cachedData;
+            }
+        }
+
         try {
             $dateRange = new DateRange([
                 'start_date' => $startDate,
@@ -149,6 +187,8 @@ class GoogleAnalyticsService
                 
                 if ($source === '(direct)') {
                     $source = 'Direct';
+                } elseif ($source === '(none)') {
+                    $source = 'Unknown';
                 }
                 
                 $trafficSources[] = [
@@ -156,12 +196,26 @@ class GoogleAnalyticsService
                     'sessions' => $sessions
                 ];
             }
+
+            if ($useCache && $this->cacheDuration > 0) {
+                Cache::put($cacheKey, $trafficSources, now()->addMinutes($this->cacheDuration));
+            }
             
             return $trafficSources;
 
         } catch (\Exception $e) {
-            logger()->error('GA4 Traffic Sources Error: ' . $e->getMessage());
+            Log::error('GA4 Traffic Sources Error: ' . $e->getMessage());
             return [];
         }
+    }
+
+    public function clearCache()
+    {
+        // Clear all GA4 cache
+        $keys = Cache::get('ga4_cache_keys', []);
+        foreach ($keys as $key) {
+            Cache::forget($key);
+        }
+        Cache::forget('ga4_cache_keys');
     }
 }

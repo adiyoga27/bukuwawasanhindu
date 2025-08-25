@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
-    protected $analytics;
+
+       protected $analytics;
 
     public function __construct(GoogleAnalyticsService $analytics)
     {
@@ -23,14 +24,17 @@ class ReportController extends Controller
 
     public function googleAnalytics()
     {
-        return view('contents.admin.reports.google-analytics');
+        return view('contents.admin.reports.google-analytics', [
+            'propertyId' => config('analytics.property_id')
+        ]);
     }
 
-   public function getAnalyticsData(Request $request)
+    public function getAnalyticsData(Request $request)
     {
         try {
             $startDate = $request->get('start_date', '30daysAgo');
             $endDate = $request->get('end_date', 'today');
+            $useCache = $request->get('cache', true);
             
             // Convert human-readable dates to GA4 format if needed
             if ($startDate !== '30daysAgo' && $startDate !== '7daysAgo') {
@@ -40,15 +44,19 @@ class ReportController extends Controller
                 $endDate = $this->convertToGa4Date($endDate);
             }
             
-            $data = $this->analytics->getReport($startDate, $endDate);
+            $data = $this->analytics->getReport($startDate, $endDate, $useCache);
             
             // Get traffic sources data
-            $trafficSources = $this->analytics->getTrafficSources($startDate, $endDate);
+            $trafficSources = $this->analytics->getTrafficSources($startDate, $endDate, $useCache);
             $data['traffic_sources'] = $trafficSources;
             
             return response()->json([
                 'success' => true,
-                'data' => $data
+                'data' => $data,
+                'period' => [
+                    'start_date' => $startDate,
+                    'end_date' => $endDate
+                ]
             ]);
             
         } catch (\Exception $e) {
@@ -58,6 +66,24 @@ class ReportController extends Controller
                 'success' => false,
                 'message' => 'Failed to fetch analytics data: ' . $e->getMessage(),
                 'debug' => env('APP_DEBUG') ? $e->getTraceAsString() : null
+            ], 500);
+        }
+    }
+
+    public function clearCache()
+    {
+        try {
+            $this->analytics->clearCache();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Analytics cache cleared successfully'
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to clear cache: ' . $e->getMessage()
             ], 500);
         }
     }
@@ -76,5 +102,9 @@ class ReportController extends Controller
             return $date;
         }
     }
+
+
+
+
     
 }
