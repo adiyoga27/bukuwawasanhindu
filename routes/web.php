@@ -52,7 +52,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
    Route::post('/products/gallery/delete', [ProductGalleryController::class, 'destroy'])->name('product.gallery.destroy');
    Route::resource('stocks', StockController::class);
    
-Route::prefix('admin/report')->group(function () {
+Route::prefix('report')->group(function () {
     Route::get('/google-analytics', [ReportController::class, 'googleAnalytics'])->name('admin.reports.analytics');
     Route::get('/google-analytics/data', [ReportController::class, 'getAnalyticsData'])->name('admin.reports.analytics.data');
 });
