@@ -26,6 +26,10 @@
 {{-- Additional --}}
 <link rel="canonical" href="{{ url()->current() }}">
 <meta name="theme-color" content="#8B0000">
+
+
+<link rel="icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
+<link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
    
 @endsection
 @section('content')

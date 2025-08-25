@@ -19,7 +19,8 @@
     <meta name="twitter:title" content="{{ $article->title }} | Buku Wawasan Hindu">
     <meta name="twitter:description" content="{{ Str::limit(strip_tags($article->content), 225, '...') }}">
     <meta name="twitter:image" content="{{ url('storage/') }}/{{ $article->featured_image }}">
-
+<link rel="icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
+<link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
         <style>
         
         .article-container {

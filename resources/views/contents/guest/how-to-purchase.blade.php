@@ -2,7 +2,8 @@
 @extends('layouts.guest')
 @section('css')
     <title>Cara Pembelian- Buku Wawasan Hindu</title>
-
+<link rel="icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
+<link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
   <meta name="description" content="Bagaimana cara pembelian buku wawasan hindu">
  
 
