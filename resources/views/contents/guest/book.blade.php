@@ -304,8 +304,11 @@
                 <div class="row">
                     @foreach($books as $book)
                         <div class="col-md-4 col-sm-6">
+                                    <a href="{{ url('product/'.$book->slug) }}" style="color: inherit; text-decoration: none;">
+                            
                             <div class="book-card">
                                 <div class="book-img">
+
                                     <img src="{{ url('storage') }}/{{ $book->thumbnail }}" alt="{{ $book->title }}">
                                     @if($book->discount > 0)
                                         <span class="discount-badge">-{{ round(($book->price - $book->discount)/$book->price * 100) }}%</span>
@@ -347,7 +350,10 @@
                                         Lihat Detail
                                     </a>
                                 </div>
+
                             </div>
+                                    </a>
+
                         </div>
                     @endforeach
                 </div>
