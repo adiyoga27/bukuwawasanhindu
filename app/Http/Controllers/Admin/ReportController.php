@@ -21,7 +21,7 @@ class ReportController extends Controller
 
     public function googleAnalytics()
     {
-        return view('admin.reports.google-analytics');
+        return view('contents.admin.reports.google-analytics');
     }
 
     public function getAnalyticsData(Request $request)
