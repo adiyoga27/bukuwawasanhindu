@@ -1,7 +1,31 @@
 @extends('layouts/guest')
 @section('css')
-    <title>Home - Buku Wawasan Hindu</title>
      
+<title>Buku Wawasan Hindu</title>
+<meta name="title" content="Buku Wawasan Hindu">
+<meta name="description" content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya yang menghadirkan beragam koleksi bacaan seputar ajaran, filsafat, budaya, dan spiritualitas Hindu. Temukan kebijaksanaan kuno dalam koleksi buku dan artikel kami.">
+<meta name="keywords" content="buku Hindu, literatur Hindu, filsafat Hindu, budaya Hindu, dharma, yoga, meditasi, spiritualitas Hindu, kitab suci Hindu, agama Hindu, Bali, Nusantara">
+<meta name="author" content="Buku Wawasan Hindu">
+<meta name="robots" content="index, follow">
+<meta name="language" content="id">
+
+{{-- Open Graph / Facebook --}}
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ url()->current() }}">
+<meta property="og:title" content="Buku Wawasan Hindu">
+<meta property="og:description" content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya dengan koleksi teks suci, tafsir, panduan upacara, sejarah Hindu, hingga literatur populer tentang dharma, yoga, dan meditasi.">
+<meta property="og:image" content="{{ url('assets/images/logo.jpg') }}">
+
+{{-- Twitter --}}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="{{ url()->current() }}">
+<meta name="twitter:title" content="Buku Wawasan Hindu">
+<meta name="twitter:description" content="Temukan kebijaksanaan kuno dalam koleksi buku dan artikel kami tentang agama Hindu, filosofi, budaya, dan spiritualitas.">
+<meta name="twitter:image" content="{{ url('assets/images/logo.jpg') }}">
+
+{{-- Additional --}}
+<link rel="canonical" href="{{ url()->current() }}">
+<meta name="theme-color" content="#8B0000">
    
 @endsection
 @section('content')
