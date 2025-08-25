@@ -250,31 +250,60 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     async function fetchAnalyticsData() {
-        const startDate = document.getElementById('start-date').value;
-        const endDate = document.getElementById('end-date').value;
-        
-        loadingIndicator.classList.remove('d-none');
-        errorMessage.classList.add('d-none');
-        analyticsContent.classList.add('d-none');
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    
+    loadingIndicator.classList.remove('d-none');
+    errorMessage.classList.add('d-none');
+    analyticsContent.classList.add('d-none');
 
-        try {
-            const response = await fetch(`/admin/report/google-analytics/data?start_date=${startDate}&end_date=${endDate}`);
-            const data = await response.json();
+    try {
+        const response = await fetch(`/admin/report/google-analytics/data?start_date=${startDate}&end_date=${endDate}`);
+        const result = await response.json();
 
-            if (data.success) {
-                updateSummaryCards(data.data);
-                initUsersSessionsChart(data.data.daily_data || []);
-                analyticsContent.classList.remove('d-none');
-            } else {
-                throw new Error(data.message || 'Failed to fetch data');
-            }
-        } catch (error) {
-            errorText.textContent = error.message;
-            errorMessage.classList.remove('d-none');
-        } finally {
-            loadingIndicator.classList.add('d-none');
+        if (result.success) {
+            updateSummaryCards(result.data);
+            initUsersSessionsChart(result.data.daily_data || []);
+            initTrafficSourcesChart(result.data.traffic_sources || []);
+            analyticsContent.classList.remove('d-none');
+        } else {
+            throw new Error(result.message || 'Failed to fetch data');
         }
+    } catch (error) {
+        console.error('Fetch error:', error);
+        errorText.textContent = error.message;
+        errorMessage.classList.remove('d-none');
+    } finally {
+        loadingIndicator.classList.add('d-none');
     }
+}
+
+function initTrafficSourcesChart(trafficSources) {
+    const labels = trafficSources.map(item => item.source);
+    const series = trafficSources.map(item => item.sessions);
+
+    const options = {
+        series: series,
+        chart: { 
+            height: 350, 
+            type: 'donut' 
+        },
+        labels: labels,
+        colors: ['#4f6cec', '#2c3e50', '#e74c3c', '#3498db', '#2ecc71'],
+        legend: { position: 'bottom' },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: { width: 200 },
+                legend: { position: 'bottom' }
+            }
+        }]
+    };
+
+    const chartElement = document.querySelector("#traffic-sources-chart");
+    chartElement.innerHTML = '';
+    new ApexCharts(chartElement, options).render();
+}
 
     function initEmptyCharts() {
         // Initialize empty charts
