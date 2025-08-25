@@ -159,7 +159,7 @@
     <section class="articles-hero d-flex align-items-center justify-content-center text-white">
         <div class="container text-center">
             <h1 class="display-4 fw-bold mb-3">Artikel Hindu</h1>
-            <p class="lead">Temukan kebijaksanaan kuno dalam koleksi artikel kami</p>
+            <p class="lead">Temukan kebijaksanaan dalam koleksi artikel kami</p>
         </div>
     </section>
 

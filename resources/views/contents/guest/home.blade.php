@@ -3,7 +3,7 @@
      
 <title>Buku Wawasan Hindu | Sebuah Buku Sejuta Pencerahan Hindu</title>
 <meta name="title" content="Buku Wawasan Hindu | Sebuah Buku Sejuta Pencerahan Hindu">
-<meta name="description" content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya yang menghadirkan beragam koleksi bacaan seputar ajaran, filsafat, budaya, dan spiritualitas Hindu. Temukan kebijaksanaan kuno dalam koleksi buku dan artikel kami.">
+<meta name="description" content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya yang menghadirkan beragam koleksi bacaan seputar ajaran, filsafat, budaya, dan spiritualitas Hindu. Temukan kebijaksanaan dalam koleksi buku dan artikel kami.">
 <meta name="keywords" content="buku Hindu, literatur Hindu, filsafat Hindu, budaya Hindu, dharma, yoga, meditasi, spiritualitas Hindu, kitab suci Hindu, agama Hindu, Bali, Nusantara">
 <meta name="author" content="Buku Wawasan Hindu">
 <meta name="robots" content="index, follow">
@@ -40,7 +40,7 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="display-4 fw-bold mb-4">Jelajahi Wawasan Hindu</h1>
-                <p class="lead mb-4">Temukan kebijaksanaan kuno dalam koleksi buku dan artikel kami yang lengkap tentang agama Hindu, filosofi, dan budaya.</p>
+                <p class="lead mb-4">Temukan kebijaksanaan dalam koleksi buku dan artikel kami yang lengkap tentang agama Hindu, filosofi, dan budaya.</p>
                 <a href="#" class="btn btn-accent">Jelajahi Sekarang</a>
             </div>
         </div>
