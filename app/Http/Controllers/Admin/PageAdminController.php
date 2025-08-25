@@ -18,7 +18,7 @@ class PageAdminController extends Controller
         $report = $ga->getReport('7daysAgo', 'today');
         $trafficSources = $ga->getTrafficSources('7daysAgo', 'today');
         // Logic to display admin dashboard or page
-        return view('contents.admin.dashboard'); // Assuming you have a view for the admin dashboard
+        return view('contents.admin.dashboard', compact('propertyId', 'report', 'trafficSources')); // Assuming you have a view for the admin dashboard
     }
 
     /**
