@@ -282,8 +282,8 @@ $endDate   = $this->normalizeDate($endDate);
         Cache::forget('ga4_cache_keys');
     }
     private function normalizeDate($date)
-{
-    // Kalau sudah format yg valid (today, yesterday, NdaysAgo)
+    {
+        // Kalau sudah format yg valid (today, yesterday, NdaysAgo)
     if (preg_match('/^\d+daysAgo$|^today$|^yesterday$/', $date)) {
         return $date;
     }
@@ -293,7 +293,7 @@ $endDate   = $this->normalizeDate($endDate);
         return substr($date, 0, 4) . '-' . substr($date, 4, 2) . '-' . substr($date, 6, 2);
     }
 
-    // Kalau sudah format YYYY-MM-DD atau lainnya, langsung balikin
-    return $date;
-}
+     // Kalau sudah format YYYY-MM-DD atau lainnya, langsung balikin
+        return $date;
+    }
 }

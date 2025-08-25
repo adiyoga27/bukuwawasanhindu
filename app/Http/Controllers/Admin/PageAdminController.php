@@ -4,67 +4,69 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\GoogleAnalyticsService;
-use Illuminate\Http\Request;
+use Google\Analytics\Data\V1beta\Client\BetaAnalyticsDataClient;
+use Google\Analytics\Data\V1beta\DateRange;
+use Google\Analytics\Data\V1beta\Dimension;
+use Google\Analytics\Data\V1beta\Metric;
+use Google\Analytics\Data\V1beta\RunReportRequest;
+
 
 class PageAdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.a
-     */
+    private $client;
+    private $propertyId;
+    private $credentialsPath;
+    private $cacheDuration;
+
+    public function __construct()
+    {
+        $this->propertyId = config('analytics.property_id'); // cukup angka ID
+        $this->credentialsPath = config('analytics.credentials_path');
+        $this->cacheDuration = config('analytics.cache_duration', 60);
+
+        $this->client = new BetaAnalyticsDataClient([
+            'credentials' => $this->credentialsPath,
+        ]);
+    }
+
     public function index(GoogleAnalyticsService $ga)
     {
-          $report = $ga->getReport('30daysAgo', 'today');
-        $trafficSources = $ga->getTrafficSources('30daysAgo', 'today');
+      
+       // Awal & akhir bulan
+    $startDate = now()->startOfMonth()->format('Y-m-d');
+    $endDate   = now()->endOfMonth()->format('Y-m-d');
 
-        // Logic to display admin dashboard or page
-        return view('contents.admin.dashboard', compact('report', 'trafficSources')); // Assuming you have a view for the admin dashboard
+    // Ambil data dari service
+    $report = $ga->getReport($startDate, $endDate);
+    $trafficSources = $ga->getTrafficSources($startDate, $endDate);
+    $topPages = $ga->getTopPages($startDate, $endDate);
+
+    // Olah data supaya gampang dipakai di Blade
+    $totalUsers = $report['total_users'] ?? 0;
+    $totalSessions = $report['total_sessions'] ?? 0;
+    $dailyDates = collect($report['daily_data'])->pluck('date')->toArray();
+    $dailyUsers = collect($report['daily_data'])->pluck('users')->toArray();
+
+    return view('contents.admin.dashboard', compact(
+        'totalUsers',
+        'totalSessions',
+        'dailyDates',
+        'dailyUsers',
+        'trafficSources',
+        'topPages'
+    ));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // Logic to show form for creating a new resource
-    }
+    
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    private function normalizeDate($date)
     {
-        // Logic to store a new resource
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        // Logic to display a specific resource
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        // Logic to show form for editing a specific resource
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        // Logic to update a specific resource
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        // Logic to delete a specific resource
+        if (preg_match('/^\d+daysAgo$|^today$|^yesterday$/', $date)) {
+            return $date;
+        }
+        if (preg_match('/^\d{8}$/', $date)) {
+            return substr($date, 0, 4) . '-' . substr($date, 4, 2) . '-' . substr($date, 6, 2);
+        }
+        return $date;
     }
 }
