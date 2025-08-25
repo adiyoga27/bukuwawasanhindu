@@ -1,8 +1,8 @@
 @extends('layouts/guest')
 @section('css')
      
-<title>Buku Wawasan Hindu</title>
-<meta name="title" content="Buku Wawasan Hindu">
+<title>Buku Wawasan Hindu | Sebuah Buku Sejuta Pencerahan Hindu</title>
+<meta name="title" content="Buku Wawasan Hindu | Sebuah Buku Sejuta Pencerahan Hindu">
 <meta name="description" content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya yang menghadirkan beragam koleksi bacaan seputar ajaran, filsafat, budaya, dan spiritualitas Hindu. Temukan kebijaksanaan kuno dalam koleksi buku dan artikel kami.">
 <meta name="keywords" content="buku Hindu, literatur Hindu, filsafat Hindu, budaya Hindu, dharma, yoga, meditasi, spiritualitas Hindu, kitab suci Hindu, agama Hindu, Bali, Nusantara">
 <meta name="author" content="Buku Wawasan Hindu">

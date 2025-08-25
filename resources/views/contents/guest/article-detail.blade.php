@@ -9,14 +9,14 @@
     <meta name="image" content="{{ url('storage/') }}/{{ $article->featured_image }}">
     <meta name="title" content="{{ $article->title }} ">
 
-    <meta property="og:title" content="{{ $article->title }} | SantoBook">
+    <meta property="og:title" content="{{ $article->title }} | Buku Wawasan Hindu">
     <meta property="og:description" content="{{ Str::limit(strip_tags($article->content), 225, '...') }}">
     <meta property="og:image" content="{{ url('storage/') }}/{{ $article->featured_image }}">
     <meta property="og:url" content="{{ url('articles/'.$article->slug) }}">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $article->title }} | SantoBook">
+    <meta name="twitter:title" content="{{ $article->title }} | Buku Wawasan Hindu">
     <meta name="twitter:description" content="{{ Str::limit(strip_tags($article->content), 225, '...') }}">
     <meta name="twitter:image" content="{{ url('storage/') }}/{{ $article->featured_image }}">
 

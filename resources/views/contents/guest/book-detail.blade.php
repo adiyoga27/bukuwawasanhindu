@@ -6,19 +6,19 @@
     {{-- Buatkan meta data untuk SEO, title, description, keywords, author, publisher, dan lain-lain . deskripsi ambil 100 kata saja dan isi titik titik ... --}}
     <link rel="canonical" href="{{ url('product/' . $book->slug) }}">
     <meta name="description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">
-    <meta name="keywords" content="Ebook, SantoBook, Kandapat">
+    <meta name="keywords" content="Ebook, Buku Wawasan Hindu, Kandapat">
     <meta name="author" content="Buku Wawasan Hindu">
     <meta name="title" content="{{ $book->title }} ">
     <meta name="image" content="{{ url('storage/') }}/{{ $book->thumbnail }}">
 
-    <meta property="og:title" content="{{ $book->title }} | SantoBook">
+    <meta property="og:title" content="{{ $book->title }} | Buku Wawasan Hindu">
     <meta property="og:description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">
     <meta property="og:image" content="{{ url('storage/') }}/{{ $book->thumbnail }}">
     <meta property="og:url" content="{{ url('product/' . $book->slug) }}">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $book->title }} | SantoBook">
+    <meta name="twitter:title" content="{{ $book->title }} | Buku Wawasan Hindu">
     <meta name="twitter:description" content="{{ Str::limit(strip_tags($book->description), 225, '...') }}">
     <meta name="twitter:image" content="{{ url('path/to/book-image.jpg') }}">
 
