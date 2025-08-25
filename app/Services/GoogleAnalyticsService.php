@@ -156,6 +156,64 @@ $endDate   = $this->normalizeDate($endDate);
 
         return $data;
     }
+public function getTopPages($startDate = '30daysAgo', $endDate = 'today', $useCache = true)
+{
+    $startDate = $this->normalizeDate($startDate);
+    $endDate   = $this->normalizeDate($endDate);
+
+    $cacheKey = "ga4_top_pages_{$startDate}_{$endDate}";
+
+    if ($useCache && $this->cacheDuration > 0) {
+        $cachedData = Cache::get($cacheKey);
+        if ($cachedData) {
+            return $cachedData;
+        }
+    }
+
+    try {
+        $dateRange = new DateRange([
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+        ]);
+
+        $request = (new RunReportRequest())
+            ->setProperty($this->propertyId)
+            ->setDateRanges([$dateRange])
+            ->setMetrics([
+                new Metric(['name' => 'screenPageViews'])
+            ])
+            ->setDimensions([
+                new Dimension(['name' => 'pagePath']),
+                new Dimension(['name' => 'pageTitle'])
+            ])
+            ->setLimit(10);
+
+        $response = $this->client->runReport($request);
+
+        $pages = [];
+        foreach ($response->getRows() as $row) {
+            $pagePath = $row->getDimensionValues()[0]->getValue();
+            $pageTitle = $row->getDimensionValues()[1]->getValue();
+            $views = (int)$row->getMetricValues()[0]->getValue();
+
+            $pages[] = [
+                'path' => $pagePath,
+                'title' => $pageTitle,
+                'views' => $views,
+            ];
+        }
+
+        if ($useCache && $this->cacheDuration > 0) {
+            Cache::put($cacheKey, $pages, now()->addMinutes($this->cacheDuration));
+        }
+
+        return $pages;
+
+    } catch (\Exception $e) {
+        Log::error('GA4 Top Pages Error: ' . $e->getMessage());
+        return [];
+    }
+}
 
     public function getTrafficSources($startDate = '30daysAgo', $endDate = 'today', $useCache = true)
     {

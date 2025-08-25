@@ -268,6 +268,8 @@ $(document).ready(function () {
                     updateSummaryCards(result.data);
                     initUsersSessionsChart(result.data.daily_data || []);
                     initTrafficSourcesChart(result.data.traffic_sources || []);
+                    
+renderTopPages(result.data.top_pages || []);
                     $analyticsContent.removeClass('d-none');
                 } else {
                     showError(result.message || 'Failed to fetch data');
@@ -348,6 +350,28 @@ $(document).ready(function () {
         const secs = Math.floor(seconds % 60);
         return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
     }
+function renderTopPages(topPages) {
+    const $table = $('#top-pages-table');
+    $table.empty();
+
+    if (topPages.length === 0) {
+        $table.append('<tr><td colspan="3" class="text-center">No data available</td></tr>');
+        return;
+    }
+
+    topPages.forEach(page => {
+        $table.append(`
+            <tr>
+                <td>
+                    <strong>${page.title || '(no title)'}</strong><br>
+                    <small class="text-muted">${page.path}</small>
+                </td>
+                <td>${page.views.toLocaleString()}</td>
+                <td>-</td>
+            </tr>
+        `);
+    });
+}
 
     function initUsersSessionsChart(dailyData) {
         const dates = dailyData.map(item => {
