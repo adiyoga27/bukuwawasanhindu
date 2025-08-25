@@ -418,7 +418,7 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a> </li>
+                <li class="nav-item"><a class="nav-link" href="/">Beranda</a> </li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Tentang Kami</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('book') }}">Buku Hindu</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url('how-to-purchase') }}">Cara Pembelian</a></li>

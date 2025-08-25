@@ -41,7 +41,7 @@
             <div class="hero-content">
                 <h1 class="display-4 fw-bold mb-4">Jelajahi Wawasan Hindu</h1>
                 <p class="lead mb-4">Temukan kebijaksanaan dalam koleksi buku dan artikel kami yang lengkap tentang agama Hindu, filosofi, dan budaya.</p>
-                <a href="#" class="btn btn-accent">Jelajahi Sekarang</a>
+                <a href="{{ url('book') }}" class="btn btn-accent">Jelajahi Sekarang</a>
             </div>
         </div>
     </section>
