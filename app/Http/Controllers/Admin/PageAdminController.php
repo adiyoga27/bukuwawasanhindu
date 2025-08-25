@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\GoogleAnalyticsService;
 use Illuminate\Http\Request;
 
 class PageAdminController extends Controller
