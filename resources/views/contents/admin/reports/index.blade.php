@@ -4,12 +4,11 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Google Analytics Report</h4>
+                <h4 class="mb-sm-0 font-size-18">Dashboard</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Report</a></li>
-                        <li class="breadcrumb-item active">Google Analytics</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
                     </ol>
                 </div>
             </div>
@@ -21,9 +20,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Google Analytics Dashboard</h4>
+                    <h4 class="card-title">Dashboard</h4>
                     <p class="card-title-desc">
-                        Analytics for Property ID: {{ env('GA4_PROPERTY_ID') }}
+                        Analytics for Property ID: {{ $propertyId }}
                     </p>
 
                     <!-- Loading Indicator -->
@@ -188,7 +187,7 @@
 
                         <!-- Bottom Row -->
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="card-title mb-4">Top Pages</h4>
@@ -227,6 +226,195 @@
     </div>
 @endsection
 
+@section('js')
+<!-- Apex Charts -->
+<script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    const $loadingIndicator = $('#loading-indicator');
+    const $errorMessage = $('#error-message');
+    const $analyticsContent = $('#analytics-content');
+    const $errorText = $('#error-text');
+
+    // Inisialisasi chart kosong
+    initEmptyCharts();
+
+    // Fetch data pertama kali saat page load
+    fetchAnalyticsData();
+
+    // Handler untuk apply date range
+    $('#apply-date-range').on('click', function () {
+        fetchAnalyticsData();
+    });
+
+    function fetchAnalyticsData() {
+        const startDate = $('#start-date').val();
+        const endDate = $('#end-date').val();
+
+        $loadingIndicator.removeClass('d-none');
+        $errorMessage.addClass('d-none');
+        $analyticsContent.addClass('d-none');
+
+        $.ajax({
+            url: `/admin/report/google-analytics/data`,
+            method: 'GET',
+            data: { start_date: startDate, end_date: endDate },
+            dataType: 'json',
+            success: function (result) {
+                if (result.success) {
+                    updateSummaryCards(result.data);
+                    initUsersSessionsChart(result.data.daily_data || []);
+                    initTrafficSourcesChart(result.data.traffic_sources || []);
+                    
+renderTopPages(result.data.top_pages || []);
+                    $analyticsContent.removeClass('d-none');
+                } else {
+                    showError(result.message || 'Failed to fetch data');
+                }
+            },
+            error: function (xhr) {
+                console.error('AJAX Error:', xhr.responseText);
+                showError('Failed to load analytics data.');
+            },
+            complete: function () {
+                $loadingIndicator.addClass('d-none');
+            }
+        });
+    }
+
+    function showError(message) {
+        $errorText.text(message);
+        $errorMessage.removeClass('d-none');
+    }
+
+    function initTrafficSourcesChart(trafficSources) {
+        const labels = trafficSources.map(item => item.source);
+        const series = trafficSources.map(item => item.sessions);
+
+        const options = {
+            series: series,
+            chart: { height: 350, type: 'donut' },
+            labels: labels,
+            colors: ['#4f6cec', '#2c3e50', '#e74c3c', '#3498db', '#2ecc71'],
+            legend: { position: 'bottom' },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: { width: 200 },
+                    legend: { position: 'bottom' }
+                }
+            }]
+        };
+
+        $("#traffic-sources-chart").empty();
+        new ApexCharts(document.querySelector("#traffic-sources-chart"), options).render();
+    }
+
+    function initEmptyCharts() {
+        const emptyOptions = {
+            series: [],
+            chart: { height: 350, type: 'line' },
+            xaxis: { categories: [] }
+        };
+        new ApexCharts(document.querySelector("#users-sessions-chart"), emptyOptions).render();
+        new ApexCharts(document.querySelector("#traffic-sources-chart"), {
+            series: [],
+            chart: { height: 350, type: 'donut' }
+        }).render();
+        new ApexCharts(document.querySelector("#devices-chart"), {
+            series: [],
+            chart: { height: 350, type: 'radialBar' }
+        }).render();
+    }
+
+    function updateSummaryCards(data) {
+        $('#total-users').text(data.total_users?.toLocaleString() || '0');
+        $('#prev-period-users').text(data.prev_users?.toLocaleString() || '0');
+
+        $('#total-sessions').text(data.total_views?.toLocaleString() || '0');
+        $('#prev-period-sessions').text(data.prev_views?.toLocaleString() || '0');
+
+        $('#avg-session-duration').text(formatDuration(data.avg_duration || 0));
+        $('#prev-period-duration').text(formatDuration(data.prev_avg_duration || 0));
+
+        $('#bounce-rate').text((data.bounce_rate || 0) + '%');
+        $('#prev-period-bounce').text((data.prev_bounce_rate || 0) + '%');
+    }
+
+    function formatDuration(seconds) {
+        if (!seconds) return '0s';
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+    }
+function renderTopPages(topPages) {
+    const $table = $('#top-pages-table');
+    $table.empty();
+
+    if (topPages.length === 0) {
+        $table.append('<tr><td colspan="3" class="text-center">No data available</td></tr>');
+        return;
+    }
+
+    topPages.forEach(page => {
+        $table.append(`
+            <tr>
+                <td>
+                    <strong>${page.title || '(no title)'}</strong><br>
+                    <small class="text-muted">${page.path}</small>
+                </td>
+                <td>${page.views.toLocaleString()}</td>
+                <td>-</td>
+            </tr>
+        `);
+    });
+}
+
+    function initUsersSessionsChart(dailyData) {
+        const dates = dailyData.map(item => {
+            const date = new Date(item.date);
+            return `${date.getDate()}/${date.getMonth() + 1}`;
+        });
+
+        const users = dailyData.map(item => parseInt(item.users || 0));
+        const sessions = dailyData.map(item => parseInt(item.views || 0));
+
+        const options = {
+            series: [
+                { name: 'Users', data: users },
+                { name: 'Sessions', data: sessions }
+            ],
+            chart: {
+                height: 350,
+                type: 'area',
+                toolbar: { show: false }
+            },
+            colors: ['#4f6cec', '#ffd166'],
+            stroke: { curve: 'smooth', width: 2 },
+            dataLabels: { enabled: false },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.45,
+                    opacityTo: 0.05,
+                    stops: [20, 100, 100, 100]
+                }
+            },
+            xaxis: { categories: dates },
+            tooltip: { shared: true }
+        };
+
+        $("#users-sessions-chart").empty();
+        new ApexCharts(document.querySelector("#users-sessions-chart"), options).render();
+    }
+});
+</script>
+@endsection
+
+{{-- 
 @section('scripts')
 <!-- Apex Charts -->
 <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
@@ -250,31 +438,60 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     async function fetchAnalyticsData() {
-        const startDate = document.getElementById('start-date').value;
-        const endDate = document.getElementById('end-date').value;
-        
-        loadingIndicator.classList.remove('d-none');
-        errorMessage.classList.add('d-none');
-        analyticsContent.classList.add('d-none');
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    
+    loadingIndicator.classList.remove('d-none');
+    errorMessage.classList.add('d-none');
+    analyticsContent.classList.add('d-none');
 
-        try {
-            const response = await fetch(`/admin/report/google-analytics/data?start_date=${startDate}&end_date=${endDate}`);
-            const data = await response.json();
+    try {
+        const response = await fetch(`/admin/report/google-analytics/data?start_date=${startDate}&end_date=${endDate}`);
+        const result = await response.json();
 
-            if (data.success) {
-                updateSummaryCards(data.data);
-                initUsersSessionsChart(data.data.daily_data || []);
-                analyticsContent.classList.remove('d-none');
-            } else {
-                throw new Error(data.message || 'Failed to fetch data');
-            }
-        } catch (error) {
-            errorText.textContent = error.message;
-            errorMessage.classList.remove('d-none');
-        } finally {
-            loadingIndicator.classList.add('d-none');
+        if (result.success) {
+            updateSummaryCards(result.data);
+            initUsersSessionsChart(result.data.daily_data || []);
+            initTrafficSourcesChart(result.data.traffic_sources || []);
+            analyticsContent.classList.remove('d-none');
+        } else {
+            throw new Error(result.message || 'Failed to fetch data');
         }
+    } catch (error) {
+        console.error('Fetch error:', error);
+        errorText.textContent = error.message;
+        errorMessage.classList.remove('d-none');
+    } finally {
+        loadingIndicator.classList.add('d-none');
     }
+}
+
+function initTrafficSourcesChart(trafficSources) {
+    const labels = trafficSources.map(item => item.source);
+    const series = trafficSources.map(item => item.sessions);
+
+    const options = {
+        series: series,
+        chart: { 
+            height: 350, 
+            type: 'donut' 
+        },
+        labels: labels,
+        colors: ['#4f6cec', '#2c3e50', '#e74c3c', '#3498db', '#2ecc71'],
+        legend: { position: 'bottom' },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: { width: 200 },
+                legend: { position: 'bottom' }
+            }
+        }]
+    };
+
+    const chartElement = document.querySelector("#traffic-sources-chart");
+    chartElement.innerHTML = '';
+    new ApexCharts(chartElement, options).render();
+}
 
     function initEmptyCharts() {
         // Initialize empty charts
@@ -357,5 +574,5 @@ document.addEventListener('DOMContentLoaded', function () {
         new ApexCharts(chartElement, options).render();
     }
 });
-</script>
-@endsection
+</script> 
+@endsection --}}

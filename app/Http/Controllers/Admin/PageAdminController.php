@@ -4,69 +4,98 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\GoogleAnalyticsService;
-use Google\Analytics\Data\V1beta\Client\BetaAnalyticsDataClient;
-use Google\Analytics\Data\V1beta\DateRange;
-use Google\Analytics\Data\V1beta\Dimension;
-use Google\Analytics\Data\V1beta\Metric;
-use Google\Analytics\Data\V1beta\RunReportRequest;
-
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 
 class PageAdminController extends Controller
 {
-    private $client;
-    private $propertyId;
-    private $credentialsPath;
-    private $cacheDuration;
+     protected $analytics;
 
-    public function __construct()
+    public function __construct(GoogleAnalyticsService $analytics)
     {
-        $this->propertyId = config('analytics.property_id'); // cukup angka ID
-        $this->credentialsPath = config('analytics.credentials_path');
-        $this->cacheDuration = config('analytics.cache_duration', 60);
+        $this->analytics = $analytics;
+    }
 
-        $this->client = new BetaAnalyticsDataClient([
-            'credentials' => $this->credentialsPath,
+    public function index()
+    {
+        return view('contents.admin.reports.google-analytics', [
+            'propertyId' => config('analytics.property_id')
         ]);
     }
 
-    public function index(GoogleAnalyticsService $ga)
+    public function getAnalyticsData(Request $request)
     {
-      
-       // Awal & akhir bulan
-    $startDate = now()->startOfMonth()->format('Y-m-d');
-    $endDate   = now()->endOfMonth()->format('Y-m-d');
-
-    // Ambil data dari service
-    $report = $ga->getReport($startDate, $endDate);
-    $trafficSources = $ga->getTrafficSources($startDate, $endDate);
-    $topPages = $ga->getTopPages($startDate, $endDate);
-
-    // Olah data supaya gampang dipakai di Blade
-    $totalUsers = $report['total_users'] ?? 0;
-    $totalSessions = $report['total_sessions'] ?? 0;
-    $dailyDates = collect($report['daily_data'])->pluck('date')->toArray();
-    $dailyUsers = collect($report['daily_data'])->pluck('users')->toArray();
-
-    return view('contents.admin.dashboard', compact(
-        'totalUsers',
-        'totalSessions',
-        'dailyDates',
-        'dailyUsers',
-        'trafficSources',
-        'topPages'
-    ));
+        try {
+            $startDate = $request->get('start_date', '30daysAgo');
+            $endDate = $request->get('end_date', 'today');
+            $useCache = $request->get('cache', true);
+            
+            // Convert human-readable dates to GA4 format if needed
+            if ($startDate !== '30daysAgo' && $startDate !== '7daysAgo') {
+                $startDate = $this->convertToGa4Date($startDate);
+            }
+            if ($endDate !== 'today' && $endDate !== 'yesterday') {
+                $endDate = $this->convertToGa4Date($endDate);
+            }
+            
+            $data = $this->analytics->getReport($startDate, $endDate, $useCache);
+            
+            // Get traffic sources data
+            $trafficSources = $this->analytics->getTrafficSources($startDate, $endDate, $useCache);
+            $data['traffic_sources'] = $trafficSources;
+             $data['top_pages'] = $this->analytics->getTopPages($startDate, $endDate);
+            
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+                'period' => [
+                    'start_date' => $startDate,
+                    'end_date' => $endDate
+                ]
+            ]);
+            
+        } catch (\Exception $e) {
+            Log::error('Analytics Error: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch analytics data: ' . $e->getMessage(),
+                'debug' => env('APP_DEBUG') ? $e->getTraceAsString() : null
+            ], 500);
+        }
     }
 
-    
-
-    private function normalizeDate($date)
+    public function clearCache()
     {
-        if (preg_match('/^\d+daysAgo$|^today$|^yesterday$/', $date)) {
+        try {
+            $this->analytics->clearCache();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Analytics cache cleared successfully'
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to clear cache: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+    
+    private function convertToGa4Date($date)
+    {
+        // Jika date sudah dalam format GA4 (YYYYMMDD), return langsung
+        if (preg_match('/^\d{8}$/', $date)) {
             return $date;
         }
-        if (preg_match('/^\d{8}$/', $date)) {
-            return substr($date, 0, 4) . '-' . substr($date, 4, 2) . '-' . substr($date, 6, 2);
+        
+        // Convert dari YYYY-MM-DD ke YYYYMMDD
+        try {
+            return Carbon::parse($date)->format('Ymd');
+        } catch (\Exception $e) {
+            return $date;
         }
-        return $date;
     }
 }

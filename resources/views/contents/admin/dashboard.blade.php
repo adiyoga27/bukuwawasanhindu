@@ -1,111 +1,468 @@
 @extends('layouts.admin')
-
 @section('content')
-    <div class="container-fluid">
-        <h4 class="mb-4">Dashboard</h4>
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0 font-size-18">Dashboard</h4>
 
-
-        {{-- Statistik Utama --}}
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <div class="card text-center shadow-sm">
-                    <div class="card-body">
-                        <h6>Total Pengguna</h6>
-                        <h3>{{ number_format($totalUsers) }}</h3>
-                    </div>
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                    </ol>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card text-center shadow-sm">
-                    <div class="card-body">
-                        <h6>Total Sesi</h6>
-                        <h3>{{ number_format($totalSessions) }}</h3>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Dashboard</h4>
+                    <p class="card-title-desc">
+                        Analytics for Property ID: {{ $propertyId }}
+                    </p>
+
+                    <!-- Loading Indicator -->
+                    <div id="loading-indicator" class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Loading analytics data...</p>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="error-message" class="alert alert-danger d-none">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <span id="error-text">Failed to load analytics data.</span>
+                    </div>
+
+                    <!-- Analytics Content (initially hidden) -->
+                    <div id="analytics-content" class="d-none">
+                        <!-- Date Range Selector -->
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <label for="start-date" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="start-date"
+                                    value="{{ date('Y-m-d', strtotime('-30 days')) }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="end-date" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="end-date" value="{{ date('Y-m-d') }}">
+                            </div>
+                            <div class="col-md-2 align-self-end">
+                                <button class="btn btn-primary" id="apply-date-range">
+                                    <i class="fas fa-sync-alt me-1"></i> Apply
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Analytics Cards -->
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card mini-stats-wid">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="flex-grow-1">
+                                                <p class="text-muted fw-medium">Users</p>
+                                                <h4 class="mb-0" id="total-users">0</h4>
+                                            </div>
+                                            <div class="flex-shrink-0 align-self-center">
+                                                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                                                    <span class="avatar-title">
+                                                        <i class="fas fa-users font-size-24"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-success" role="progressbar" id="user-growth-bar"
+                                                    style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+                                                    aria-valuemax="100"></div>
+                                            </div>
+                                            <p class="mb-0 text-muted">Previous period: <span class="fw-medium"
+                                                    id="prev-period-users">0</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card mini-stats-wid">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="flex-grow-1">
+                                                <p class="text-muted fw-medium">Sessions</p>
+                                                <h4 class="mb-0" id="total-sessions">0</h4>
+                                            </div>
+                                            <div class="flex-shrink-0 align-self-center">
+                                                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                                                    <span class="avatar-title">
+                                                        <i class="fas fa-globe font-size-24"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                    id="session-growth-bar" style="width: 0%" aria-valuenow="0"
+                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <p class="mb-0 text-muted">Previous period: <span class="fw-medium"
+                                                    id="prev-period-sessions">0</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card mini-stats-wid">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="flex-grow-1">
+                                                <p class="text-muted fw-medium">Avg. Session Duration</p>
+                                                <h4 class="mb-0" id="avg-session-duration">0s</h4>
+                                            </div>
+                                            <div class="flex-shrink-0 align-self-center">
+                                                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                                                    <span class="avatar-title">
+                                                        <i class="fas fa-clock font-size-24"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                    id="duration-growth-bar" style="width: 0%" aria-valuenow="0"
+                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <p class="mb-0 text-muted">Previous period: <span class="fw-medium"
+                                                    id="prev-period-duration">0s</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card mini-stats-wid">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="flex-grow-1">
+                                                <p class="text-muted fw-medium">Bounce Rate</p>
+                                                <h4 class="mb-0" id="bounce-rate">0%</h4>
+                                            </div>
+                                            <div class="flex-shrink-0 align-self-center">
+                                                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                                                    <span class="avatar-title">
+                                                        <i class="fas fa-sign-out-alt font-size-24"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-danger" role="progressbar"
+                                                    id="bounce-rate-bar" style="width: 0%" aria-valuenow="0"
+                                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <p class="mb-0 text-muted">Previous period: <span class="fw-medium"
+                                                    id="prev-period-bounce">0%</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charts Row -->
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Users & Sessions</h4>
+                                        <div id="users-sessions-chart" class="apex-charts" dir="ltr"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Traffic Sources</h4>
+                                        <div id="traffic-sources-chart" class="apex-charts" dir="ltr"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Top Pages</h4>
+                                        <div class="table-responsive">
+                                            <table class="table table-centered table-nowrap mb-0">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Page</th>
+                                                        <th>Views</th>
+                                                        <th>% Change</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="top-pages-table">
+                                                    <tr>
+                                                        <td colspan="3" class="text-center">No data available</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Devices</h4>
+                                        <div id="devices-chart" class="apex-charts" dir="ltr"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        {{-- Grafik Pengguna Harian --}}
-        <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-                <h5>👥 Pengguna Harian</h5>
-                <canvas id="usersChart" height="100"></canvas>
-            </div>
-        </div>
+    </div>
+@endsection
 
-        {{-- Sumber Trafik --}}
-        <div class="row">
-           
+@section('js')
+    <!-- Apex Charts -->
+    
+    <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
-            <div class="col-lg-9">
-                {{-- Halaman Terpopuler --}}
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5>📑 Halaman Terpopuler</h5>
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Halaman</th>
-                                    <th class="text-center">Jumlah Kunjungan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($topPages as $row)
-                                    <tr>
-                                        <td>{{ $row['title'] }}</td>
-                                        <td class="text-center">{{ number_format($row['views']) }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="2" class="text-center text-muted">Tidak ada data halaman</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-             <div class="col-lg-3">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5>🌍 Sumber Trafik</h5>
-                        <canvas id="trafficChart" height="20"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endsection
+    <script>
+        $(document).ready(function() {
+            const $loadingIndicator = $('#loading-indicator');
+            const $errorMessage = $('#error-message');
+            const $analyticsContent = $('#analytics-content');
+            const $errorText = $('#error-text');
 
-    @section('js')
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            // Grafik pengguna harian
-            const usersCtx = document.getElementById('usersChart').getContext('2d');
-            new Chart(document.getElementById('usersChart').getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: @json($dailyDates),
-                    datasets: [{
-                        label: 'Pengguna',
-                        data: @json($dailyUsers),
-                        borderColor: '#007bff',
-                        backgroundColor: 'rgba(0,123,255,0.2)',
-                        fill: true,
-                        tension: 0.3
-                    }]
-                }
+            // Inisialisasi chart kosong
+            initEmptyCharts();
+
+            // Fetch data pertama kali saat page load
+            fetchAnalyticsData();
+
+            // Handler untuk apply date range
+            $('#apply-date-range').on('click', function() {
+                fetchAnalyticsData();
             });
 
-            // Grafik sumber trafik
-            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
-            new Chart(document.getElementById('trafficChart').getContext('2d'), {
-                type: 'pie',
-                data: {
-                    labels: @json(array_column($trafficSources, 'source')),
-                    datasets: [{
-                        data: @json(array_column($trafficSources, 'sessions')),
-                        backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1']
+            function fetchAnalyticsData() {
+                const startDate = $('#start-date').val();
+                const endDate = $('#end-date').val();
+
+                $loadingIndicator.removeClass('d-none');
+                $errorMessage.addClass('d-none');
+                $analyticsContent.addClass('d-none');
+
+                $.ajax({
+                    url: `/admin/report/google-analytics/data`,
+                    method: 'GET',
+                    data: {
+                        start_date: startDate,
+                        end_date: endDate
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        if (result.success) {
+                            updateSummaryCards(result.data);
+                            initUsersSessionsChart(result.data.daily_data || []);
+                            initTrafficSourcesChart(result.data.traffic_sources || []);
+
+                            renderTopPages(result.data.top_pages || []);
+                            $analyticsContent.removeClass('d-none');
+                        } else {
+                            showError(result.message || 'Failed to fetch data');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('AJAX Error:', xhr.responseText);
+                        showError('Failed to load analytics data.');
+                    },
+                    complete: function() {
+                        $loadingIndicator.addClass('d-none');
+                    }
+                });
+            }
+
+            function showError(message) {
+                $errorText.text(message);
+                $errorMessage.removeClass('d-none');
+            }
+
+            function initTrafficSourcesChart(trafficSources) {
+                const labels = trafficSources.map(item => item.source);
+                const series = trafficSources.map(item => item.sessions);
+
+                const options = {
+                    series: series,
+                    chart: {
+                        height: 350,
+                        type: 'donut'
+                    },
+                    labels: labels,
+                    colors: ['#4f6cec', '#2c3e50', '#e74c3c', '#3498db', '#2ecc71'],
+                    legend: {
+                        position: 'bottom'
+                    },
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 200
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
                     }]
+                };
+
+                $("#traffic-sources-chart").empty();
+                new ApexCharts(document.querySelector("#traffic-sources-chart"), options).render();
+            }
+
+            function initEmptyCharts() {
+                const emptyOptions = {
+                    series: [],
+                    chart: {
+                        height: 350,
+                        type: 'line'
+                    },
+                    xaxis: {
+                        categories: []
+                    }
+                };
+                new ApexCharts(document.querySelector("#users-sessions-chart"), emptyOptions).render();
+                new ApexCharts(document.querySelector("#traffic-sources-chart"), {
+                    series: [],
+                    chart: {
+                        height: 350,
+                        type: 'donut'
+                    }
+                }).render();
+                new ApexCharts(document.querySelector("#devices-chart"), {
+                    series: [],
+                    chart: {
+                        height: 350,
+                        type: 'radialBar'
+                    }
+                }).render();
+            }
+
+            function updateSummaryCards(data) {
+                $('#total-users').text(data.total_users?.toLocaleString() || '0');
+                $('#prev-period-users').text(data.prev_users?.toLocaleString() || '0');
+
+                $('#total-sessions').text(data.total_views?.toLocaleString() || '0');
+                $('#prev-period-sessions').text(data.prev_views?.toLocaleString() || '0');
+
+                $('#avg-session-duration').text(formatDuration(data.avg_duration || 0));
+                $('#prev-period-duration').text(formatDuration(data.prev_avg_duration || 0));
+
+                $('#bounce-rate').text((data.bounce_rate || 0) + '%');
+                $('#prev-period-bounce').text((data.prev_bounce_rate || 0) + '%');
+            }
+
+            function formatDuration(seconds) {
+                if (!seconds) return '0s';
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+            }
+
+            function renderTopPages(topPages) {
+                const $table = $('#top-pages-table');
+                $table.empty();
+
+                if (topPages.length === 0) {
+                    $table.append('<tr><td colspan="3" class="text-center">No data available</td></tr>');
+                    return;
                 }
-            });
-        </script>
-    @endsection
+
+                topPages.forEach(page => {
+                    $table.append(`
+            <tr>
+                <td>
+                    <strong>${page.title || '(no title)'}</strong><br>
+                    <small class="text-muted">${page.path}</small>
+                </td>
+                <td>${page.views.toLocaleString()}</td>
+                <td>-</td>
+            </tr>
+        `);
+                });
+            }
+
+            function initUsersSessionsChart(dailyData) {
+                const dates = dailyData.map(item => {
+                    const date = new Date(item.date);
+                    return `${date.getDate()}/${date.getMonth() + 1}`;
+                });
+
+                const users = dailyData.map(item => parseInt(item.users || 0));
+                const sessions = dailyData.map(item => parseInt(item.views || 0));
+
+                const options = {
+                    series: [{
+                            name: 'Users',
+                            data: users
+                        },
+                        {
+                            name: 'Sessions',
+                            data: sessions
+                        }
+                    ],
+                    chart: {
+                        height: 350,
+                        type: 'area',
+                        toolbar: {
+                            show: false
+                        }
+                    },
+                    colors: ['#4f6cec', '#ffd166'],
+                    stroke: {
+                        curve: 'smooth',
+                        width: 2
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.45,
+                            opacityTo: 0.05,
+                            stops: [20, 100, 100, 100]
+                        }
+                    },
+                    xaxis: {
+                        categories: dates
+                    },
+                    tooltip: {
+                        shared: true
+                    }
+                };
+
+                $("#users-sessions-chart").empty();
+                new ApexCharts(document.querySelector("#users-sessions-chart"), options).render();
+            }
+        });
+    </script>
+@endsection

@@ -36,7 +36,7 @@ Route::get('how-to-purchase',[PageController::class, 'howToPurchase']);
 Route::get('articles', [PageController::class, 'articles']);
 Route::get('articles/{slug}', [PageController::class, 'articlesDetail']);
 Route::prefix('admin')->middleware('auth')->group(function () {
-   Route::get('/', [ReportController::class, 'googleAnalytics'])->name('admin.home');
+   Route::get('/', [PageAdminController::class, 'index'])->name('admin');
    Route::resource('categories', CategoryAdminController::class);
    Route::resource('products', ProductAdminController::class);
    Route::get('configs', [WebsiteController::class,'index']);
