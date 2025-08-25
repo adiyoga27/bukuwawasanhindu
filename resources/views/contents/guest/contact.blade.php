@@ -228,13 +228,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="map-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3944.016230518094!2d115.21841431478192!3d-8.6836851937646!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd2408808c9f9c3%3A0x6a1b3b7d1b0b0b0b!2sDenpasar%2C%20Bali!5e0!3m2!1sen!2sid!4v1620000000000!5m2!1sen!2sid" 
-                                width="100%" 
-                                height="300" 
-                                style="border:0;" 
-                                allowfullscreen="" 
-                                loading="lazy">
-                        </iframe>
+                       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7991.5972057838!2d115.20060885872529!3d-8.611744780159732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23fc774a859c3%3A0x41962379c76232e2!2sToko%20Buku%20Wawasan%20Hindu!5e0!3m2!1sid!2sid!4v1756126069586!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
