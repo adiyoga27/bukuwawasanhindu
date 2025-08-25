@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <h4 class="card-title">Google Analytics Dashboard</h4>
                     <p class="card-title-desc">
-                        Analytics for Property ID: {{ env('GA4_PROPERTY_ID') }}
+                        Analytics for Property ID: {{ $propertyId }}
                     </p>
 
                     <!-- Loading Indicator -->
