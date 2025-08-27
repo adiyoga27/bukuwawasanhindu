@@ -232,6 +232,11 @@
                                                                     placeholder="Masukkan shopee buku pembelian ..."
                                                                     required>
                                                             </div>
+                                                                 <div class="mb-3">
+                                                        <label for="lazada" class="form-label">Link Lazada</label>
+                                                        <input type="text" class="form-control" name="lazada" id="lazada" value="{{ $item->lazada }}"
+                                                            placeholder="Masukkan lazada buku pembelian ..." required>
+                                                    </div>
                                                             <div class="mb-3">
                                                                 <label for="shopee" class="form-label">Tags</label>
                                                                 <input type="text" class="form-control" name="keyword"
@@ -240,11 +245,7 @@
                                                                     required>
                                                                     <p style="color:red"> Contoh: Agama, Yoga,</p>
                                                             </div>
-                                                    <div class="mb-3">
-                                                        <label for="lazada" class="form-label">Link Lazada</label>
-                                                        <input type="text" class="form-control" name="lazada" id="lazada" value="{{ $item->lazada }}"
-                                                            placeholder="Masukkan lazada buku pembelian ..." required>
-                                                    </div>
+                                               
 
                                                             <div class="mb-3">
                                                                 <label for="categoryStatus{{ $item->id }}"
@@ -472,6 +473,35 @@
         }
         // Gallery Upload Script
         document.addEventListener('DOMContentLoaded', function() {
+          if (document.querySelectorAll(".elm1").length > 0) {
+        tinymce.init({
+            selector: "textarea.elm1",
+            height: 300,
+            plugins: "advlist autolink link image lists charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table directionality emoticons template paste textcolor",
+            toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code preview",
+            setup: function (editor) {
+                editor.on('init', function () {
+                    console.log("TinyMCE ready for", editor.id);
+                });
+            }
+        });
+    }
+
+    document.querySelectorAll('.modal').forEach(function (modal) {
+    modal.addEventListener('shown.bs.modal', function () {
+        modal.querySelectorAll('textarea.elm1').forEach(function (el) {
+            if (!tinymce.get(el.id)) { // hindari double init
+                tinymce.init({
+                    target: el,
+                    height: 300,
+                    plugins: "advlist autolink link image lists charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table directionality emoticons template paste textcolor",
+                    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code preview"
+                });
+            }
+        });
+    });
+});
+
             // Initialize all gallery modals
             document.querySelectorAll('[id^="galleryUploadForm"]').forEach(form => {
                 form.addEventListener('submit', function(e) {
