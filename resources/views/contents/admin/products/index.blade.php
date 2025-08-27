@@ -18,7 +18,6 @@
     </div>
     <!-- end page title -->
 
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -26,7 +25,6 @@
 
                     <h4 class="card-title">Produk</h4>
                     <p class="card-title-desc">
-
                         Silahkan isi data produk pada form di bawah ini. Data yang sudah diisi akan ditampilkan pada tabel
                         di bawahnya.
                     </p>
@@ -40,10 +38,8 @@
                                 <th>Diskon</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
-
                             </tr>
                         </thead>
-
 
                         <tbody>
                             @foreach ($datas as $item)
@@ -147,7 +143,6 @@
                                                             method="POST" enctype="multipart/form-data">
                                                             @csrf
                                                             @method('PUT')
-                                                            @csrf
                                                             <div class="mb-3">
                                                                 <label for="categoryName"
                                                                     class="form-label">Kategori</label>
@@ -268,8 +263,6 @@
                                         </div>
                                         <!-- End Edit Form Modal -->
 
-
-
                                         <form action="{{ url('admin/categories/' . $item->id) }}" method="POST"
                                             class="d-inline"
                                             onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
@@ -351,9 +344,6 @@
                             <textarea class="form-control elm1" name="description" required>
                           </textarea>
                         </div>
-                        {{-- <div class="mb-3">
-                            <img src="{{ url('storage/') }}/{{ $item->thumbnail }}" width="100px">
-                        </div> --}}
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Upload Gambar</label>
                             <input type="file" class="form-control" name="thumbnail" id="thumbnail" required>
@@ -415,94 +405,77 @@
     <!--tinymce js-->
     <script src="{{ url('assets') }}/libs/tinymce/tinymce.min.js"></script>
 
-    <!-- init js -->
-    {{-- <script src="{{ url('assets') }}/js/pages/form-editor.init.js"></script> --}}
-
     <!-- Datatable init js -->
     <script src="{{ url('assets') }}/js/pages/datatables.init.js"></script>
 
     <script>
-        if ($(".elm1").length > 0) {
-            tinymce.init({
-                selector: "textarea.elm1",
-                height: 300,
-                plugins: [
-                    "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
-                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                    "save table contextmenu directionality emoticons template paste textcolor"
-                ],
-                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
-                style_formats: [{
-                        title: "Bold text",
-                        inline: "b"
-                    },
-                    {
-                        title: "Red text",
-                        inline: "span",
-                        styles: {
-                            color: "#ff0000"
-                        }
-                    },
-                    {
-                        title: "Red header",
-                        block: "h1",
-                        styles: {
-                            color: "#ff0000"
-                        }
-                    },
-                    {
-                        title: "Example 1",
-                        inline: "span",
-                        classes: "example1"
-                    },
-                    {
-                        title: "Example 2",
-                        inline: "span",
-                        classes: "example2"
-                    },
-                    {
-                        title: "Table styles"
-                    },
-                    {
-                        title: "Table row 1",
-                        selector: "tr",
-                        classes: "tablerow1"
-                    }
-                ]
-            });
-        }
-        // Gallery Upload Script
+        // Pastikan DOM sudah sepenuhnya dimuat
         document.addEventListener('DOMContentLoaded', function() {
-          if (document.querySelectorAll(".elm1").length > 0) {
-        tinymce.init({
-            selector: "textarea.elm1",
-            height: 300,
-            plugins: "advlist autolink link image lists charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table directionality emoticons template paste textcolor",
-            toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code preview",
-            setup: function (editor) {
-                editor.on('init', function () {
-                    console.log("TinyMCE ready for", editor.id);
-                });
+            // Inisialisasi TinyMCE hanya jika elemen textarea dengan kelas elm1 ada
+            if (document.querySelectorAll('textarea.elm1').length > 0) {
+                try {
+                    tinymce.init({
+                        selector: "textarea.elm1",
+                        height: 300,
+                        plugins: [
+                            "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                            "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                            "save table contextmenu directionality emoticons template paste textcolor"
+                        ],
+                        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
+                        style_formats: [{
+                                title: "Bold text",
+                                inline: "b"
+                            },
+                            {
+                                title: "Red text",
+                                inline: "span",
+                                styles: {
+                                    color: "#ff0000"
+                                }
+                            },
+                            {
+                                title: "Red header",
+                                block: "h1",
+                                styles: {
+                                    color: "#ff0000"
+                                }
+                            },
+                            {
+                                title: "Example 1",
+                                inline: "span",
+                                classes: "example1"
+                            },
+                            {
+                                title: "Example 2",
+                                inline: "span",
+                                classes: "example2"
+                            },
+                            {
+                                title: "Table styles"
+                            },
+                            {
+                                title: "Table row 1",
+                                selector: "tr",
+                                classes: "tablerow1"
+                            }
+                        ],
+                        // Setup callback untuk menangani error
+                        setup: function(editor) {
+                            editor.on('init', function() {
+                                console.log('TinyMCE initialized successfully');
+                            });
+                            editor.on('error', function(e) {
+                                console.error('TinyMCE error:', e);
+                            });
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error initializing TinyMCE:', error);
+                }
             }
-        });
-    }
 
-    document.querySelectorAll('.modal').forEach(function (modal) {
-    modal.addEventListener('shown.bs.modal', function () {
-        modal.querySelectorAll('textarea.elm1').forEach(function (el) {
-            if (!tinymce.get(el.id)) { // hindari double init
-                tinymce.init({
-                    target: el,
-                    height: 300,
-                    plugins: "advlist autolink link image lists charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table directionality emoticons template paste textcolor",
-                    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code preview"
-                });
-            }
-        });
-    });
-});
-
-            // Initialize all gallery modals
+            // Gallery Upload Script
             document.querySelectorAll('[id^="galleryUploadForm"]').forEach(form => {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
