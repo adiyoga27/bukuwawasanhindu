@@ -497,7 +497,7 @@
             <!-- Product Info Column -->
             <div class="col-lg-7">
                 <h1 class="book-title">{{ $book['title'] }}</h1>
-                <p class="book-author">By {{ $book['author'] }}</p>
+                <p class="book-author">Oleh : {{ $book['author'] }}</p>
 
                 <div class="rating mb-3">
                     <span class="badge bg-warning text-dark me-2">
