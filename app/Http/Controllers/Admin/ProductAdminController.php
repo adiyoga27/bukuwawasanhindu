@@ -16,7 +16,7 @@ class ProductAdminController extends Controller
     public function index()
     {
         $categories = Category::orderBy('name', 'ASC')->get();
-        $datas = Product::all();
+        $datas = Product::orderBy('id', 'DESC')->get();
         return view('contents.admin.products.index', compact('categories', 'datas'));
     }
 
