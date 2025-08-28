@@ -265,7 +265,7 @@
                                         </div>
                                         <!-- End Edit Form Modal -->
 
-                                        <form action="{{ url('admin/categories/' . $item->id) }}" method="POST"
+                                        <form action="{{ url('admin/products/' . $item->id) }}" method="POST"
                                             class="d-inline"
                                             onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
                                             @csrf
