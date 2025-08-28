@@ -14,12 +14,25 @@ class ProductAdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $categories = Category::orderBy('name', 'ASC')->get();
-        $datas = Product::orderBy('id', 'DESC')->get();
-        return view('contents.admin.products.index', compact('categories', 'datas'));
+   public function index(Request $request)
+{
+    $categories = Category::orderBy('name', 'ASC')->get();
+
+    $datas = Product::with('category')->orderBy('id', 'DESC');
+
+    if ($request->filled('category')) {
+        $categorySlug = $request->query('category');
+
+        $datas->whereHas('category', function ($q) use ($categorySlug) {
+            $q->where('slug', $categorySlug);
+        });
     }
+
+    $datas = $datas->get();
+
+    return view('contents.admin.products.index', compact('categories', 'datas'));
+}
+
 
     /**
      * Show the form for creating a new resource.

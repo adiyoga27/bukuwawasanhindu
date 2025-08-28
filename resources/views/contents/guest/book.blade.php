@@ -262,7 +262,7 @@
                 <ul class="category-list">
                     <li><a href="{{ url('/') }}"><i class="fas fa-book"></i> Semua Kategori</a></li>
                     @foreach($categories as $category)
-                        <li><a href="{{ url('categories/'.$category->slug) }}"><i class="fas fa-{{ $category->icon ?? 'bookmark' }}"></i> {{ $category->name }}</a></li>
+                        <li><a href="{{ url('book?category='.$category->slug) }}"><i class="fas fa-{{ $category->icon ?? 'bookmark' }}"></i> {{ $category->name }}</a></li>
                     @endforeach
                 </ul>
             </div>
