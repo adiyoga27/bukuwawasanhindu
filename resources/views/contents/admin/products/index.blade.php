@@ -45,7 +45,7 @@
                         <tbody>
                             @foreach ($datas as $item)
                                 <tr>
-                                    <td>{{ /Carbon/Carbon::parse($item->created_at)->format('d M Y H:i') }} wita</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y H:i') }} wita</td>
                                     <td>{{ $item->title }}</td>
                                     <td>{{ $item->slug }}</td>
                                     <td>Rp{{ number_format($item->price, 0, ',', '.') }}</td>
