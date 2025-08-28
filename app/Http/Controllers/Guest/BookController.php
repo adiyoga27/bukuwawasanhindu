@@ -11,33 +11,47 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
     public function index(Request $request)
-    {
-                $books = Product::orderBy('id', 'DESC');
+{
+    $books = Product::with('category'); // eager load category
 
-        if(isset($request->sort)){
-            $sort = $request->sort;
-            if($sort == 'price_asc'){
-                       $books = Product::orderBy('price', 'asc');
-
-
-            }else if($sort == 'price_desc'){
-                          $books = Product::orderBy('price', 'desc');
-
-
-            }else if($sort == 'rating'){
-                       $books = Product::orderBy('stars', 'desc');
-
-
-            }
-        }
-
-        $books = $books->paginate(10);
-        $configs = Website::first();
-        $categories  = Category::orderBy('name', 'ASC')->get();
-        // $books = Product::paginate(10);
- 
-        return view('contents.guest.book', compact('categories', 'books', 'configs'));
+    // ✅ Filter kategori berdasarkan slug
+    if ($request->filled('category')) {
+        $categorySlug = $request->query('category');
+        $books->whereHas('category', function ($q) use ($categorySlug) {
+            $q->where('slug', $categorySlug);
+        });
     }
+
+    // ✅ Default order by terbaru
+    $books->orderBy('id', 'DESC');
+
+    // ✅ Sorting berdasarkan query string ?sort=...
+    if ($request->filled('sort')) {
+        switch ($request->sort) {
+            case 'price_asc':
+                $books->orderBy('price', 'asc');
+                break;
+
+            case 'price_desc':
+                $books->orderBy('price', 'desc');
+                break;
+
+            case 'rating':
+                $books->orderBy('stars', 'desc');
+                break;
+        }
+    }
+
+    // ✅ Pagination
+    $books = $books->paginate(10)->withQueryString();
+
+    // ✅ Ambil konfigurasi & kategori
+    $configs = Website::first();
+    $categories = Category::orderBy('name', 'ASC')->get();
+
+    return view('contents.guest.book', compact('categories', 'books', 'configs'));
+}
+
 
     public function showByCategory($slug)
     {

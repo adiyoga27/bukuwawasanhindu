@@ -260,7 +260,7 @@
             <div class="sidebar">
                 <h4 class="sidebar-title">Kategori Buku</h4>
                 <ul class="category-list">
-                    <li><a href="{{ url('/') }}"><i class="fas fa-book"></i> Semua Kategori</a></li>
+                    <li><a href="{{ url('/book') }}"><i class="fas fa-book"></i> Semua Kategori</a></li>
                     @foreach($categories as $category)
                         <li><a href="{{ url('book?category='.$category->slug) }}"><i class="fas fa-{{ $category->icon ?? 'bookmark' }}"></i> {{ $category->name }}</a></li>
                     @endforeach
