@@ -298,7 +298,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('admin/products') }}" method="POST" enctype="multipart/form-data">
+                    {{-- <form action="{{ url('admin/products') }}" method="POST" enctype="multipart/form-data"> --}}
+                           <form id="addProductForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Kategori</label>
@@ -571,5 +572,113 @@
                 button.addEventListener('click', deleteGalleryImage);
             });
         });
+
+         // AJAX untuk form tambah produk
+          $('#addProductForm').on('submit', function(e) {
+    e.preventDefault();
+    
+    // Ambil konten dari TinyMCE
+    if (typeof tinymce !== 'undefined' && tinymce.get('description')) {
+        tinymce.get('description').save();
+    }
+    
+    var formData = new FormData(this);
+    var submitButton = $('#submitButton');
+    var originalButtonText = submitButton.html();
+    
+    // Tampilkan loading state
+    submitButton.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Menyimpan...');
+    
+    $.ajax({
+        url: window.location.href,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            if (response.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: response.message || 'Produk berhasil ditambahkan!',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                // Reset form
+                $('#addProductForm')[0].reset();
+
+                // Tutup modal
+                $('#addFormModal').modal('hide');
+
+                // Reload halaman setelah 1.5 detik
+                setTimeout(function() {
+                    location.reload();
+                }, 1500);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: response.message || 'Terjadi kesalahan saat menambahkan produk.'
+                });
+            }
+        },
+        error: function(xhr) {
+            let errorMessage = 'Terjadi kesalahan saat menyimpan data.';
+
+            if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
+                // Jika ada error validasi Laravel
+                let errors = xhr.responseJSON.errors;
+                errorMessage = '';
+                $.each(errors, function(key, value) {
+                    errorMessage += value[0] + '<br>';
+                });
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validasi Gagal!',
+                    html: errorMessage
+                });
+            } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: xhr.responseJSON.message
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorMessage
+                });
+            }
+        },
+        complete: function() {
+            // Kembalikan state button ke semula
+            submitButton.prop('disabled', false).html(originalButtonText);
+        }
+    });
+});
+
+            
+            // Fungsi untuk menampilkan alert
+            function showAlert(type, message) {
+                var alert = $('#ajaxAlert');
+                alert.removeClass('d-none alert-success alert-danger')
+                     .addClass('alert-' + type)
+                     .html(message);
+                
+                // Scroll ke atas untuk melihat alert
+                $('html, body').animate({
+                    scrollTop: alert.offset().top - 100
+                }, 500);
+            }
+            
+            // Reset form ketika modal ditutup
+            $('#addFormModal').on('hidden.bs.modal', function() {
+                $('#addProductForm')[0].reset();
+                $('#ajaxAlert').addClass('d-none');
+            });
+
     </script>
 @endsection

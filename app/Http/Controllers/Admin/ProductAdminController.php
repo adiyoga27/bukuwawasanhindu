@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -31,46 +32,49 @@ class ProductAdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+
+    public function store(ProductRequest $request)
     {
-        $request->validate([
-                'title' => 'required|string|max:255|unique:products,title',
-                'author' => 'required|string|max:255',
-                'description' => 'nullable|string',
-                'category_id' => 'required|exists:categories,id',
-                'price' => 'required|numeric|min:0',
-                'discount' => 'nullable|numeric|min:0',
-                'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-                'is_active' => 'boolean',
-                'rating' => 'required|numeric|min:0',
-                'tokopedia' => 'string',
-                'lazada' => 'string',
-                'shopee' => 'string',
-                'keyword' => 'nullable',
-
-
-            ]);
         try {
             Product::create([
-                'title' => $request->title,
-                'author' => $request->author,
+                'title'       => $request->title,
+                'author'      => $request->author,
                 'description' => $request->description,
                 'category_id' => $request->category_id,
-                'price' => $request->price,
-                'discount' => $request->discount,
-                'rating' => $request->rating,
-                'lazada' => $request->lazada,
-                'tokopedia'=> $request->tokopedia,
-                'shopee'=> $request->shopee,
-                'keyword'=> $request->keyword,
-                'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : null,
-                'is_active' => $request->is_active ? true : false,
-                'slug' => Str::slug($request->title),
+                'price'       => $request->price,
+                'discount'    => $request->discount,
+                'rating'      => $request->rating,
+                'lazada'      => $request->lazada,
+                'tokopedia'   => $request->tokopedia,
+                'shopee'      => $request->shopee,
+                'keyword'     => $request->keyword,
+                'thumbnail'   => $request->file('thumbnail')
+                                    ? $request->file('thumbnail')->store('products', 'public')
+                                    : null,
+                'is_active'   => $request->boolean('is_active'),
+                'slug'        => Str::slug($request->title),
             ]);
-            return redirect('admin/products')->with('success', 'Product created successfully.');
+
+            // Kalau requestnya via AJAX (expects JSON)
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Produk berhasil ditambahkan!',
+                ]);
+            }
+
+            // Kalau request normal (via form biasa)
+            return redirect('admin/products')->with('success', 'Produk berhasil ditambahkan.');
+            
         } catch (\Throwable $th) {
-            //throw $th;
-            return redirect()->back()->with('error', 'Failed to create product: ' . $th->getMessage());
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menambahkan produk: ' . $th->getMessage(),
+                ], 500);
+            }
+
+            return redirect()->back()->with('error', 'Gagal menambahkan produk: ' . $th->getMessage());
         }
     }
 
