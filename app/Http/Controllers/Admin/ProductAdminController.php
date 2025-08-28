@@ -36,6 +36,17 @@ class ProductAdminController extends Controller
     public function store(ProductRequest $request)
     {
         try {
+
+            $slug = Str::slug($request->title);
+$originalSlug = $slug;
+$counter = 1;
+
+// cek apakah slug sudah ada di database
+while (Product::where('slug', $slug)->exists()) {
+    $slug = $originalSlug . '-' . $counter;
+    $counter++;
+}
+
             Product::create([
                 'title'       => $request->title,
                 'author'      => $request->author,
@@ -52,7 +63,7 @@ class ProductAdminController extends Controller
                                     ? $request->file('thumbnail')->store('products', 'public')
                                     : null,
                 'is_active'   => $request->boolean('is_active'),
-                'slug'        => Str::slug($request->title),
+                'slug'        => $slug,
             ]);
 
             // Kalau requestnya via AJAX (expects JSON)
@@ -114,7 +125,15 @@ class ProductAdminController extends Controller
                 'shopee' => 'string',
                 'keyword' => 'string|nullable',
         ]);
+$slug = Str::slug($request->title);
+$originalSlug = $slug;
+$counter = 1;
 
+// cek apakah slug sudah ada di database
+while (Product::where('slug', $slug)->exists()) {
+    $slug = $originalSlug . '-' . $counter;
+    $counter++;
+}
         try {
             $product = Product::findOrFail($id);
             $product->update([
@@ -132,7 +151,7 @@ class ProductAdminController extends Controller
                 'discount' => $request->discount,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : $product->thumbnail,
                 'is_active' => $request->is_active ? true : false,
-                'slug' => Str::slug($request->title),
+                'slug' => $slug,
             ]);
             return redirect('admin/products')->with('success', 'Product updated successfully.');
         } catch (\Throwable $th) {
