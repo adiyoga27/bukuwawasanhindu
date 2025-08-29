@@ -187,7 +187,7 @@
                                                                         <input type="number" class="form-control"
                                                                             name="price" id="price"
                                                                             placeholder="Masukkan harga buku ..."
-                                                                            value="{{ number_format($item->price,0) }}" required>
+                                                                            value="{{ $item->price }}" required>
                                                                         <p>Contoh : 100000</p>
                                                                     </div>
                                                                     <div class="col-md-6">
@@ -197,7 +197,7 @@
                                                                         <input type="number" class="form-control"
                                                                             name="discount" id="discount"
                                                                             placeholder="Masukkan harga diskon buku ..."
-                                                                            value="{{ number_format($item->discount) }}">
+                                                                            value="{{ $item->discount }}">
                                                                         <p>Contoh : 100000</p>
                                                                     </div>
                                                                 </div>
