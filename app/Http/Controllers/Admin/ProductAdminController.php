@@ -112,7 +112,7 @@ while (Product::where('slug', $slug)->exists()) {
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'title' => 'required|string|max:255|unique:products,title,' . $id,
+            'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
