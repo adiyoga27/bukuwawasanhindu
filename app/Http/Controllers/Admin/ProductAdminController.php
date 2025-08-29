@@ -128,7 +128,7 @@ while (Product::where('slug', $slug)->exists()) {
         ]);
 $slug = Str::slug($request->title);
 $originalSlug = $slug;
-$counter = 1;
+$counter = rand(1,100);
 
 // cek apakah slug sudah ada di database
 while (Product::where('slug', $slug)->exists()) {
