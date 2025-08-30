@@ -74,21 +74,21 @@
                 <p class="lead mb-4">Temukan kebijaksanaan dalam koleksi buku dan artikel kami yang lengkap tentang agama
                     Hindu, filosofi, dan budaya.</p>
                 <a href="{{ url('book') }}" class="btn btn-accent">Jelajahi Sekarang</a>
-              
+
             </div>
-            
+
         </div>
-        
+
     </section>
-  <div class="hero-search mt-4">
-                    <form action="{{ url('book') }}" method="GET" class="d-flex justify-content-center">
-                        <input type="text" name="search" class="form-control form-control-lg w-50"
-                            placeholder="Cari buku Hindu..." value="{{ request('search') }}">
-                        <button type="submit" class="btn btn-accent ms-2">
-                            <i class="fas fa-search"></i> Cari
-                        </button>
-                    </form>
-                </div>
+    <div class="hero-search mt-4">
+        <form action="{{ url('book') }}" method="GET" class="d-flex justify-content-center">
+            <input type="text" name="search" class="form-control form-control-lg w-50" placeholder="Cari buku Hindu..."
+                value="{{ request('search') }}">
+            <button type="submit" class="btn btn-accent ms-2">
+                <i class="fas fa-search"></i> Cari
+            </button>
+        </form>
+    </div>
     <!-- Popular Books Section -->
     <section class="container">
         <h2 class="section-title">Buku Terbaru</h2>

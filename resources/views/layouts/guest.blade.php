@@ -49,18 +49,27 @@
 
         .nav-link::after {
             content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 1rem;
-            background-color: var(--accent);
-            transition: var(--transition);
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 1rem;
+    background-color: var(--accent);
+    transition: var(--transition);
+    opacity: 0; /* sembunyikan dulu */
         }
 
-        .nav-link:hover::after {
-            width: calc(100% - 2rem);
-        }
+      /* Saat hover */
+.nav-link:hover::after {
+    width: calc(100% - 2rem);
+    opacity: 1;
+}
+
+/* Saat menu aktif */
+.nav-link.active::after {
+    width: calc(100% - 2rem);
+    opacity: 1;
+}
 
         .hero-section {
             background: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
@@ -423,10 +432,10 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Beranda</a> </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Tentang Kami</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('book') }}">Buku Hindu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('how-to-purchase') }}">Cara Pembelian</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Beranda</a> </li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ url('about') }}" >Tentang Kami</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('book') ? 'active' : '' }}" href="{{ url('book') }}">Buku Hindu</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('how-to-purchase') ? 'active' : '' }}" href="{{ url('how-to-purchase') }}">Cara Pembelian</a></li>
 
                     <!-- Marketplace Dropdown -->
                     <li class="nav-item dropdown">
@@ -459,8 +468,8 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item"><a class="nav-link" href="{{ url('articles') }}">Artikel</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ url('contact') }}">Kontak Kami</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('articles') ? 'active' : '' }}" href="{{ url('articles') }}">Artikel</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="{{ url('contact') }}">Kontak Kami</a></li>
                 </ul>
             </div>
         </div>
