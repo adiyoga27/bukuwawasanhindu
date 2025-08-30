@@ -1,14 +1,12 @@
-
 @extends('layouts.guest')
 @section('css')
     <title>Cara Pembelian- Buku Wawasan Hindu</title>
-<link rel="icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
-<link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
-  <meta name="description" content="Bagaimana cara pembelian buku wawasan hindu">
- 
+    <link rel="icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
+    <meta name="description" content="Bagaimana cara pembelian buku wawasan hindu">
 
-        <style>
-        
+
+    <style>
         .article-container {
             max-width: 800px;
             margin: 0 auto;
@@ -44,7 +42,7 @@
             width: 100%;
             border-radius: 8px;
             margin: 2rem 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .article-content {
@@ -162,14 +160,14 @@
         .related-card {
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
             margin-bottom: 1.5rem;
         }
 
         .related-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
 
         .related-image {
@@ -207,40 +205,38 @@
             .article-title {
                 font-size: 1.8rem;
             }
-            
+
             .author-header {
                 flex-direction: column;
                 text-align: center;
             }
-            
+
             .share-buttons {
                 flex-direction: column;
             }
         }
-             .articles-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+
+        .articles-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
             height: 300px;
         }
-
     </style>
 @endsection
 @section('content')
-    
     <!-- Hero Section -->
     <section class="articles-hero d-flex align-items-center justify-content-center text-white">
         <div class="container text-center">
-            <h1 class="display-4 fw-bold mb-3">Artikel Hindu</h1>
-            <p class="lead">Temukan kebijaksanaan dalam koleksi artikel kami</p>
+            <h1 class="display-4 fw-bold mb-3">Cara Pembelian</h1>
+            <p class="lead">Berikut cara melakukan pembelian Buku</p>
         </div>
     </section>
 
     <section class="py-5 bg-light">
         <div class="container ">
-                {!! $configs->how_to_purchase !!}
-            </div>
-        </section>
-
+            {!! $configs->how_to_purchase !!}
+        </div>
+    </section>
 @endsection

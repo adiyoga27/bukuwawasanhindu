@@ -1,9 +1,9 @@
 @extends('layouts.guest')
 @section('css')
-    <title>Buku - Buku Wawasan Hindu</title>
+    <title>Koleksi Buku Hindu Kami - Buku Wawasan Hindu</title>
     <link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
-    <meta name="title" content="Buku Wawasan Hindu | Sebuah Buku Sejuta Pencerahan Hindu">
-<meta name="description" content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya yang menghadirkan beragam koleksi bacaan seputar ajaran, filsafat, budaya, dan spiritualitas Hindu. Temukan kebijaksanaan dalam koleksi buku dan artikel kami.">
+    <meta name="title" content="Koleksi Buku Hindu Kami">
+<meta name="description" content="Temukan wawasan Hindu berharga dalam membuka cakrawala pengetahuan, filsafat , spritualitas , budaya , dan  bathin melalui rangkaian buku buku pilihan kami.">
 <meta name="keywords" content="buku Hindu, literatur Hindu, filsafat Hindu, budaya Hindu, dharma, yoga, meditasi, spiritualitas Hindu, kitab suci Hindu, agama Hindu, Bali, Nusantara">
 <meta name="author" content="Buku Wawasan Hindu">
 <meta name="robots" content="index, follow">
@@ -336,8 +336,8 @@
     <!-- Hero Section -->
     <section class="contact-hero d-flex align-items-center justify-content-center text-white">
         <div class="container text-center">
-            <h1 class="display-4 fw-bold mb-3">Hubungi Kami</h1>
-            <p class="lead">Kami siap membantu Anda dengan pertanyaan tentang buku dan artikel kami.</p>
+            <h1 class="display-4 fw-bold mb-3">Koleksi Buku Hindu Kami</h1>
+            <p class="lead">Temukan wawasan Hindu berharga dalam membuka cakrawala pengetahuan, filsafat , spritualitas , budaya , dan  bathin melalui rangkaian buku buku pilihan kami.</p>
         </div>
     </section>
 <div class="container py-5">
