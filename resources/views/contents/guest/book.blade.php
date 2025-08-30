@@ -218,6 +218,65 @@
             margin-bottom: 1rem;
         }
 
+          /* Custom Pagination Styles */
+        .pagination-container {
+            padding: 1.5rem 0;
+        }
+        
+        .pagination {
+            --bs-pagination-color: var(--secondary);
+            --bs-pagination-hover-color: var(--primary);
+            --bs-pagination-active-bg: var(--primary);
+            --bs-pagination-active-border-color: var(--primary);
+            --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(79, 108, 236, 0.25);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .pagination .page-link {
+            border-radius: var(--border-radius);
+            margin: 0.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2.8rem;
+            height: 2.8rem;
+            transition: var(--transition);
+            font-weight: 500;
+            border: none;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .pagination .page-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        
+        .pagination .page-item.active .page-link {
+            font-weight: 600;
+        }
+        
+        .pagination .page-item:first-child .page-link,
+        .pagination .page-item:last-child .page-link {
+            min-width: auto;
+            padding: 0 1rem;
+        }
+        
+        .pagination-mobile-info {
+            display: none;
+            text-align: center;
+            margin-top: 0.5rem;
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+        
+        .pagination-summary {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 992px) {
             .book-img {
                 height: 200px;
@@ -242,7 +301,29 @@
             .book-img {
                 height: 200px;
             }
+            .pagination .page-link {
+                min-width: 2.2rem;
+                height: 2.2rem;
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem;
+                margin: 0.1rem;
+            }
+            
+            .pagination .page-item:first-child .page-link,
+            .pagination .page-item:last-child .page-link {
+                padding: 0.4rem 0.8rem;
+            }
+            
+            .pagination-mobile-info {
+                display: block;
+            }
+            
+            .pagination-summary {
+                font-size: 0.8rem;
+            }
         }
+
+        
     </style>
 @endsection
 @section('content')
@@ -359,9 +440,59 @@
                 </div>
                 
                 <!-- Pagination -->
-                <div class="d-flex justify-content-center mt-4">
+                {{-- <div class="d-flex justify-content-center mt-4">
                     {{ $books->links() }}
-                </div>
+                </div> --}}
+                <!-- Pagination -->
+                    <div class="pagination-container">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                {{-- Previous Page Link --}}
+                                @if ($books->onFirstPage())
+                                    <li class="page-item disabled" aria-disabled="true">
+                                        <span class="page-link"><i class="fas fa-chevron-left"></i></span>
+                                    </li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $books->previousPageUrl() }}" rel="prev">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                {{-- Pagination Elements --}}
+                                @foreach ($books->getUrlRange(1, $books->lastPage()) as $page => $url)
+                                    @if ($page == $books->currentPage())
+                                        <li class="page-item active" aria-current="page">
+                                            <span class="page-link">{{ $page }}</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+
+                                {{-- Next Page Link --}}
+                                @if ($books->hasMorePages())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $books->nextPageUrl() }}" rel="next">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="page-item disabled" aria-disabled="true">
+                                        <span class="page-link"><i class="fas fa-chevron-right"></i></span>
+                                    </li>
+                                @endif
+                            </ul>
+                        </nav>
+                        
+                        {{-- Mobile Info --}}
+                        <div class="pagination-mobile-info">
+                            Halaman {{ $books->currentPage() }} dari {{ $books->lastPage() }}
+                        </div>
+                    </div>
             @endif
         </div>
     </div>

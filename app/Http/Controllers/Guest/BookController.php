@@ -57,7 +57,7 @@ class BookController extends Controller
         }
 
         // ✅ Pagination
-        $books = $books->paginate(10)->withQueryString();
+        $books = $books->paginate(30)->withQueryString();
 
         // ✅ Ambil konfigurasi & kategori
         $configs = Website::first();
