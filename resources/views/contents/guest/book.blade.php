@@ -1,7 +1,13 @@
 @extends('layouts.guest')
 @section('css')
     <title>Buku - Buku Wawasan Hindu</title>
-
+    <link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
+    <meta name="title" content="Buku Wawasan Hindu | Sebuah Buku Sejuta Pencerahan Hindu">
+<meta name="description" content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya yang menghadirkan beragam koleksi bacaan seputar ajaran, filsafat, budaya, dan spiritualitas Hindu. Temukan kebijaksanaan dalam koleksi buku dan artikel kami.">
+<meta name="keywords" content="buku Hindu, literatur Hindu, filsafat Hindu, budaya Hindu, dharma, yoga, meditasi, spiritualitas Hindu, kitab suci Hindu, agama Hindu, Bali, Nusantara">
+<meta name="author" content="Buku Wawasan Hindu">
+<meta name="robots" content="index, follow">
+<meta name="language" content="id">
     <style>
         :root {
             --primary: #4f6cec;

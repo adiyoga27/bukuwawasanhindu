@@ -381,7 +381,7 @@
             position: fixed;
             /* width: 60px; */
             /* height: 60px; */
-            bottom: 20px;
+            bottom: 200px;
             right: 20px;
             background-color: #25d366;
             color: white;
