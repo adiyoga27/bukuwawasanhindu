@@ -136,7 +136,7 @@ while (Product::where('slug', $slug)->exists()) {
     $counter++;
 }
         try {
-            $product = Product::findOrFail($id);
+            $product = Product::where('id',$id)->first();
             $product->update([
                 'title' => $request->title,
                 'author' => $request->author,

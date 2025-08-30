@@ -26,21 +26,33 @@ class BookController extends Controller
     $books->orderBy('id', 'DESC');
 
     // ✅ Sorting berdasarkan query string ?sort=...
-    if ($request->filled('sort')) {
-        switch ($request->sort) {
-            case 'price_asc':
-                $books->orderBy('price', 'asc');
-                break;
+   if ($request->filled('sort')) {
+    switch ($request->sort) {
+        case 'price_asc':
+            $books->orderBy('price', 'asc')
+                  ->orderBy('discount', 'asc'); // tambahin orderBy kedua
+            break;
 
-            case 'price_desc':
-                $books->orderBy('price', 'desc');
-                break;
+        case 'price_desc':
+            $books->orderBy('price', 'desc')
+                  ->orderBy('discount', 'desc');
+            break;
 
-            case 'rating':
-                $books->orderBy('stars', 'desc');
-                break;
-        }
+        case 'discount_asc':
+            $books->orderBy('discount', 'asc')
+                  ->orderBy('price', 'asc');
+            break;
+
+        case 'discount_desc':
+            $books->orderBy('discount', 'desc')
+                  ->orderBy('price', 'desc');
+            break;
+
+        case 'rating':
+            $books->orderBy('stars', 'desc');
+            break;
     }
+}
 
     // ✅ Pagination
     $books = $books->paginate(10)->withQueryString();
