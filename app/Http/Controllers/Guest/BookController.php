@@ -92,4 +92,5 @@ class BookController extends Controller
 
         return view('contents.guest.book-detail', compact('book', 'relatedBooks', 'configs'));
     }
+
 }

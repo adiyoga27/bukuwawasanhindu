@@ -63,210 +63,9 @@
                                             data-bs-target="#galleryModal{{ $item->id }}">
                                             <i class="fas fa-images"></i> Gallery
                                         </a>
-                                        <div class="modal fade" id="galleryModal{{ $item->id }}" tabindex="-1"
-                                            aria-labelledby="galleryModalLabel{{ $item->id }}" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="galleryModalLabel{{ $item->id }}">
-                                                            Gallery Produk: {{ $item->title }}
-                                                        </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form id="galleryUploadForm{{ $item->id }}"
-                                                            enctype="multipart/form-data">
-                                                            @csrf
-                                                            <input type="hidden" name="product_id"
-                                                                value="{{ $item->id }}">
-                                                            <div class="mb-3">
-                                                                <label for="images{{ $item->id }}"
-                                                                    class="form-label">Upload Gambar (JPEG, PNG, JPG, GIF,
-                                                                    WEBP)</label>
-                                                                <input class="form-control" type="file"
-                                                                    id="images{{ $item->id }}" name="images[]" multiple
-                                                                    accept="image/jpeg,image/png,image/jpg,image/gif,image/webp">
-                                                            </div>
-                                                            <div class="progress mb-3 d-none"
-                                                                id="uploadProgress{{ $item->id }}">
-                                                                <div class="progress-bar" role="progressbar"
-                                                                    style="width: 0%"></div>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary">Upload</button>
-                                                        </form>
-
-                                                        <div class="mt-4">
-                                                            <h6>Gambar Gallery</h6>
-                                                            <div class="row" id="imageList{{ $item->id }}">
-                                                                @foreach ($item->galleries as $gallery)
-                                                                    <div class="col-md-3 mb-3">
-                                                                        <div class="card">
-                                                                            <img src="{{ url('storage') }}/{{ $gallery->image_path }}"
-                                                                                class="card-img-top" alt="Gallery image">
-                                                                            <div class="card-body p-2">
-                                                                                <button
-                                                                                    class="btn btn-danger btn-sm delete-image"
-                                                                                    data-id="{{ $gallery->id }}"
-                                                                                    data-product="{{ $item->id }}">
-                                                                                    <i class="fas fa-trash"></i> Hapus
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Tutup</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#editFormModal{{ $item->id }}">
+                                        <a href="#" class="btn btn-info btn-sm editProductBtn" data-id="{{ $item->id }}">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
-                                        <!-- Edit Form Modal -->
-                                        <div class="modal fade" id="editFormModal{{ $item->id }}" tabindex="-1"
-                                            aria-labelledby="editFormModalLabel{{ $item->id }}" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="editFormModalLabel{{ $item->id }}">
-                                                            Edit </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="{{ url('admin/products/' . $item->id) }}"
-                                                            method="POST" enctype="multipart/form-data">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <div class="mb-3">
-                                                                <label for="categoryName"
-                                                                    class="form-label">Kategori</label>
-                                                                <select class="form-control" name="category_id" required>
-                                                                    @foreach ($categories as $c)
-                                                                        <option value={{ $c->id }}
-                                                                            @if ($c->id == $item->category_id) selected @endif>
-                                                                            {{ $c->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="categoryName" class="form-label">Judul
-                                                                    Buku</label>
-                                                                <input type="text" class="form-control" name="title"
-                                                                    id="title" placeholder="Masukkan judul buku"
-                                                                    value="{{ $item->title }}" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="categoryName"
-                                                                    class="form-label">Pengarang</label>
-                                                                <input type="text" class="form-control" name="author"
-                                                                    id="author"
-                                                                    placeholder="Masukkan nama pengarang buku ..."
-                                                                    value="{{ $item->author }}" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="categoryName"
-                                                                    class="form-label">Bintang</label>
-                                                                <input class="form-control" name="rating" id="rating"
-                                                                    value="{{ $item->rating }}"
-                                                                    placeholder="Masukkan jumlah bintang ..." required>
-                                                                <p>contoh : 0.0 s/d 5.0</p>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <label for="categoryName"
-                                                                            class="form-label">Harga</label>
-                                                                        <input type="number" class="form-control"
-                                                                            name="price" id="price"
-                                                                            placeholder="Masukkan harga buku ..."
-                                                                            value="{{ $item->price }}" required>
-                                                                        <p>Contoh : 100000</p>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <label for="categoryName"
-                                                                            class="form-label">Diskon
-                                                                            Harga</label>
-                                                                        <input type="number" class="form-control"
-                                                                            name="discount" id="discount"
-                                                                            placeholder="Masukkan harga diskon buku ..."
-                                                                            value="{{ $item->discount }}">
-                                                                        <p>Contoh : 100000</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="categoryName"
-                                                                    class="form-label">Deskripsi</label>
-                                                                <textarea class="form-control elm1" id="description" name="description" required> {{ $item->description }} </textarea>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="categoryName" class="form-label">Upload
-                                                                    Gambar</label>
-                                                                <input type="file" class="form-control"
-                                                                    name="thumbnail" id="thumbnail">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="tokopedia" class="form-label">Link
-                                                                    Tokopedia</label>
-                                                                <input type="text" class="form-control"
-                                                                    name="tokopedia" id="tokopedia"
-                                                                    placeholder="Masukkan tokopedia buku pembelian ..."
-                                                                    value="{{ $item->tokopedia }}" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="shopee" class="form-label">Link
-                                                                    Shopee</label>
-                                                                <input type="text" class="form-control" name="shopee"
-                                                                    id="shopee" value="{{ $item->shopee }}"
-                                                                    placeholder="Masukkan shopee buku pembelian ..."
-                                                                    required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="lazada" class="form-label">Link
-                                                                    Lazada</label>
-                                                                <input type="text" class="form-control" name="lazada"
-                                                                    id="lazada" value="{{ $item->lazada }}"
-                                                                    placeholder="Masukkan lazada buku pembelian ..."
-                                                                    required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="shopee" class="form-label">Tags</label>
-                                                                <input type="text" class="form-control" name="keyword"
-                                                                    id="keyword" value="{{ $item->keyword }}"
-                                                                    placeholder="Masukkan tags keyword product ..."
-                                                                    required>
-                                                                <p style="color:red"> Contoh: Agama, Yoga,</p>
-                                                            </div>
-
-
-                                                            <div class="mb-3">
-                                                                <label for="categoryStatus{{ $item->id }}"
-                                                                    class="form-label">Status Kategori</label>
-                                                                <select class="form-select" name="is_active"
-                                                                    id="categoryStatus{{ $item->id }}">
-                                                                    <option value="1"
-                                                                        {{ $item->is_active ? 'selected' : '' }}>Aktif
-                                                                    </option>
-                                                                    <option value="0"
-                                                                        {{ !$item->is_active ? 'selected' : '' }}>Tidak
-                                                                        Aktif</option>
-                                                                </select>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Edit Form Modal -->
 
                                         <form action="{{ url('admin/products/' . $item->id) }}" method="POST"
                                             class="d-inline"
@@ -390,6 +189,91 @@
         </div>
     </div>
     <!-- Gallery Modal -->
+
+    <!-- Global Edit Modal -->
+<div class="modal fade" id="editFormModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Produk</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" id="edit_id">
+
+                    <div class="mb-3">
+                        <label>Kategori</label>
+                        <select class="form-control" name="category_id" id="edit_category_id" required>
+                            @foreach ($categories as $c)
+                                <option value="{{ $c->id }}">{{ $c->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Judul</label>
+                        <input type="text" class="form-control" name="title" id="edit_title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Pengarang</label>
+                        <input type="text" class="form-control" name="author" id="edit_author" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Bintang</label>
+                        <input type="number" step="0.1" min="0" max="5" class="form-control"
+                               name="rating" id="edit_rating" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Harga</label>
+                        <input type="number" class="form-control" name="price" id="edit_price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Diskon</label>
+                        <input type="number" class="form-control" name="discount" id="edit_discount">
+                    </div>
+                    <div class="mb-3">
+                        <label>Deskripsi</label>
+                        <textarea class="form-control elm1" name="description" id="edit_description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label>Thumbnail</label>
+
+    <div id="edit_thumbnail_preview" class="mb-2"></div>
+                        <input type="file" class="form-control" name="thumbnail" id="edit_thumbnail">
+                    </div>
+                    <div class="mb-3">
+                        <label>Tokopedia</label>
+                        <input type="text" class="form-control" name="tokopedia" id="edit_tokopedia">
+                    </div>
+                    <div class="mb-3">
+                        <label>Shopee</label>
+                        <input type="text" class="form-control" name="shopee" id="edit_shopee">
+                    </div>
+                    <div class="mb-3">
+                        <label>Lazada</label>
+                        <input type="text" class="form-control" name="lazada" id="edit_lazada">
+                    </div>
+                    <div class="mb-3">
+                        <label>Tags</label>
+                        <input type="text" class="form-control" name="keyword" id="edit_keyword">
+                    </div>
+                    <div class="mb-3">
+                        <label>Status</label>
+                        <select class="form-control" name="is_active" id="edit_is_active">
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="editSubmitBtn">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 @section('js')
     <!-- Required datatable js -->
@@ -668,5 +552,89 @@
             $('#addProductForm')[0].reset();
             $('#ajaxAlert').addClass('d-none');
         });
+
+        // Klik tombol edit
+$(document).on('click', '.editProductBtn', function(e) {
+    e.preventDefault();
+    let id = $(this).data('id');
+
+    $.ajax({
+        url: "/admin/products/" + id + "/edit",
+        type: "GET",
+        success: function(response) {
+            if (response.success) {
+                let product = response.data;
+            if (product.thumbnail) {
+                $('#edit_thumbnail_preview').html(`
+                    <img src="/storage/${product.thumbnail}" 
+                        alt="${product.title}" 
+                        class="img-fluid rounded" 
+                        style="max-width: 200px; border:1px solid #ddd;">
+                `);
+            } else {
+                $('#edit_thumbnail_preview').html(`<small class="text-muted">Belum ada thumbnail</small>`);
+            }
+                $('#edit_id').val(product.id);
+                $('#edit_category_id').val(product.category_id);
+                $('#edit_title').val(product.title);
+                $('#edit_author').val(product.author);
+                $('#edit_rating').val(product.rating);
+                $('#edit_price').val(product.price);
+                $('#edit_discount').val(product.discount);
+                $('#edit_tokopedia').val(product.tokopedia);
+                $('#edit_shopee').val(product.shopee);
+                $('#edit_lazada').val(product.lazada);
+                $('#edit_keyword').val(product.keyword);
+                $('#edit_is_active').val(product.is_active);
+
+                // TinyMCE set content
+                if (tinymce.get('edit_description')) {
+                    tinymce.get('edit_description').setContent(product.description || "");
+                }
+
+                $('#editFormModal').modal('show');
+            } else {
+                Swal.fire("Error", "Data produk tidak ditemukan!", "error");
+            }
+        },
+        error: function() {
+            Swal.fire("Error", "Gagal mengambil data produk!", "error");
+        }
+    });
+});
+
+// Submit edit form via AJAX
+$('#editProductForm').on('submit', function(e) {
+    e.preventDefault();
+    let id = $('#edit_id').val();
+
+    // simpan isi TinyMCE
+    if (tinymce.get('edit_description')) {
+        tinymce.get('edit_description').save();
+    }
+
+    let formData = new FormData(this);
+
+    $.ajax({
+        url: "/admin/products/" + id,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            if (response.status) {
+                Swal.fire("Berhasil", "Produk berhasil diperbarui!", "success");
+                $('#editFormModal').modal('hide');
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                Swal.fire("Error", response.message || "Gagal update produk!", "error");
+            }
+        },
+        error: function(xhr) {
+            Swal.fire("Error", "Terjadi kesalahan!", "error");
+        }
+    });
+});
+
     </script>
 @endsection

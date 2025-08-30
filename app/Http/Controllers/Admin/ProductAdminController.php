@@ -16,7 +16,7 @@ class ProductAdminController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         $categories = Category::orderBy('name', 'ASC')->get();
         $datas = Product::orderBy('id', 'DESC')->get();
         return view('contents.admin.products.index', compact('categories', 'datas'));
@@ -39,14 +39,14 @@ class ProductAdminController extends Controller
         try {
 
             $slug = Str::slug($request->title);
-$originalSlug = $slug;
-$counter = 1;
+            $originalSlug = $slug;
+            $counter = 1;
 
-// cek apakah slug sudah ada di database
-while (Product::where('slug', $slug)->exists()) {
-    $slug = $originalSlug . '-' . $counter;
-    $counter++;
-}
+            // cek apakah slug sudah ada di database
+            while (Product::where('slug', $slug)->exists()) {
+                $slug = $originalSlug . '-' . $counter;
+                $counter++;
+            }
 
             Product::create([
                 'title'       => $request->title,
@@ -61,8 +61,8 @@ while (Product::where('slug', $slug)->exists()) {
                 'shopee'      => $request->shopee,
                 'keyword'     => $request->keyword,
                 'thumbnail'   => $request->file('thumbnail')
-                                    ? $request->file('thumbnail')->store('products', 'public')
-                                    : null,
+                    ? $request->file('thumbnail')->store('products', 'public')
+                    : null,
                 'is_active'   => $request->boolean('is_active'),
                 'slug'        => $slug,
             ]);
@@ -77,7 +77,6 @@ while (Product::where('slug', $slug)->exists()) {
 
             // Kalau request normal (via form biasa)
             return redirect('admin/products')->with('success', 'Produk berhasil ditambahkan.');
-            
         } catch (\Throwable $th) {
             if ($request->expectsJson()) {
                 return response()->json([
@@ -103,7 +102,11 @@ while (Product::where('slug', $slug)->exists()) {
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::find($id);
+        if (!$product) {
+            return response()->json(['success' => false], 404);
+        }
+        return response()->json(['success' => true, 'data' => $product]);
     }
 
     /**
@@ -121,22 +124,22 @@ while (Product::where('slug', $slug)->exists()) {
             'discount' => 'nullable|numeric|min:0',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'is_active' => 'boolean',
-              'tokopedia' => 'string',
-              'lazada' => 'string',
-                'shopee' => 'string',
-                'keyword' => 'string|nullable',
+            'tokopedia' => 'string',
+            'lazada' => 'string',
+            'shopee' => 'string',
+            'keyword' => 'string|nullable',
         ]);
-$slug = Str::slug($request->title);
-$originalSlug = $slug;
-$counter = rand(1,100);
-
-// cek apakah slug sudah ada di database
-while (Product::where('slug', $slug)->exists()) {
-    $slug = $originalSlug . '-' . $counter;
-    $counter++;
-}
+        $slug = Str::slug($request->title);
+        $originalSlug = $slug;
+        $counter = rand(1, 100);
+dd($request->file('thumbnail'));
+        // cek apakah slug sudah ada di database
+        while (Product::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
         try {
-            $product = Product::where('id',$id)->first();
+            $product = Product::where('id', $id)->first();
             $product->update([
                 'title' => $request->title,
                 'author' => $request->author,
@@ -144,19 +147,27 @@ while (Product::where('slug', $slug)->exists()) {
                 'category_id' => $request->category_id,
                 'price' => $request->price,
                 'rating' => $request->rating,
-                'tokopedia'=> $request->tokopedia,
-                'shopee'=> $request->shopee,
+                'tokopedia' => $request->tokopedia,
+                'shopee' => $request->shopee,
                 'lazada' => $request->lazada,
-                'keyword'=> $request->keyword,
+                'keyword' => $request->keyword,
 
                 'discount' => $request->discount,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : $product->thumbnail,
                 'is_active' => $request->is_active ? true : false,
                 'slug' => $slug,
             ]);
-            return redirect('admin/products')->with('success', 'Product updated successfully.');
+            // return redirect('admin/products')->with('success', 'Product updated successfully.');
+            return response()->json([
+                'status' => true,
+                'message' => "Product updated successfully"
+            ]);
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Failed to update product: ' . $th->getMessage());
+             return response()->json([
+                'status' => true,
+                'message' => 'Failed to update product: ' . $th->getMessage()
+            ]);
+            // return redirect()->back()->with('error', 'Failed to update product: ' . $th->getMessage());
         }
     }
 
