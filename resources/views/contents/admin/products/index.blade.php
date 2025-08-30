@@ -57,26 +57,32 @@
                                             <span class="badge bg-danger">Tidak Aktif</span>
                                         @endif
                                     </td>
-                                    <td>
-                                        <!-- Add this new button for gallery -->
-                                        <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#galleryModal{{ $item->id }}">
-                                            <i class="fas fa-images"></i> Gallery
-                                        </a>
-                                        <a href="#" class="btn btn-info btn-sm editProductBtn" data-id="{{ $item->id }}">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </a>
+                                   <td>
+    <div class="d-flex flex-wrap gap-2">
+        <!-- Gallery -->
+        <a href="#" class="btn btn-success btn-sm d-flex align-items-center" 
+           data-bs-toggle="modal" data-bs-target="#galleryModal{{ $item->id }}">
+            <i class="fas fa-images me-1"></i> Gallery
+        </a>
 
-                                        <form action="{{ url('admin/products/' . $item->id) }}" method="POST"
-                                            class="d-inline"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">
-                                                <i class="fas fa-trash-alt"></i> Hapus
-                                            </button>
-                                        </form>
-                                    </td>
+        <!-- Edit -->
+        <a href="#" class="btn btn-info btn-sm d-flex align-items-center editProductBtn" 
+           data-id="{{ $item->id }}">
+            <i class="fas fa-edit me-1"></i> Edit
+        </a>
+
+        <!-- Delete -->
+        <form action="{{ url('admin/products/' . $item->id) }}" 
+              method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center"
+                    onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
+                <i class="fas fa-trash-alt me-1"></i> Hapus
+            </button>
+        </form>
+    </div>
+</td>
                                 </tr>
                             @endforeach
                         </tbody>
