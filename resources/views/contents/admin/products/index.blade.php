@@ -205,7 +205,7 @@
                                                             <div class="mb-3">
                                                                 <label for="categoryName"
                                                                     class="form-label">Deskripsi</label>
-                                                                <textarea class="form-control elm1" name="description" required> {{ $item->description }} </textarea>
+                                                                <textarea class="form-control elm1" id="description" name="description" required> {{ $item->description }} </textarea>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="categoryName" class="form-label">Upload
@@ -229,20 +229,23 @@
                                                                     placeholder="Masukkan shopee buku pembelian ..."
                                                                     required>
                                                             </div>
-                                                                 <div class="mb-3">
-                                                        <label for="lazada" class="form-label">Link Lazada</label>
-                                                        <input type="text" class="form-control" name="lazada" id="lazada" value="{{ $item->lazada }}"
-                                                            placeholder="Masukkan lazada buku pembelian ..." required>
-                                                    </div>
+                                                            <div class="mb-3">
+                                                                <label for="lazada" class="form-label">Link
+                                                                    Lazada</label>
+                                                                <input type="text" class="form-control" name="lazada"
+                                                                    id="lazada" value="{{ $item->lazada }}"
+                                                                    placeholder="Masukkan lazada buku pembelian ..."
+                                                                    required>
+                                                            </div>
                                                             <div class="mb-3">
                                                                 <label for="shopee" class="form-label">Tags</label>
                                                                 <input type="text" class="form-control" name="keyword"
                                                                     id="keyword" value="{{ $item->keyword }}"
                                                                     placeholder="Masukkan tags keyword product ..."
                                                                     required>
-                                                                    <p style="color:red"> Contoh: Agama, Yoga,</p>
+                                                                <p style="color:red"> Contoh: Agama, Yoga,</p>
                                                             </div>
-                                               
+
 
                                                             <div class="mb-3">
                                                                 <label for="categoryStatus{{ $item->id }}"
@@ -299,7 +302,7 @@
                 </div>
                 <div class="modal-body">
                     {{-- <form action="{{ url('admin/products') }}" method="POST" enctype="multipart/form-data"> --}}
-                           <form id="addProductForm" method="POST" enctype="multipart/form-data">
+                    <form id="addProductForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="categoryName" class="form-label">Kategori</label>
@@ -361,16 +364,16 @@
                             <input type="text" class="form-control" name="shopee" id="shopee"
                                 placeholder="Masukkan shopee buku pembelian ..." required>
                         </div>
-                         <div class="mb-3">
+                        <div class="mb-3">
                             <label for="lazada" class="form-label">Link Lazada</label>
                             <input type="text" class="form-control" name="lazada" id="lazada"
                                 placeholder="Masukkan lazada buku pembelian ..." required>
                         </div>
-                            <div class="mb-3">
+                        <div class="mb-3">
                             <label for="lazada" class="form-label">Tags</label>
                             <input type="text" class="form-control" name="keyword" id="keyword"
                                 placeholder="Masukkan tag keyword ..." required>
-                                                                    <p style="color:red"> Contoh: Agama, Yoga,</p>
+                            <p style="color:red"> Contoh: Agama, Yoga,</p>
 
                         </div>
                         <div class="mb-3">
@@ -405,11 +408,9 @@
     <!-- Responsive examples -->
     <script src="{{ url('assets') }}/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ url('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-    <!--tinymce js-->
-{{-- <script src="https://cdn.tiny.cloud/1/ghn31ixjcwj75ngc15umk1jd81ah0sdhjmy659jb11ecxkxf/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script> --}}
     <!-- Datatable init js -->
     <script src="{{ url('assets') }}/js/pages/datatables.init.js"></script>
-<script src="{{ url('assets') }}/libs/tinymce/tinymce.min.js"></script>
+    <script src="{{ url('assets') }}/libs/tinymce/tinymce.min.js"></script>
 
     <script>
         // Pastikan DOM sudah sepenuhnya dimuat
@@ -573,112 +574,112 @@
             });
         });
 
-         // AJAX untuk form tambah produk
-          $('#addProductForm').on('submit', function(e) {
-    e.preventDefault();
-    
-    // Ambil konten dari TinyMCE
-    if (typeof tinymce !== 'undefined' && tinymce.get('description')) {
-        tinymce.get('description').save();
-    }
-    
-    var formData = new FormData(this);
-    var submitButton = $('#submitButton');
-    var originalButtonText = submitButton.html();
-    
-    // Tampilkan loading state
-    submitButton.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Menyimpan...');
-    
-    $.ajax({
-        url: window.location.href,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            if (response.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: response.message || 'Produk berhasil ditambahkan!',
-                    timer: 1500,
-                    showConfirmButton: false
-                });
+        // AJAX untuk form tambah produk
+        $('#addProductForm').on('submit', function(e) {
+            e.preventDefault();
 
-                // Reset form
-                $('#addProductForm')[0].reset();
-
-                // Tutup modal
-                $('#addFormModal').modal('hide');
-
-                // Reload halaman setelah 1.5 detik
-                setTimeout(function() {
-                    location.reload();
-                }, 1500);
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal!',
-                    text: response.message || 'Terjadi kesalahan saat menambahkan produk.'
-                });
+            // Ambil konten dari TinyMCE
+            if (typeof tinymce !== 'undefined' && tinymce.get('description')) {
+                tinymce.get('description').save();
             }
-        },
-        error: function(xhr) {
-            let errorMessage = 'Terjadi kesalahan saat menyimpan data.';
 
-            if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
-                // Jika ada error validasi Laravel
-                let errors = xhr.responseJSON.errors;
-                errorMessage = '';
-                $.each(errors, function(key, value) {
-                    errorMessage += value[0] + '<br>';
-                });
+            var formData = new FormData(this);
+            var submitButton = $('#submitButton');
+            var originalButtonText = submitButton.html();
 
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Validasi Gagal!',
-                    html: errorMessage
-                });
-            } else if (xhr.responseJSON && xhr.responseJSON.message) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: xhr.responseJSON.message
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: errorMessage
-                });
-            }
-        },
-        complete: function() {
-            // Kembalikan state button ke semula
-            submitButton.prop('disabled', false).html(originalButtonText);
-        }
-    });
-});
+            // Tampilkan loading state
+            submitButton.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Menyimpan...');
 
-            
-            // Fungsi untuk menampilkan alert
-            function showAlert(type, message) {
-                var alert = $('#ajaxAlert');
-                alert.removeClass('d-none alert-success alert-danger')
-                     .addClass('alert-' + type)
-                     .html(message);
-                
-                // Scroll ke atas untuk melihat alert
-                $('html, body').animate({
-                    scrollTop: alert.offset().top - 100
-                }, 500);
-            }
-            
-            // Reset form ketika modal ditutup
-            $('#addFormModal').on('hidden.bs.modal', function() {
-                $('#addProductForm')[0].reset();
-                $('#ajaxAlert').addClass('d-none');
+            $.ajax({
+                url: window.location.href,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: response.message || 'Produk berhasil ditambahkan!',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+
+                        // Reset form
+                        $('#addProductForm')[0].reset();
+
+                        // Tutup modal
+                        $('#addFormModal').modal('hide');
+
+                        // Reload halaman setelah 1.5 detik
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: response.message ||
+                                'Terjadi kesalahan saat menambahkan produk.'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    let errorMessage = 'Terjadi kesalahan saat menyimpan data.';
+
+                    if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
+                        // Jika ada error validasi Laravel
+                        let errors = xhr.responseJSON.errors;
+                        errorMessage = '';
+                        $.each(errors, function(key, value) {
+                            errorMessage += value[0] + '<br>';
+                        });
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validasi Gagal!',
+                            html: errorMessage
+                        });
+                    } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: xhr.responseJSON.message
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: errorMessage
+                        });
+                    }
+                },
+                complete: function() {
+                    // Kembalikan state button ke semula
+                    submitButton.prop('disabled', false).html(originalButtonText);
+                }
             });
+        });
 
+
+        // Fungsi untuk menampilkan alert
+        function showAlert(type, message) {
+            var alert = $('#ajaxAlert');
+            alert.removeClass('d-none alert-success alert-danger')
+                .addClass('alert-' + type)
+                .html(message);
+
+            // Scroll ke atas untuk melihat alert
+            $('html, body').animate({
+                scrollTop: alert.offset().top - 100
+            }, 500);
+        }
+
+        // Reset form ketika modal ditutup
+        $('#addFormModal').on('hidden.bs.modal', function() {
+            $('#addProductForm')[0].reset();
+            $('#ajaxAlert').addClass('d-none');
+        });
     </script>
 @endsection
