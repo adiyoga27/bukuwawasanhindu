@@ -1,4 +1,8 @@
 @extends('layouts.admin')
+@section('js')
+<script src="{{ url('assets') }}/libs/tinymce/tinymce.min.js"></script>
+    
+@endsection
 @section('content')
     <!-- start page title -->
     <div class="row">
@@ -407,7 +411,6 @@
     <script src="{{ url('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
     <!--tinymce js-->
 {{-- <script src="https://cdn.tiny.cloud/1/ghn31ixjcwj75ngc15umk1jd81ah0sdhjmy659jb11ecxkxf/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script> --}}
-<script src="{{ url('assets') }}/libs/tinymce/tinymce.min.js"></script>
     <!-- Datatable init js -->
     <script src="{{ url('assets') }}/js/pages/datatables.init.js"></script>
 
