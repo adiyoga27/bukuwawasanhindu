@@ -231,7 +231,8 @@
     <script src="{{ url('assets') }}/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
     <!--tinymce js-->
     {{-- <script src="{{ url('assets') }}/libs/tinymce/tinymce.min.js"></script> --}}
-<script src="https://cdn.tiny.cloud/1/ghn31ixjcwj75ngc15umk1jd81ah0sdhjmy659jb11ecxkxf/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+{{-- <script src="https://cdn.tiny.cloud/1/ghn31ixjcwj75ngc15umk1jd81ah0sdhjmy659jb11ecxkxf/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script> --}}
+<script src="{{ url('assets') }}/libs/tinymce/tinymce.min.js"></script>
 
     <!-- init js -->
     {{-- <script src="{{ url('assets') }}/js/pages/form-editor.init.js"></script> --}}
