@@ -1,116 +1,161 @@
 @extends('layouts/guest')
 @section('css')
-     
-<title>Buku Wawasan Hindu | Sebuah Buku Sejuta Pencerahan Hindu</title>
-<meta name="title" content="Buku Wawasan Hindu | Sebuah Buku Sejuta Pencerahan Hindu">
-<meta name="description" content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya yang menghadirkan beragam koleksi bacaan seputar ajaran, filsafat, budaya, dan spiritualitas Hindu. Temukan kebijaksanaan dalam koleksi buku dan artikel kami.">
-<meta name="keywords" content="buku Hindu, literatur Hindu, filsafat Hindu, budaya Hindu, dharma, yoga, meditasi, spiritualitas Hindu, kitab suci Hindu, agama Hindu, Bali, Nusantara">
-<meta name="author" content="Buku Wawasan Hindu">
-<meta name="robots" content="index, follow">
-<meta name="language" content="id">
+    <title>Buku Wawasan Hindu | Sebuah Buku Sejuta Pencerahan Hindu</title>
+    <meta name="title" content="Buku Wawasan Hindu | Sebuah Buku Sejuta Pencerahan Hindu">
+    <meta name="description"
+        content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya yang menghadirkan beragam koleksi bacaan seputar ajaran, filsafat, budaya, dan spiritualitas Hindu. Temukan kebijaksanaan dalam koleksi buku dan artikel kami.">
+    <meta name="keywords"
+        content="buku Hindu, literatur Hindu, filsafat Hindu, budaya Hindu, dharma, yoga, meditasi, spiritualitas Hindu, kitab suci Hindu, agama Hindu, Bali, Nusantara">
+    <meta name="author" content="Buku Wawasan Hindu">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="id">
 
-{{-- Open Graph / Facebook --}}
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{ url()->current() }}">
-<meta property="og:title" content="Buku Wawasan Hindu">
-<meta property="og:description" content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya dengan koleksi teks suci, tafsir, panduan upacara, sejarah Hindu, hingga literatur populer tentang dharma, yoga, dan meditasi.">
-<meta property="og:image" content="{{ url('assets/images/logo.jpg') }}">
+    {{-- Open Graph / Facebook --}}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="Buku Wawasan Hindu">
+    <meta property="og:description"
+        content="Buku Wawasan Hindu adalah toko buku Hindu online terpercaya dengan koleksi teks suci, tafsir, panduan upacara, sejarah Hindu, hingga literatur populer tentang dharma, yoga, dan meditasi.">
+    <meta property="og:image" content="{{ url('assets/images/logo.jpg') }}">
 
-{{-- Twitter --}}
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="{{ url()->current() }}">
-<meta name="twitter:title" content="Buku Wawasan Hindu">
-<meta name="twitter:description" content="Temukan kebijaksanaan dalam koleksi buku dan artikel kami tentang agama Hindu, filosofi, budaya, dan spiritualitas.">
-<meta name="twitter:image" content="{{ url('assets/images/logo.jpg') }}">
+    {{-- Twitter --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="Buku Wawasan Hindu">
+    <meta name="twitter:description"
+        content="Temukan kebijaksanaan dalam koleksi buku dan artikel kami tentang agama Hindu, filosofi, budaya, dan spiritualitas.">
+    <meta name="twitter:image" content="{{ url('assets/images/logo.jpg') }}">
 
-{{-- Additional --}}
-<link rel="canonical" href="{{ url()->current() }}">
-<meta name="theme-color" content="#8B0000">
+    {{-- Additional --}}
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta name="theme-color" content="#8B0000">
 
 
-<link rel="icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
-<link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
-   
+    <link rel="icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
+@endsection
+@section('css')
+    <style>
+        .hero-search input {
+            border-radius: 30px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .hero-search button {
+            border-radius: 30px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-search form {
+                flex-direction: column;
+            }
+
+            .hero-search input {
+                width: 100% !important;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero-search button {
+                width: 100%;
+            }
+        }
+    </style>
 @endsection
 @section('content')
-    
     <!-- Hero Section -->
     <section class="hero-section d-flex align-items-center">
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-content">
                 <h1 class="display-4 fw-bold mb-4">Jelajahi Wawasan Hindu</h1>
-                <p class="lead mb-4">Temukan kebijaksanaan dalam koleksi buku dan artikel kami yang lengkap tentang agama Hindu, filosofi, dan budaya.</p>
+                <p class="lead mb-4">Temukan kebijaksanaan dalam koleksi buku dan artikel kami yang lengkap tentang agama
+                    Hindu, filosofi, dan budaya.</p>
                 <a href="{{ url('book') }}" class="btn btn-accent">Jelajahi Sekarang</a>
+              
             </div>
+            
         </div>
+        
     </section>
-
+  <div class="hero-search mt-4">
+                    <form action="{{ url('book') }}" method="GET" class="d-flex justify-content-center">
+                        <input type="text" name="search" class="form-control form-control-lg w-50"
+                            placeholder="Cari buku Hindu..." value="{{ request('search') }}">
+                        <button type="submit" class="btn btn-accent ms-2">
+                            <i class="fas fa-search"></i> Cari
+                        </button>
+                    </form>
+                </div>
     <!-- Popular Books Section -->
     <section class="container">
         <h2 class="section-title">Buku Terbaru</h2>
-        
+
         <div id="booksCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 @php $chunks = $books->take(10)->chunk(4); @endphp
-                @foreach($chunks as $chunk)
-                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <div class="row g-4">
-                        @foreach($chunk as $b)
-                        <div class="col-md-3">
-                            <div class="card h-100">
-                                <div class="book-img">
-                        <a href="{{ url('product') }}/{{ $b->slug }}" style="text-decoration:none">
+                @foreach ($chunks as $chunk)
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                        <div class="row g-4">
+                            @foreach ($chunk as $b)
+                                <div class="col-md-3">
+                                    <div class="card h-100">
+                                        <div class="book-img">
+                                            <a href="{{ url('product') }}/{{ $b->slug }}"
+                                                style="text-decoration:none">
 
-                                    <img src="{{ url('storage') }}/{{ $b->thumbnail }}" class="card-img-top" alt="{{ $b->title }}">
-                        </a>
-                                </div>
-                                <div class="card-body">
-                        <a href="{{ url('product') }}/{{ $b->slug }}" style="text-decoration:none">
+                                                <img src="{{ url('storage') }}/{{ $b->thumbnail }}" class="card-img-top"
+                                                    alt="{{ $b->title }}">
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="{{ url('product') }}/{{ $b->slug }}"
+                                                style="text-decoration:none">
 
-                                    <h5 class="card-title">{{ $b->title }}</h5>
-                        </a>
+                                                <h5 class="card-title">{{ $b->title }}</h5>
+                                            </a>
 
-                                    <p class="card-text text-muted small">oleh {{ $b->author }}</p>
-                                    
-                                    <div class="d-flex align-items-center mb-2">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $b->rating)
-                                                <i class="fas fa-star text-warning me-1"></i>
-                                            @elseif ($i - 0.5 <= $b->rating)
-                                                <i class="fas fa-star-half-alt text-warning me-1"></i>
+                                            <p class="card-text text-muted small">oleh {{ $b->author }}</p>
+
+                                            <div class="d-flex align-items-center mb-2">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= $b->rating)
+                                                        <i class="fas fa-star text-warning me-1"></i>
+                                                    @elseif ($i - 0.5 <= $b->rating)
+                                                        <i class="fas fa-star-half-alt text-warning me-1"></i>
+                                                    @else
+                                                        <i class="far fa-star text-warning me-1"></i>
+                                                    @endif
+                                                @endfor
+                                                <span class="ms-1 small">{{ number_format($b->rating, 1) }}</span>
+                                            </div>
+
+                                            @if ($b->discount > 0)
+                                                <p class="h5 text-primary mb-3">
+                                                    Rp {{ number_format($b->discount, 0, ',', '.') }}
+                                                    <span class="text-decoration-line-through text-muted small ms-2">
+                                                        Rp {{ number_format($b->price, 0, ',', '.') }}
+                                                    </span>
+                                                </p>
                                             @else
-                                                <i class="far fa-star text-warning me-1"></i>
+                                                <p class="h5 text-primary mb-3">
+                                                    Rp {{ number_format($b->price, 0, ',', '.') }}
+                                                </p>
                                             @endif
-                                        @endfor
-                                        <span class="ms-1 small">{{ number_format($b->rating, 1) }}</span>
+
+                                            <button class="btn btn-primary w-100" id="add-to-whatsapp"
+                                                data-book-id="{{ $b->id }}" data-book-title="{{ $b->title }}"
+                                                data-price="{{ $b->discount > 0 ? $b->discount : $b->price }}">
+                                                Beli Sekarang
+                                            </button>
+                                        </div>
                                     </div>
-                                    
-                                    @if ($b->discount > 0)
-                                        <p class="h5 text-primary mb-3">
-                                            Rp {{ number_format($b->discount, 0, ',', '.') }}
-                                            <span class="text-decoration-line-through text-muted small ms-2">
-                                                Rp {{ number_format($b->price, 0, ',', '.') }}
-                                            </span>
-                                        </p>
-                                    @else
-                                        <p class="h5 text-primary mb-3">
-                                            Rp {{ number_format($b->price, 0, ',', '.') }}
-                                        </p>
-                                    @endif
-                                    
-                                    <button class="btn btn-primary w-100" id="add-to-whatsapp" 
-                                        data-book-id="{{ $b->id }}"
-                                        data-book-title="{{ $b->title }}"
-                                        data-price="{{ $b->discount > 0 ? $b->discount : $b->price }}">
-                                        Beli Sekarang
-                                    </button>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
-                        @endforeach
                     </div>
-                </div>
                 @endforeach
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#booksCarousel" data-bs-slide="prev">
@@ -122,8 +167,9 @@
                 <span class="visually-hidden">Next</span>
             </button>
             <div class="carousel-indicators position-static mt-4">
-                @foreach($chunks as $chunk)
-                <button type="button" data-bs-target="#booksCarousel" data-bs-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></button>
+                @foreach ($chunks as $chunk)
+                    <button type="button" data-bs-target="#booksCarousel" data-bs-slide-to="{{ $loop->index }}"
+                        class="{{ $loop->first ? 'active' : '' }}"></button>
                 @endforeach
             </div>
         </div>
@@ -133,69 +179,59 @@
     <section class="bg-light py-5 my-5">
         <div class="container">
             <h2 class="section-title">Artikel Terbaru</h2>
-            
+
             <div id="articlesCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     @php $articleChunks = $articles->take(10)->chunk(3); @endphp
-                    @foreach($articleChunks as $chunk)
-                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                        <div class="row g-4">
-                            @foreach($chunk as $art)
-                            <div class="col-md-4">
-                                <div class="card h-100">
-                                    <div class="article-img position-relative">
-                                        <img src="{{ url('storage') }}/{{ $art->featured_image }}" class="card-img-top" alt="{{ $art->title }}">
-                                        <span class="article-category">{{ $art->category?->name }}</span>
-                                    </div>
-                                    <div class="card-body d-flex flex-column">
-                                        <div class="d-flex align-items-center text-muted small mb-2">
-                                            <i class="far fa-calendar-alt me-2"></i>
-                                            {{ $art->created_at->format('M d, Y') }}
+                    @foreach ($articleChunks as $chunk)
+                        <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                            <div class="row g-4">
+                                @foreach ($chunk as $art)
+                                    <div class="col-md-4">
+                                        <div class="card h-100">
+                                            <div class="article-img position-relative">
+                                                <img src="{{ url('storage') }}/{{ $art->featured_image }}"
+                                                    class="card-img-top" alt="{{ $art->title }}">
+                                                <span class="article-category">{{ $art->category?->name }}</span>
+                                            </div>
+                                            <div class="card-body d-flex flex-column">
+                                                <div class="d-flex align-items-center text-muted small mb-2">
+                                                    <i class="far fa-calendar-alt me-2"></i>
+                                                    {{ $art->created_at->format('M d, Y') }}
+                                                </div>
+                                                <h5 class="card-title">{{ $art->title }}</h5>
+                                                <p class="card-text text-muted">
+                                                    {{ Str::limit(strip_tags(str_replace('&nbsp;', ' ', $art->content)), 100) }}
+                                                </p>
+                                                <a href="{{ url('articles/' . $art->slug) }}"
+                                                    class="btn btn-link text-primary mt-auto ps-0 text-decoration-none">
+                                                    Baca Selengkapnya <i class="fas fa-arrow-right ms-2"></i>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <h5 class="card-title">{{ $art->title }}</h5>
-                                        <p class="card-text text-muted">   {{ Str::limit(strip_tags(str_replace('&nbsp;', ' ', $art->content)), 100) }}</p>
-                                        <a href="{{ url('articles/'.$art->slug) }}" class="btn btn-link text-primary mt-auto ps-0 text-decoration-none">
-                                            Baca Selengkapnya <i class="fas fa-arrow-right ms-2"></i>
-                                        </a>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
-                            @endforeach
                         </div>
-                    </div>
                     @endforeach
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#articlesCarousel" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#articlesCarousel"
+                    data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#articlesCarousel" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#articlesCarousel"
+                    data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
                 <div class="carousel-indicators position-static mt-4">
-                    @foreach($articleChunks as $chunk)
-                    <button type="button" data-bs-target="#articlesCarousel" data-bs-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></button>
+                    @foreach ($articleChunks as $chunk)
+                        <button type="button" data-bs-target="#articlesCarousel" data-bs-slide-to="{{ $loop->index }}"
+                            class="{{ $loop->first ? 'active' : '' }}"></button>
                     @endforeach
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Newsletter Section -->
-    {{-- <section class="container">
-        <div class="newsletter-section position-relative overflow-hidden">
-            <div class="position-relative z-index-1">
-                <h2 class="mb-4">Berlangganan Newsletter</h2>
-                <p class="mb-5 mx-auto" style="max-width: 600px;">Dapatkan update terbaru tentang buku-buku Hindu, artikel, dan promo menarik langsung ke email Anda.</p>
-                
-                <form class="newsletter-form d-flex justify-content-center">
-                    <div class="input-group" style="max-width: 500px;">
-                        <input type="email" class="form-control" placeholder="Masukkan alamat email Anda">
-                        <button class="btn btn-accent" type="submit">Berlangganan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section> --}}
 @endsection
