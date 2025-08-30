@@ -132,7 +132,6 @@ class ProductAdminController extends Controller
         $slug = Str::slug($request->title);
         $originalSlug = $slug;
         $counter = rand(1, 100);
-dd($request->file('thumbnail'));
         // cek apakah slug sudah ada di database
         while (Product::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $counter;
