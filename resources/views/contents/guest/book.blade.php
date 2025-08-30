@@ -3,11 +3,13 @@
     <title>Koleksi Buku Hindu Kami - Buku Wawasan Hindu</title>
     <link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
     <meta name="title" content="Koleksi Buku Hindu Kami">
-<meta name="description" content="Temukan wawasan Hindu berharga dalam membuka cakrawala pengetahuan, filsafat , spritualitas , budaya , dan  bathin melalui rangkaian buku buku pilihan kami.">
-<meta name="keywords" content="buku Hindu, literatur Hindu, filsafat Hindu, budaya Hindu, dharma, yoga, meditasi, spiritualitas Hindu, kitab suci Hindu, agama Hindu, Bali, Nusantara">
-<meta name="author" content="Buku Wawasan Hindu">
-<meta name="robots" content="index, follow">
-<meta name="language" content="id">
+    <meta name="description"
+        content="Temukan wawasan Hindu berharga dalam membuka cakrawala pengetahuan, filsafat , spritualitas , budaya , dan  bathin melalui rangkaian buku buku pilihan kami.">
+    <meta name="keywords"
+        content="buku Hindu, literatur Hindu, filsafat Hindu, budaya Hindu, dharma, yoga, meditasi, spiritualitas Hindu, kitab suci Hindu, agama Hindu, Bali, Nusantara">
+    <meta name="author" content="Buku Wawasan Hindu">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="id">
     <style>
         :root {
             --primary: #4f6cec;
@@ -19,7 +21,7 @@
             --border-radius: 12px;
             --transition: all 0.3s ease;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f9f9f9;
@@ -39,14 +41,15 @@
         .navbar-brand i {
             color: var(--accent);
         }
-.contact-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+
+        .contact-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
             height: 300px;
         }
-       
+
 
         .sidebar {
             background: white;
@@ -82,7 +85,7 @@
 
         .category-list li {
             padding: 0.7rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .category-list li:last-child {
@@ -224,11 +227,11 @@
             margin-bottom: 1rem;
         }
 
-          /* Custom Pagination Styles */
+        /* Custom Pagination Styles */
         .pagination-container {
             padding: 1.5rem 0;
         }
-        
+
         .pagination {
             --bs-pagination-color: var(--secondary);
             --bs-pagination-hover-color: var(--primary);
@@ -238,7 +241,7 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-        
+
         .pagination .page-link {
             border-radius: var(--border-radius);
             margin: 0.2rem;
@@ -252,22 +255,22 @@
             border: none;
             box-shadow: var(--card-shadow);
         }
-        
+
         .pagination .page-link:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
-        
+
         .pagination .page-item.active .page-link {
             font-weight: 600;
         }
-        
+
         .pagination .page-item:first-child .page-link,
         .pagination .page-item:last-child .page-link {
             min-width: auto;
             padding: 0 1rem;
         }
-        
+
         .pagination-mobile-info {
             display: none;
             text-align: center;
@@ -275,12 +278,111 @@
             color: #6c757d;
             font-size: 0.875rem;
         }
-        
+
         .pagination-summary {
             text-align: center;
             margin-bottom: 1rem;
             color: var(--secondary);
             font-size: 0.9rem;
+        }
+
+        .search-sort-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 45px 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(79, 108, 236, 0.25);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+            cursor: pointer;
+        }
+
+        .sort-container {
+            position: relative;
+        }
+
+        .sort-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: white;
+            border: 1px solid #ddd;
+            color: var(--dark);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .sort-button:hover {
+            background-color: #f8f9fa;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .sort-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 10px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 10px 0;
+            min-width: 200px;
+            z-index: 1000;
+            /* Pastikan z-index tinggi */
+            display: none;
+        }
+
+        .sort-options.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .sort-option {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            text-decoration: none;
+            color: var(--dark);
+        }
+
+        .sort-option:hover {
+            background-color: #f8f9fa;
+            color: var(--primary);
+        }
+
+        .sort-option.active {
+            color: var(--primary);
+            font-weight: 600;
+            background-color: rgba(79, 108, 236, 0.1);
         }
 
         @media (max-width: 992px) {
@@ -293,9 +395,18 @@
             .hero-section {
                 padding: 80px 0;
             }
-            
+
             .book-img {
                 height: 250px;
+            }
+
+            .search-sort-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .sort-container {
+                align-self: flex-end;
             }
         }
 
@@ -303,10 +414,11 @@
             .hero-section {
                 padding: 60px 0;
             }
-            
+
             .book-img {
                 height: 200px;
             }
+
             .pagination .page-link {
                 min-width: 2.2rem;
                 height: 2.2rem;
@@ -314,22 +426,20 @@
                 padding: 0.4rem 0.6rem;
                 margin: 0.1rem;
             }
-            
+
             .pagination .page-item:first-child .page-link,
             .pagination .page-item:last-child .page-link {
                 padding: 0.4rem 0.8rem;
             }
-            
+
             .pagination-mobile-info {
                 display: block;
             }
-            
+
             .pagination-summary {
                 font-size: 0.8rem;
             }
         }
-
-        
     </style>
 @endsection
 @section('content')
@@ -337,35 +447,86 @@
     <section class="contact-hero d-flex align-items-center justify-content-center text-white">
         <div class="container text-center">
             <h1 class="display-4 fw-bold mb-3">Koleksi Buku Hindu Kami</h1>
-            <p class="lead">Temukan wawasan Hindu berharga dalam membuka cakrawala pengetahuan, filsafat , spritualitas , budaya , dan  bathin melalui rangkaian buku buku pilihan kami.</p>
+            <p class="lead">Temukan wawasan Hindu berharga dalam membuka cakrawala pengetahuan, filsafat , spritualitas ,
+                budaya , dan bathin melalui rangkaian buku buku pilihan kami.</p>
         </div>
     </section>
-<div class="container py-5">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-lg-3">
-            <div class="sidebar">
-                <h4 class="sidebar-title">Kategori Buku</h4>
-                <ul class="category-list">
-                    <li><a href="{{ url('/book') }}"><i class="fas fa-book"></i> Semua Kategori</a></li>
-                    @foreach($categories as $category)
-                        <li><a href="{{ url('book?category='.$category->slug) }}"><i class="fas fa-{{ $category->icon ?? 'bookmark' }}"></i> {{ $category->name }}</a></li>
-                    @endforeach
-                </ul>
+    <div class="container py-5">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3">
+                <div class="sidebar">
+                    <h4 class="sidebar-title">Kategori Buku</h4>
+                    <ul class="category-list">
+                        <li><a href="{{ url('/book') }}"><i class="fas fa-book"></i> Semua Kategori</a></li>
+                        @foreach ($categories as $category)
+                            <li><a href="{{ url('book?category=' . $category->slug) }}"><i
+                                        class="fas fa-{{ $category->icon ?? 'bookmark' }}"></i> {{ $category->name }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                <div class="sidebar">
+                    <h4 class="sidebar-title">Butuh Bantuan?</h4>
+                    <p class="mb-3">Tim kami siap membantu Anda menemukan buku yang tepat.</p>
+                    <a href="{{ url('contact') }}" class="btn btn-primary w-100">
+                        <i class="fas fa-envelope me-2"></i> Hubungi Kami
+                    </a>
+                </div>
             </div>
-            
-            <div class="sidebar">
-                <h4 class="sidebar-title">Butuh Bantuan?</h4>
-                <p class="mb-3">Tim kami siap membantu Anda menemukan buku yang tepat.</p>
-                <a href="{{ url('contact') }}" class="btn btn-primary w-100">
-                    <i class="fas fa-envelope me-2"></i> Hubungi Kami
-                </a>
-            </div>
-        </div>
-        
-        <!-- Book List -->
-        <div class="col-lg-9">
-            <div class="d-flex justify-content-end mb-4">
+
+            <!-- Book List -->
+            <div class="col-lg-9">
+
+                <div class="search-sort-container">
+                    <!-- Search Box -->
+                    <div class="search-box">
+                        <form method="GET" action="{{ url('book') }}">
+                            <input type="text" class="search-input" name="search" placeholder="Cari buku..."
+                                value="{{ request('search') }}">
+                            <div class="search-icon" onclick="this.closest('form').submit()">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            {{-- jaga agar sort/category tetap ikut --}}
+                            @if (request('sort'))
+                                <input type="hidden" name="sort" value="{{ request('sort') }}">
+                            @endif
+                            @if (request('category'))
+                                <input type="hidden" name="category" value="{{ request('category') }}">
+                            @endif
+                        </form>
+                    </div>
+
+                    <!-- Sort Button dan Options -->
+                    <div class="sort-container">
+                        <div class="sort-button" id="sortButton">
+                            <i class="fas fa-sort"></i>
+                        </div>
+                        <div class="sort-options" id="sortOptions">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'latest']) }}"
+                                class="sort-option {{ request('sort', 'latest') == 'latest' ? 'active' : '' }}"
+                                data-sort="latest">
+                                <i class="fas fa-clock me-2"></i> Terbaru
+                            </a>
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'price_asc']) }}"
+                                class="sort-option {{ request('sort') == 'price_asc' ? 'active' : '' }}"
+                                data-sort="price_asc">
+                                <i class="fas fa-arrow-up me-2"></i> Harga: Rendah ke Tinggi
+                            </a>
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'price_desc']) }}"
+                                class="sort-option {{ request('sort') == 'price_desc' ? 'active' : '' }}"
+                                data-sort="price_desc">
+                                <i class="fas fa-arrow-down me-2"></i> Harga: Tinggi ke Rendah
+                            </a>
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'rating']) }}"
+                                class="sort-option {{ request('sort') == 'rating' ? 'active' : '' }}" data-sort="rating">
+                                <i class="fas fa-star me-2"></i> Rating Tertinggi
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="d-flex justify-content-end mb-4">
                 <form method="GET" action="{{ url('book/') }}" class="w-100">
                     <div class="input-group">
                         <select class="form-select sort-select" name="sort" onchange="this.form.submit()">
@@ -376,80 +537,82 @@
                         </select>
                     </div>
                 </form>
-            </div>
-            
-            @if($books->isEmpty())
-                <div class="empty-state">
-                    <i class="fas fa-book-open"></i>
-                    <h4>Tidak ada buku dalam kategori ini</h4>
-                    <p>Silakan cek kategori lainnya atau hubungi kami untuk informasi lebih lanjut.</p>
-                    <a href="{{ url('/') }}" class="btn btn-primary mt-3">
-                        <i class="fas fa-arrow-left me-2"></i> Kembali ke Beranda
-                    </a>
-                </div>
-            @else
-                <div class="row">
-                    @foreach($books as $book)
-                        <div class="col-md-4 col-sm-6">
-                                    <a href="{{ url('product/'.$book->slug) }}" style="color: inherit; text-decoration: none;">
-                            
-                            <div class="book-card">
-                                <div class="book-img">
+            </div> --}}
 
-                                    <img src="{{ url('storage') }}/{{ $book->thumbnail }}" alt="{{ $book->title }}">
-                                    @if($book->discount > 0)
-                                        <span class="discount-badge">-{{ round(($book->price - $book->discount)/$book->price * 100) }}%</span>
-                                    @endif
-                                </div>
-                                <div class="book-info">
-                                    <h5 class="book-title">{{ $book->title }}</h5>
-                                    <p class="book-author">{{ $book->author }}</p>
-                                    
-                                    <div class="book-rating">
-                                        <div class="stars">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                @if ($i <= $book->rating)
-                                                    <i class="fas fa-star"></i>
-                                                @elseif ($i - 0.5 <= $book->rating)
-                                                    <i class="fas fa-star-half-alt"></i>
-                                                @else
-                                                    <i class="far fa-star"></i>
-                                                @endif
-                                            @endfor
+                @if ($books->isEmpty())
+                    <div class="empty-state">
+                        <i class="fas fa-book-open"></i>
+                        <h4>Tidak ada buku dalam kategori ini</h4>
+                        <p>Silakan cek kategori lainnya atau hubungi kami untuk informasi lebih lanjut.</p>
+                        <a href="{{ url('/') }}" class="btn btn-primary mt-3">
+                            <i class="fas fa-arrow-left me-2"></i> Kembali ke Beranda
+                        </a>
+                    </div>
+                @else
+                    <div class="row">
+                        @foreach ($books as $book)
+                            <div class="col-md-4 col-sm-6">
+                                <a href="{{ url('product/' . $book->slug) }}" style="color: inherit; text-decoration: none;">
+
+                                    <div class="book-card">
+                                        <div class="book-img">
+
+                                            <img src="{{ url('storage') }}/{{ $book->thumbnail }}"
+                                                alt="{{ $book->title }}">
+                                            @if ($book->discount > 0)
+                                                <span
+                                                    class="discount-badge">-{{ round((($book->price - $book->discount) / $book->price) * 100) }}%</span>
+                                            @endif
                                         </div>
-                                        <span class="ms-2 small">{{ number_format($book->rating, 1) }}</span>
+                                        <div class="book-info">
+                                            <h5 class="book-title">{{ $book->title }}</h5>
+                                            <p class="book-author">{{ $book->author }}</p>
+
+                                            <div class="book-rating">
+                                                <div class="stars">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $book->rating)
+                                                            <i class="fas fa-star"></i>
+                                                        @elseif ($i - 0.5 <= $book->rating)
+                                                            <i class="fas fa-star-half-alt"></i>
+                                                        @else
+                                                            <i class="far fa-star"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                                <span class="ms-2 small">{{ number_format($book->rating, 1) }}</span>
+                                            </div>
+
+                                            @if ($book->discount > 0)
+                                                <p class="book-price">
+                                                    Rp {{ number_format($book->discount, 0, ',', '.') }}
+                                                    <span class="original-price">
+                                                        Rp {{ number_format($book->price, 0, ',', '.') }}
+                                                    </span>
+                                                </p>
+                                            @else
+                                                <p class="book-price">
+                                                    Rp {{ number_format($book->price, 0, ',', '.') }}
+                                                </p>
+                                            @endif
+
+                                            <a href="{{ url('product/' . $book->slug) }}" class="btn btn-primary w-100">
+                                                Lihat Detail
+                                            </a>
+                                        </div>
+
                                     </div>
-                                    
-                                    @if($book->discount > 0)
-                                        <p class="book-price">
-                                            Rp {{ number_format($book->discount, 0, ',', '.') }}
-                                            <span class="original-price">
-                                                Rp {{ number_format($book->price, 0, ',', '.') }}
-                                            </span>
-                                        </p>
-                                    @else
-                                        <p class="book-price">
-                                            Rp {{ number_format($book->price, 0, ',', '.') }}
-                                        </p>
-                                    @endif
-                                    
-                                    <a href="{{ url('product/'.$book->slug) }}" class="btn btn-primary w-100">
-                                        Lihat Detail
-                                    </a>
-                                </div>
+                                </a>
 
                             </div>
-                                    </a>
+                        @endforeach
+                    </div>
 
-                        </div>
-                    @endforeach
-                </div>
-                
-                <!-- Pagination -->
-                {{-- <div class="d-flex justify-content-center mt-4">
+                    <!-- Pagination -->
+                    {{-- <div class="d-flex justify-content-center mt-4">
                     {{ $books->links() }}
                 </div> --}}
-                <!-- Pagination -->
+                    <!-- Pagination -->
                     <div class="pagination-container">
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
@@ -493,14 +656,59 @@
                                 @endif
                             </ul>
                         </nav>
-                        
+
                         {{-- Mobile Info --}}
                         <div class="pagination-mobile-info">
                             Halaman {{ $books->currentPage() }} dari {{ $books->lastPage() }}
                         </div>
                     </div>
-            @endif
+                @endif
+            </div>
         </div>
     </div>
-</div>
+@endsection
+@section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sortButton = document.getElementById('sortButton');
+            const sortOptions = document.getElementById('sortOptions');
+
+            // Toggle sort options
+            sortButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                sortOptions.classList.toggle('show');
+            });
+
+            // Close sort options when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!sortOptions.contains(e.target) && e.target !== sortButton) {
+                    sortOptions.classList.remove('show');
+                }
+            });
+
+
+            // Handle search functionality
+            const searchInput = document.querySelector('.search-input');
+            const searchIcon = document.querySelector('.search-icon');
+
+            searchIcon.addEventListener('click', function() {
+                performSearch();
+            });
+
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            function performSearch() {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm) {
+                    const params = new URLSearchParams(window.location.search);
+                    params.set('search', searchTerm);
+                    window.location = window.location.pathname + '?' + params.toString();
+                }
+            }
+        });
+    </script>
 @endsection

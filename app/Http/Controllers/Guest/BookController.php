@@ -22,7 +22,13 @@ class BookController extends Controller
             });
         }
 
-
+if ($request->filled('search')) {
+    $keyword = $request->query('search');
+    $books->where(function($q) use ($keyword) {
+        $q->where('title', 'like', "%{$keyword}%")
+          ->orWhere('description', 'like', "%{$keyword}%");
+    });
+}
 
         // ✅ Sorting berdasarkan query string ?sort=...
         if ($request->filled('sort')) {
