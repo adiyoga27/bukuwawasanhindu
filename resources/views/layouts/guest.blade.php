@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-   <style>
+
+    <style>
         :root {
             --primary: #4f6cec;
             --secondary: #121f5a;
@@ -121,19 +121,21 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
-        .book-img, .article-img {
+        .book-img,
+        .article-img {
             height: 320px;
             overflow: hidden;
         }
 
-        .book-img img, .article-img img {
+        .book-img img,
+        .article-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
 
-        .card:hover .book-img img, 
+        .card:hover .book-img img,
         .card:hover .article-img img {
             transform: scale(1.05);
         }
@@ -285,7 +287,7 @@
         }
 
         /* Carousel controls */
-        .carousel-control-prev, 
+        .carousel-control-prev,
         .carousel-control-next {
             width: 40px;
             height: 40px;
@@ -323,20 +325,20 @@
                 height: 400px;
                 text-align: center;
             }
-            
+
             .hero-content {
                 max-width: 100%;
             }
-            
+
             .newsletter-form {
                 flex-direction: column;
             }
-            
+
             .newsletter-form .form-control {
                 border-radius: 50px;
                 margin-bottom: 1rem;
             }
-            
+
             .newsletter-form .btn {
                 border-radius: 50px;
                 padding: 1rem;
@@ -344,14 +346,16 @@
         }
 
         @media (max-width: 768px) {
-            .book-img, .article-img {
+
+            .book-img,
+            .article-img {
                 height: 250px;
             }
-            
+
             .carousel-control-prev {
                 left: 0;
             }
-            
+
             .carousel-control-next {
                 right: 0;
             }
@@ -361,103 +365,108 @@
             .hero-section {
                 height: 350px;
             }
-            
+
             .section-title {
                 font-size: 1.8rem;
             }
-            
-            .book-img, .article-img {
+
+            .book-img,
+            .article-img {
                 height: 200px;
             }
         }
 
-        
-.whatsapp-float {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 20px;
-    right: 20px;
-    background-color: #25d366;
-    color: white;
-    border-radius: 50px;
-    text-align: center;
-    font-size: 30px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease-in-out;
-     text-decoration: none;
-}
 
-.whatsapp-float:hover {
-    transform: scale(1.1);
-    background-color: #1ebc59;
-}
+        .whatsapp-float {
+            position: fixed;
+            /* width: 60px; */
+            /* height: 60px; */
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+        }
 
-.whatsapp-icon {
-    margin-top: 2px;
-}
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #1ebc59;
+        }
+
+        .whatsapp-icon {
+            margin-top: 2px;
+        }
     </style>
-    
+
     @yield('css')
 </head>
 
 <body>
     <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-    <div class="container">
-        <a class="navbar-brand" href="/">
-            <i class="fas fa-book-open me-2"></i>Buku Wawasan Hindu
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-book-open me-2"></i>Buku Wawasan Hindu
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Beranda</a> </li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Tentang Kami</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('book') }}">Buku Hindu</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('how-to-purchase') }}">Cara Pembelian</a></li>
-                
-                                <!-- Marketplace Dropdown -->
-              <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Marketplace
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="marketplaceDropdown">
-        <li>
-            <a class="dropdown-item d-flex align-items-center" href="{{ $configs->shopee }}" target="_blank">
-                 <img  src="{{ url('assets/images/shopee.svg') }}" alt="Shopee" width="20"
-                                class="marketplace-logo">&nbsp; Shopee
-            </a>
-        </li>
-        <li>
-            <a class="dropdown-item d-flex align-items-center" href="{{ $configs->tokopedia }}" target="_blank">
-                <img width="20" src="{{ url('assets/images/tokopedia.svg') }}" alt="Tokopedia"
-                                class="marketplace-logo"> &nbsp; Tokopedia
-            </a>
-        </li>
-        <li>
-            <a class="dropdown-item d-flex align-items-center" href="{{ $configs->lazada }}" target="_blank">
-                <img width="20" src="{{ url('assets/images/lazada.webp') }}" alt="Tokopedia"
-                                class="marketplace-logo"> &nbsp; Lazada
-            </a>
-        </li>
-    </ul>
-</li>
-              
-                <li class="nav-item"><a class="nav-link" href="{{ url('articles') }}">Artikel</a></li>
-                <li class="nav-item"><a class="nav-link active" href="{{ url('contact') }}">Kontak Kami</a></li>
-            </ul>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Beranda</a> </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('about') }}">Tentang Kami</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('book') }}">Buku Hindu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('how-to-purchase') }}">Cara Pembelian</a></li>
+
+                    <!-- Marketplace Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="marketplaceDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Marketplace
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="marketplaceDropdown">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ $configs->shopee }}"
+                                    target="_blank">
+                                    <img src="{{ url('assets/images/shopee.svg') }}" alt="Shopee" width="20"
+                                        class="marketplace-logo">&nbsp; Shopee
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ $configs->tokopedia }}"
+                                    target="_blank">
+                                    <img width="20" src="{{ url('assets/images/tokopedia.svg') }}" alt="Tokopedia"
+                                        class="marketplace-logo"> &nbsp; Tokopedia
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ $configs->lazada }}"
+                                    target="_blank">
+                                    <img width="20" src="{{ url('assets/images/lazada.webp') }}" alt="Tokopedia"
+                                        class="marketplace-logo"> &nbsp; Lazada
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="{{ url('articles') }}">Artikel</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ url('contact') }}">Kontak Kami</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
     @yield('content')
-   
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -465,10 +474,11 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-column">
                         <h3>Tentang Buku Wawasan Hindu</h3>
-                        <p>Buku Wawasan Hindu adalah toko buku online yang berfokus pada literatur Hindu, menyediakan buku-buku berkualitas tentang filosofi, budaya, dan spiritualitas Hindu.</p>
+                        <p>Buku Wawasan Hindu adalah toko buku online yang berfokus pada literatur Hindu, menyediakan
+                            buku-buku berkualitas tentang filosofi, budaya, dan spiritualitas Hindu.</p>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-column">
                         <h3>Kategori</h3>
@@ -481,7 +491,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-column">
                         <h3>Bantuan</h3>
@@ -490,7 +500,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-column">
                         <h3>Hubungi Kami</h3>
@@ -506,19 +516,20 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="copyright mt-5">
                 <p>&copy; {{ date('Y') }} Buku Wawasan Hindu. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/{{ $configs->phone }}" class="whatsapp-float" target="_blank">
- <i class="fab fa-whatsapp"></i>
-</a>
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/{{ $configs->phone }}" class="whatsapp-float" target="_blank">
+        {{-- <i class="fab fa-whatsapp"></i> --}}
+        <img src="{{ url('assets/images/whatsapp.png') }}" width="200px">
+    </a>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
         // WhatsApp button functionality
         document.querySelectorAll('#add-to-whatsapp').forEach(button => {
@@ -526,7 +537,8 @@
                 const title = this.getAttribute('data-book-title');
                 const price = this.getAttribute('data-price');
 
-                const message = `Halo, saya tertarik dengan buku "${title}" seharga Rp${parseInt(price).toLocaleString('id-ID')}. Apakah masih tersedia?`;
+                const message =
+                    `Halo, saya tertarik dengan buku "${title}" seharga Rp${parseInt(price).toLocaleString('id-ID')}. Apakah masih tersedia?`;
                 const phoneNumber = "6287762225026";
                 const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
@@ -535,16 +547,19 @@
         });
     </script>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R8F2CPYZ6L"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R8F2CPYZ6L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-R8F2CPYZ6L');
-</script>
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
 
-@yield('js')
+        gtag('config', 'G-R8F2CPYZ6L');
+    </script>
+
+    @yield('js')
 </body>
 
 </html>
