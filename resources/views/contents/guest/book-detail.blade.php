@@ -441,9 +441,48 @@
 
     </style>
 @endsection
+
+@section('css')
+    <style>
+        .hero-search input {
+            border-radius: 30px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .hero-search button {
+            border-radius: 30px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-search form {
+                flex-direction: column;
+            }
+
+            .hero-search input {
+                width: 100% !important;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero-search button {
+                width: 100%;
+            }
+        }
+    </style>
+@endsection
 @section('content')
     <!-- Hero Section -->
+           <div class="hero-search mt-4">
+        <form action="{{ url('book') }}" method="GET" class="d-flex justify-content-center">
+            <input type="text" name="search" class="form-control form-control-lg w-50" placeholder="Cari buku Hindu..."
+                value="{{ request('search') }}">
+        
+        </form>
+    </div>
     <div class="mt-4"></div>
+    
     <div class="container">
         <div class="row">
             <!-- Product Gallery Column - Now side by side -->
