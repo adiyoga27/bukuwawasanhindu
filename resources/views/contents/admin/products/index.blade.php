@@ -313,11 +313,11 @@
 
                 {{-- List gambar --}}
                 <div class="row mt-3" id="imageList{{ $item->id }}">
-                    @if (!empty($item->gallery))
-                        @foreach ($item->gallery as $g)
+                    @if (!empty($item->galleries))
+                        @foreach ($item->galleries as $g)
                             <div class="col-md-3 mb-3">
                                 <div class="card">
-                                    <img src="{{ asset($g->path) }}" class="card-img-top" alt="Gallery image">
+                                    <img src="{{ url('storage/'.$g->image_path) }}" class="card-img-top" alt="Gallery image">
                                     <div class="card-body p-2">
                                         <button class="btn btn-danger btn-sm delete-image"
                                             data-id="{{ $g->id }}" data-product="{{ $item->id }}">
