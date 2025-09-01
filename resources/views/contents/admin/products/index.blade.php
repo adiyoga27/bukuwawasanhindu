@@ -57,33 +57,38 @@
                                             <span class="badge bg-danger">Tidak Aktif</span>
                                         @endif
                                     </td>
-                                   <td>
-    <div class="d-flex flex-wrap gap-2">
-        <!-- Gallery -->
-        <a href="#" class="btn btn-success btn-sm d-flex align-items-center" 
-           data-bs-toggle="modal" data-bs-target="#galleryModal{{ $item->id }}">
-            <i class="fas fa-images me-1"></i> Gallery
-        </a>
+                                    <td>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <!-- Gallery -->
+                                            <a href="#" class="btn btn-success btn-sm d-flex align-items-center"
+                                                data-bs-toggle="modal" data-bs-target="#galleryModal{{ $item->id }}">
+                                                <i class="fas fa-images me-1"></i> Gallery
+                                            </a>
 
-        <!-- Edit -->
-        <a href="#" class="btn btn-info btn-sm d-flex align-items-center editProductBtn" 
-           data-id="{{ $item->id }}">
-            <i class="fas fa-edit me-1"></i> Edit
-        </a>
+                                            <!-- Edit -->
+                                            <a href="#"
+                                                class="btn btn-info btn-sm d-flex align-items-center editProductBtn"
+                                                data-id="{{ $item->id }}">
+                                                <i class="fas fa-edit me-1"></i> Edit
+                                            </a>
 
-        <!-- Delete -->
-        <form action="{{ url('admin/products/' . $item->id) }}" 
-              method="POST" class="d-inline">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center"
-                    onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
-                <i class="fas fa-trash-alt me-1"></i> Hapus
-            </button>
-        </form>
-    </div>
-</td>
+                                            <!-- Delete -->
+                                            <form action="{{ url('admin/products/' . $item->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="btn btn-danger btn-sm d-flex align-items-center"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
+                                                    <i class="fas fa-trash-alt me-1"></i> Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
+
+                                 <!-- Gallery list -->
+                       
                             @endforeach
                         </tbody>
                     </table>
@@ -197,89 +202,139 @@
     <!-- Gallery Modal -->
 
     <!-- Global Edit Modal -->
-<div class="modal fade" id="editFormModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="editFormModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Produk</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProductForm" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="id" id="edit_id">
+
+                        <div class="mb-3">
+                            <label>Kategori</label>
+                            <select class="form-control" name="category_id" id="edit_category_id" required>
+                                @foreach ($categories as $c)
+                                    <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Judul</label>
+                            <input type="text" class="form-control" name="title" id="edit_title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Pengarang</label>
+                            <input type="text" class="form-control" name="author" id="edit_author" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Bintang</label>
+                            <input type="number" step="0.1" min="0" max="5" class="form-control"
+                                name="rating" id="edit_rating" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Harga</label>
+                            <input type="number" class="form-control" name="price" id="edit_price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Diskon</label>
+                            <input type="number" class="form-control" name="discount" id="edit_discount">
+                        </div>
+                        <div class="mb-3">
+                            <label>Deskripsi</label>
+                            <textarea class="form-control elm1" name="description" id="edit_description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label>Thumbnail</label>
+
+                            <div id="edit_thumbnail_preview" class="mb-2"></div>
+                            <input type="file" class="form-control" name="thumbnail" id="edit_thumbnail">
+                        </div>
+                        <div class="mb-3">
+                            <label>Tokopedia</label>
+                            <input type="text" class="form-control" name="tokopedia" id="edit_tokopedia">
+                        </div>
+                        <div class="mb-3">
+                            <label>Shopee</label>
+                            <input type="text" class="form-control" name="shopee" id="edit_shopee">
+                        </div>
+                        <div class="mb-3">
+                            <label>Lazada</label>
+                            <input type="text" class="form-control" name="lazada" id="edit_lazada">
+                        </div>
+                        <div class="mb-3">
+                            <label>Tags</label>
+                            <input type="text" class="form-control" name="keyword" id="edit_keyword">
+                        </div>
+                        <div class="mb-3">
+                            <label>Status</label>
+                            <select class="form-control" name="is_active" id="edit_is_active">
+                                <option value="1">Aktif</option>
+                                <option value="0">Tidak Aktif</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="editSubmitBtn">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- === Gallery Modals (render di luar tabel!) === --}}
+@foreach ($datas as $item)
+<div class="modal fade" id="galleryModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Produk</h5>
+                <h5 class="modal-title">Gallery - {{ $item->title }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="editProductForm" method="POST" enctype="multipart/form-data">
+
+                {{-- Form upload --}}
+                <form id="galleryUploadForm{{ $item->id }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
-                    <input type="hidden" name="id" id="edit_id">
-
+                    <input type="hidden" name="product_id" value="{{ $item->id }}">
                     <div class="mb-3">
-                        <label>Kategori</label>
-                        <select class="form-control" name="category_id" id="edit_category_id" required>
-                            @foreach ($categories as $c)
-                                <option value="{{ $c->id }}">{{ $c->name }}</option>
-                            @endforeach
-                        </select>
+                        <input type="file" name="images[]" multiple class="form-control" required>
                     </div>
-                    <div class="mb-3">
-                        <label>Judul</label>
-                        <input type="text" class="form-control" name="title" id="edit_title" required>
-                    </div>
-                    <div class="mb-3">
-                        <label>Pengarang</label>
-                        <input type="text" class="form-control" name="author" id="edit_author" required>
-                    </div>
-                    <div class="mb-3">
-                        <label>Bintang</label>
-                        <input type="number" step="0.1" min="0" max="5" class="form-control"
-                               name="rating" id="edit_rating" required>
-                    </div>
-                    <div class="mb-3">
-                        <label>Harga</label>
-                        <input type="number" class="form-control" name="price" id="edit_price" required>
-                    </div>
-                    <div class="mb-3">
-                        <label>Diskon</label>
-                        <input type="number" class="form-control" name="discount" id="edit_discount">
-                    </div>
-                    <div class="mb-3">
-                        <label>Deskripsi</label>
-                        <textarea class="form-control elm1" name="description" id="edit_description"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label>Thumbnail</label>
-
-    <div id="edit_thumbnail_preview" class="mb-2"></div>
-                        <input type="file" class="form-control" name="thumbnail" id="edit_thumbnail">
-                    </div>
-                    <div class="mb-3">
-                        <label>Tokopedia</label>
-                        <input type="text" class="form-control" name="tokopedia" id="edit_tokopedia">
-                    </div>
-                    <div class="mb-3">
-                        <label>Shopee</label>
-                        <input type="text" class="form-control" name="shopee" id="edit_shopee">
-                    </div>
-                    <div class="mb-3">
-                        <label>Lazada</label>
-                        <input type="text" class="form-control" name="lazada" id="edit_lazada">
-                    </div>
-                    <div class="mb-3">
-                        <label>Tags</label>
-                        <input type="text" class="form-control" name="keyword" id="edit_keyword">
-                    </div>
-                    <div class="mb-3">
-                        <label>Status</label>
-                        <select class="form-control" name="is_active" id="edit_is_active">
-                            <option value="1">Aktif</option>
-                            <option value="0">Tidak Aktif</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" id="editSubmitBtn">Simpan</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
                 </form>
+
+                {{-- Progress bar --}}
+                <div id="uploadProgress{{ $item->id }}" class="progress mt-2 d-none">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:0%"></div>
+                </div>
+
+                {{-- List gambar --}}
+                <div class="row mt-3" id="imageList{{ $item->id }}">
+                    @if (!empty($item->gallery))
+                        @foreach ($item->gallery as $g)
+                            <div class="col-md-3 mb-3">
+                                <div class="card">
+                                    <img src="{{ asset($g->path) }}" class="card-img-top" alt="Gallery image">
+                                    <div class="card-body p-2">
+                                        <button class="btn btn-danger btn-sm delete-image"
+                                            data-id="{{ $g->id }}" data-product="{{ $item->id }}">
+                                            <i class="fas fa-trash"></i> Hapus
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+
             </div>
         </div>
     </div>
 </div>
-
+@endforeach
 @endsection
 @section('js')
     <!-- Required datatable js -->
@@ -303,7 +358,7 @@
     <script src="{{ url('assets') }}/libs/tinymce/tinymce.min.js"></script>
 
     <script>
-          if ($(".elm1").length > 0) {
+        if ($(".elm1").length > 0) {
             tinymce.init({
                 selector: "textarea.elm1",
                 height: 300,
@@ -560,87 +615,87 @@
         });
 
         // Klik tombol edit
-$(document).on('click', '.editProductBtn', function(e) {
-    e.preventDefault();
-    let id = $(this).data('id');
+        $(document).on('click', '.editProductBtn', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');
 
-    $.ajax({
-        url: "/admin/products/" + id + "/edit",
-        type: "GET",
-        success: function(response) {
-            if (response.success) {
-                let product = response.data;
-            if (product.thumbnail) {
-                $('#edit_thumbnail_preview').html(`
+            $.ajax({
+                url: "/admin/products/" + id + "/edit",
+                type: "GET",
+                success: function(response) {
+                    if (response.success) {
+                        let product = response.data;
+                        if (product.thumbnail) {
+                            $('#edit_thumbnail_preview').html(`
                     <img src="/storage/${product.thumbnail}" 
                         alt="${product.title}" 
                         class="img-fluid rounded" 
                         style="max-width: 200px; border:1px solid #ddd;">
                 `);
-            } else {
-                $('#edit_thumbnail_preview').html(`<small class="text-muted">Belum ada thumbnail</small>`);
-            }
-                $('#edit_id').val(product.id);
-                $('#edit_category_id').val(product.category_id);
-                $('#edit_title').val(product.title);
-                $('#edit_author').val(product.author);
-                $('#edit_rating').val(product.rating);
-                $('#edit_price').val(product.price);
-                $('#edit_discount').val(product.discount);
-                $('#edit_tokopedia').val(product.tokopedia);
-                $('#edit_shopee').val(product.shopee);
-                $('#edit_lazada').val(product.lazada);
-                $('#edit_keyword').val(product.keyword);
-                $('#edit_is_active').val(product.is_active);
+                        } else {
+                            $('#edit_thumbnail_preview').html(
+                                `<small class="text-muted">Belum ada thumbnail</small>`);
+                        }
+                        $('#edit_id').val(product.id);
+                        $('#edit_category_id').val(product.category_id);
+                        $('#edit_title').val(product.title);
+                        $('#edit_author').val(product.author);
+                        $('#edit_rating').val(product.rating);
+                        $('#edit_price').val(product.price);
+                        $('#edit_discount').val(product.discount);
+                        $('#edit_tokopedia').val(product.tokopedia);
+                        $('#edit_shopee').val(product.shopee);
+                        $('#edit_lazada').val(product.lazada);
+                        $('#edit_keyword').val(product.keyword);
+                        $('#edit_is_active').val(product.is_active);
 
-                // TinyMCE set content
-                if (tinymce.get('edit_description')) {
-                    tinymce.get('edit_description').setContent(product.description || "");
+                        // TinyMCE set content
+                        if (tinymce.get('edit_description')) {
+                            tinymce.get('edit_description').setContent(product.description || "");
+                        }
+
+                        $('#editFormModal').modal('show');
+                    } else {
+                        Swal.fire("Error", "Data produk tidak ditemukan!", "error");
+                    }
+                },
+                error: function() {
+                    Swal.fire("Error", "Gagal mengambil data produk!", "error");
                 }
+            });
+        });
 
-                $('#editFormModal').modal('show');
-            } else {
-                Swal.fire("Error", "Data produk tidak ditemukan!", "error");
+        // Submit edit form via AJAX
+        $('#editProductForm').on('submit', function(e) {
+            e.preventDefault();
+            let id = $('#edit_id').val();
+
+            // simpan isi TinyMCE
+            if (tinymce.get('edit_description')) {
+                tinymce.get('edit_description').save();
             }
-        },
-        error: function() {
-            Swal.fire("Error", "Gagal mengambil data produk!", "error");
-        }
-    });
-});
 
-// Submit edit form via AJAX
-$('#editProductForm').on('submit', function(e) {
-    e.preventDefault();
-    let id = $('#edit_id').val();
+            let formData = new FormData(this);
 
-    // simpan isi TinyMCE
-    if (tinymce.get('edit_description')) {
-        tinymce.get('edit_description').save();
-    }
-
-    let formData = new FormData(this);
-
-    $.ajax({
-        url: "/admin/products/" + id,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            if (response.status) {
-                Swal.fire("Berhasil", "Produk berhasil diperbarui!", "success");
-                $('#editFormModal').modal('hide');
-                setTimeout(() => location.reload(), 1000);
-            } else {
-                Swal.fire("Error", response.message || "Gagal update produk!", "error");
-            }
-        },
-        error: function(xhr) {
-            Swal.fire("Error", "Terjadi kesalahan!", "error");
-        }
-    });
-});
-
+            $.ajax({
+                url: "/admin/products/" + id,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.status) {
+                        Swal.fire("Berhasil", "Produk berhasil diperbarui!", "success");
+                        $('#editFormModal').modal('hide');
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        Swal.fire("Error", response.message || "Gagal update produk!", "error");
+                    }
+                },
+                error: function(xhr) {
+                    Swal.fire("Error", "Terjadi kesalahan!", "error");
+                }
+            });
+        });
     </script>
 @endsection
