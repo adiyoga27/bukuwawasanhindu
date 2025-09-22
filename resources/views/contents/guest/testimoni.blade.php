@@ -4,6 +4,7 @@
     <link rel="icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ url('assets/images/favicon.png') }}" type="image/x-icon">
     <meta name="description" content="Testimoni tentang buku wawasan hindu">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 
     <style>
@@ -224,7 +225,7 @@
             height: 300px;
         }
 
-        
+
         .hero-search input {
             border-radius: 30px;
             padding: 0.8rem 1.5rem;
@@ -261,96 +262,54 @@
             <p class="lead">Berikut tentang Buku Wawasan Hindu</p>
         </div>
     </section>
-    
+
     <!-- Testimoni Section -->
-<!-- Testimoni Section -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">Apa Kata Mereka?</h2>
-        <div class="row">
-            <!-- Testimoni 1 -->
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <!-- Foto Profil -->
-                        <img src="{{ url('assets/images/testimoni1.jpg') }}" 
-                             class="rounded-circle mb-3" 
-                             alt="Foto I Made Surya" 
-                             width="80" height="80" 
-                             style="object-fit: cover;">
-                        
-                        <!-- Rating Bintang -->
-                        <div class="mb-2 text-warning">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
-                        </div>
-
-                        <!-- Isi Testimoni -->
-                        <p class="card-text">“Buku ini sangat membuka wawasan saya tentang ajaran Hindu.
-                            Penjelasannya sederhana dan mudah dipahami.”</p>
-                        <h6 class="fw-bold mt-3 mb-0">I Made Surya</h6>
-                        <small class="text-muted">Guru Agama Hindu</small>
+    <!-- Testimoni Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Apa Kata Mereka?</h2>
+            <div class="row">
+    @foreach ($testimonies as $testimoni)
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <!-- Foto Profil -->
+                    <img src="{{ url('storage/'.$testimoni->photo) }}" 
+                         class="rounded-circle mb-3" 
+                         alt="Foto {{ $testimoni->name }}" 
+                         width="80" height="80" 
+                         style="object-fit: cover;">
+                    
+                    <!-- Rating Bintang -->
+                    <div class="mb-2 text-warning">
+                        @for ($i = 1; $i <= 5; $i++)
+                            @if ($i <= floor($testimoni->rating))
+                                <i class="bi bi-star-fill"></i>
+                            @elseif ($i - $testimoni->rating < 1)
+                                <i class="bi bi-star-half"></i>
+                            @else
+                                <i class="bi bi-star"></i>
+                            @endif
+                        @endfor
                     </div>
-                </div>
-            </div>
 
-            <!-- Testimoni 2 -->
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <img src="{{ url('assets/images/testimoni2.jpg') }}" 
-                             class="rounded-circle mb-3" 
-                             alt="Foto Ni Luh Ayu" 
-                             width="80" height="80"
-                             style="object-fit: cover;">
-                        
-                        <div class="mb-2 text-warning">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                        </div>
-
-                        <p class="card-text">“Sangat membantu sebagai referensi untuk mahasiswa.
-                            Isi bukunya lengkap dan sistematis.”</p>
-                        <h6 class="fw-bold mt-3 mb-0">Ni Luh Ayu</h6>
-                        <small class="text-muted">Mahasiswi</small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Testimoni 3 -->
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body text-center">
-                        <img src="{{ url('assets/images/testimoni3.jpg') }}" 
-                             class="rounded-circle mb-3" 
-                             alt="Foto Ketut Dharma" 
-                             width="80" height="80"
-                             style="object-fit: cover;">
-                        
-                        <div class="mb-2 text-warning">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star"></i>
-                        </div>
-
-                        <p class="card-text">“Rekomendasi sekali untuk siapa saja yang ingin memahami
-                            Hindu secara lebih mendalam.”</p>
-                        <h6 class="fw-bold mt-3 mb-0">Ketut Dharma</h6>
-                        <small class="text-muted">Aktivis Hindu</small>
-                    </div>
+                    <!-- Isi Testimoni -->
+                    <p class="card-text">“{{ $testimoni->message }}”</p>
+                    <h6 class="fw-bold mt-3 mb-0">{{ $testimoni->name }}</h6>
+                    <small class="text-muted">{{ $testimoni->role }}</small>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    @endforeach
+</div>
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-4">
+    {{ $testimonies->links('pagination::bootstrap-5') }}
+</div>
+
+        </div>
+    </section>
 
 
 

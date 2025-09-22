@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Models\CategoryArticle;
 use App\Models\Product;
+use App\Models\Testimoni;
 use App\Models\Website;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,8 @@ class PageController extends Controller
          return view('contents.guest.how-to-purchase', compact('configs'));
     }public function testimoni(){
         $configs = Website::first();
-         return view('contents.guest.testimoni', compact('configs'));
+        $testimonies = Testimoni::paginate(10);
+         return view('contents.guest.testimoni', compact('configs','testimonies'));
     }
     public function articles(){
         $articles = Article::paginate(10);

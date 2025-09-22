@@ -43,11 +43,12 @@ class TestimoniController extends Controller
             'message' => 'required|string',
            
         ]);
-
+        $data = $request->only(['name', 'role', 'rating', 'message']);
         if ($request->hasFile('photo')) {
             $data['photo'] = $request->file('photo')->store('testimonies', 'public');
         }
-
+        
+        // dd($data);
        Testimoni::create($data);
 
       
@@ -61,7 +62,7 @@ class TestimoniController extends Controller
         return view('testimonies.edit', compact('article'));
     }
 
-    public function update(Request $request, Testimoni $testimoni)
+    public function update(Request $request, $id)
     {
         $request->validate([
              'name' => 'required|max:255',
@@ -69,17 +70,18 @@ class TestimoniController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'rating' => 'required|integer|min:1|max:5',
             'message' => 'required|string',
+
         ]);
 
-
+        $testimoni = Testimoni::where('id', $id)->first();
+        $data = $request->only(['name', 'role', 'rating', 'message']);
         if ($request->hasFile('photo')) {
             // Hapus gambar lama jika ada
-            if ($testimoni->featured_image) {
-                Storage::disk('public')->delete($testimoni->featured_image);
+            if ($testimoni->photo) {
+                Storage::disk('public')->delete($testimoni->photo);
             }
-            $data['featured_image'] = $request->file('featured_image')->store('articles', 'public');
+            $data['photo'] = $request->file('photo')->store('testimonies', 'public');
         }
-
         $testimoni->update($data);
 
        
@@ -88,15 +90,17 @@ class TestimoniController extends Controller
             ->with('success', 'Testimoni berhasil diperbarui!');
     }
 
-    public function destroy(Testimoni $testimoni)
+    public function destroy(Testimoni $t, $id)
     {
-        if ($testimoni->featured_image) {
-            Storage::disk('public')->delete($testimoni->featured_image);
+        $testimoni = Testimoni::where('id', $id)->first();
+
+        if ($testimoni->photo) {
+            Storage::disk('public')->delete($testimoni->photo);
         }
 
         $testimoni->delete();
 
         return redirect()->route('testimonies.index')
-            ->with('success', 'Artikel berhasil dihapus!');
+            ->with('success', 'Testimoni berhasil dihapus!');
     }
 }

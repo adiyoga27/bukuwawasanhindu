@@ -231,7 +231,13 @@
 
 
 
+                        <li >
+                            <a href="{{ url('admin/testimonies') }}" class="waves-effect ">
+                                <i class="bx bx-home-circle"></i>
+                                <span key="t-dashboards">Testimoni</span>
+                            </a>
 
+                        </li>
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fas fa-book-open"></i>

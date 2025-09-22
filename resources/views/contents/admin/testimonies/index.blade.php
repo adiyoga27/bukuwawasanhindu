@@ -4,12 +4,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Kategori</h4>
+                <h4 class="mb-sm-0 font-size-18">Testimoni</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Kategori</a></li>
-                        <li class="breadcrumb-item active">List Kategori</li>
+                        <li class="breadcrumb-item active">List Testimoni</li>
                     </ol>
                 </div>
 
@@ -24,17 +24,17 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Kategori</h4>
+                    <h4 class="card-title">Testimoni</h4>
                     <p class="card-title-desc">
-                        Silahkan isi data kategori pada form di bawah ini. Data yang sudah diisi akan ditampilkan pada tabel di bawahnya.
+                        Silahkan isi data Testimoni pada form di bawah ini. Data yang sudah diisi akan ditampilkan pada tabel di bawahnya.
                     </p>
 
                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Judul</th>
-                                <th>Slug</th>
-                                <th>Status</th>
+                                <th>Nama</th>
+                                <th>Posisi</th>
+                                <th>Message</th>
                                 <th>Aksi</th>
                               
                             </tr>
@@ -45,14 +45,9 @@
                             @foreach ($datas as $item)
                             <tr>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->slug }}</td>
-                                <td>
-                                    @if ($item->is_active)
-                                        <span class="badge bg-success">Aktif</span>
-                                    @else
-                                        <span class="badge bg-danger">Tidak Aktif</span>
-                                    @endif
-                                </td>
+                                <td>{{ $item->role }}</td>
+                                <td>{{ $item->message }}</td>
+                              
                                 <td>
                                     <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#editFormModal{{ $item->id }}">
                                         <i class="fas fa-edit"></i> Edit
@@ -62,24 +57,38 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editFormModalLabel{{ $item->id }}">Edit Kategori</h5>
+                                                    <h5 class="modal-title" id="editFormModalLabel{{ $item->id }}">Edit Testimoni</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="{{ url('admin/categories/'.$item->id) }}" method="POST">
+                                                    <form action="{{ url('admin/testimonies/'.$item->id) }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         @method('PUT')
-                                                        <div class="mb-3">
-                                                            <label for="categoryName{{ $item->id }}" class="form-label">Nama Kategori</label>
-                                                            <input type="text" class="form-control" name="name" id="categoryName{{ $item->id }}" value="{{ $item->name }}" placeholder="Masukkan nama kategori">
-                                                        </div>
+                                                        
                                                         
                                                         <div class="mb-3">
-                                                            <label for="categoryStatus{{ $item->id }}" class="form-label">Status Kategori</label>
-                                                            <select class="form-select" name="is_active" id="categoryStatus{{ $item->id }}">
-                                                                <option value="1" {{ $item->is_active ? 'selected' : '' }}>Aktif</option>   
-                                                                <option value="0" {{ !$item->is_active ? 'selected' : '' }}>Tidak Aktif</option>
-                                                            </select>
+                                                            <label for="categoryName" class="form-label">Nama </label>
+                                                            <input type="text" class="form-control" name="name" id="categoryName" value="{{ $item->name }}" placeholder="Masukkan nama testimoni">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="categoryName" class="form-label">Posisi </label>
+                                                            <input type="text" class="form-control" name="role" id="categoryName" value="{{ $item->role }}" placeholder="Masukkan posisi yang testimoni">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="categoryName" class="form-label">Message </label>
+                                                            <textarea type="text" class="form-control" name="message" id="message" >{{ $item->message }}</textarea>
+                                                        </div>
+                                                           <div class="mb-3">
+                            <label for="categoryName" class="form-label">Rating </label>
+                            <input type="text" class="form-control" name="rating" id="rating" placeholder="Masukkan jumlah bintang (1-5)" value="{{ $item->rating }}" min="1" max="5">
+                            <p class="text-muted">Masukkan angka antara 1 hingga 5.</p>
+                        </div>
+                        <div>
+                            <img src="{{ asset('storage/'.$item->photo) }}" alt="Photo" style="max-width: 200px; max-height: 200px;">
+                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="categoryName" class="form-label">Photo Profile </label>
+                                                            <input type="file" class="form-control" name="photo" id="photo" >
                                                         </div>
                                                         <button type="submit" class="btn btn-primary">Simpan</button>   
                                                     </form>
@@ -91,7 +100,7 @@
 
 
                                   
-                                    <form action="{{ url('admin/categories/'.$item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
+                                    <form action="{{ url('admin/testimonies/'.$item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus testimoni ini?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">
@@ -105,7 +114,7 @@
                     </table>
                     <div class="mt-4">
                         <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFormModal">
-                            <i class="fas fa-plus"></i> Tambah Kategori
+                            <i class="fas fa-plus"></i> Tambah Testimoni
                         </a>
                     </div>
                 </div>
@@ -119,23 +128,32 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addFormModalLabel">Tambah Kategori</h5>
+                    <h5 class="modal-title" id="addFormModalLabel">Tambah Testimoni</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('admin/categories') }}" method="POST">
+                    <form action="{{ url('admin/testimonies') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="categoryName" class="form-label">Nama Kategori</label>
-                            <input type="text" class="form-control" name="name" id="categoryName" placeholder="Masukkan nama kategori">
+                            <label for="categoryName" class="form-label">Nama </label>
+                            <input type="text" class="form-control" name="name" id="categoryName" placeholder="Masukkan nama testimoni">
                         </div>
-                  
                         <div class="mb-3">
-                            <label for="categoryStatus" class="form-label">Status Kategori</label>
-                            <select class="form-select" name="is_active" id="categoryStatus">
-                                <option value="1">Aktif</option>   
-                                <option value="0">Tidak Aktif</option>
-                            </select>
+                            <label for="categoryName" class="form-label">Posisi </label>
+                            <input type="text" class="form-control" name="role" id="categoryName" placeholder="Masukkan posisi yang testimoni">
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Message </label>
+                            <textarea type="text" class="form-control" name="message" id="message" > </textarea>
+                        </div>
+                         <div class="mb-3">
+                            <label for="categoryName" class="form-label">Rating </label>
+                            <input type="text" class="form-control" name="rating" id="rating" placeholder="Masukkan jumlah bintang (1-5)"  min="1" max="5">
+                            <p class="text-muted">Masukkan angka antara 1 hingga 5.</p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Photo Profile </label>
+                            <input type="file" class="form-control" name="photo" id="photo" >
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>   
                     </form>
