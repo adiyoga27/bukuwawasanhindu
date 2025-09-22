@@ -33,6 +33,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('contact',[PageController::class, 'contact']);
 Route::get('about',[PageController::class, 'about']);
 Route::get('how-to-purchase',[PageController::class, 'howToPurchase']);
+Route::get('testimoni',[PageController::class, 'testimoni']);
 Route::get('articles', [PageController::class, 'articles']);
 Route::get('articles/{slug}', [PageController::class, 'articlesDetail']);
 Route::prefix('admin')->middleware('auth')->group(function () {

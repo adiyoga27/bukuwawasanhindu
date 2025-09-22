@@ -35,6 +35,9 @@ class PageController extends Controller
      public function howToPurchase(){
         $configs = Website::first();
          return view('contents.guest.how-to-purchase', compact('configs'));
+    }public function testimoni(){
+        $configs = Website::first();
+         return view('contents.guest.testimoni', compact('configs'));
     }
     public function articles(){
         $articles = Article::paginate(10);

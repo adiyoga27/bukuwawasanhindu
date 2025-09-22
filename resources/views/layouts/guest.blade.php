@@ -435,6 +435,7 @@
                     <li class="nav-item"><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Beranda</a> </li>
                     <li class="nav-item"><a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ url('about') }}" >Tentang Kami</a></li>
                     <li class="nav-item"><a class="nav-link {{ request()->is('book') ? 'active' : '' }}" href="{{ url('book') }}">Buku Hindu</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('testimoni') ? 'active' : '' }}" href="{{ url('testimoni') }}">Testimoni</a></li>
                     <li class="nav-item"><a class="nav-link {{ request()->is('how-to-purchase') ? 'active' : '' }}" href="{{ url('how-to-purchase') }}">Cara Pembelian</a></li>
 
                     <!-- Marketplace Dropdown -->
