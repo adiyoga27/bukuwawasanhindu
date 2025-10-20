@@ -582,6 +582,12 @@
                 <span>Beli di Lazada</span>
             </a>
         @endif
+           @if ($book->tiktokshop)
+            <a href="{{ $book->tiktokshop }}" target="_blank" class="marketplace-link lazada-link">
+                <img width="45" src="{{ url('assets/images/lazada.webp') }}" alt="Tiktokshop" class="marketplace-logo">
+                <span>Beli di Tiktok SHop</span>
+            </a>
+        @endif
     </div>
 
     <div class="mt-3">
