@@ -23,6 +23,7 @@ class Product extends Model
         'tokopedia',
         'shopee',
         'lazada',
+        'tiktokshop',
         'keyword'
     ];
 

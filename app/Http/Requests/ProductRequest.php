@@ -32,6 +32,7 @@ class ProductRequest extends FormRequest
             'tokopedia'   => 'nullable|string',
             'lazada'      => 'nullable|string',
             'shopee'      => 'nullable|string',
+            'tiktokshop'      => 'nullable|string',
             'keyword'     => 'nullable',
         ];
     }

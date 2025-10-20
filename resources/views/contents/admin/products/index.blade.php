@@ -179,6 +179,11 @@
                             <input type="text" class="form-control" name="lazada" id="lazada"
                                 placeholder="Masukkan lazada buku pembelian ..." required>
                         </div>
+                           <div class="mb-3">
+                            <label for="lazada" class="form-label">Link Tiktokshop</label>
+                            <input type="text" class="form-control" name="tiktokshop" id="tiktokshop"
+                                placeholder="Masukkan lazada buku pembelian ..." required>
+                        </div>
                         <div class="mb-3">
                             <label for="lazada" class="form-label">Tags</label>
                             <input type="text" class="form-control" name="keyword" id="keyword"
@@ -265,6 +270,9 @@
                         <div class="mb-3">
                             <label>Lazada</label>
                             <input type="text" class="form-control" name="lazada" id="edit_lazada">
+                        </div><div class="mb-3">
+                            <label>Tiktokshop</label>
+                            <input type="text" class="form-control" name="tiktokshop" id="edit_tiktokshop">
                         </div>
                         <div class="mb-3">
                             <label>Tags</label>
@@ -646,6 +654,7 @@
                         $('#edit_tokopedia').val(product.tokopedia);
                         $('#edit_shopee').val(product.shopee);
                         $('#edit_lazada').val(product.lazada);
+                        $('#edit_tiktokshop').val(product.tiktokshop);
                         $('#edit_keyword').val(product.keyword);
                         $('#edit_is_active').val(product.is_active);
 

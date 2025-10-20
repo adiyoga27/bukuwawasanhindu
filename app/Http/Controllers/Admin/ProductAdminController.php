@@ -59,6 +59,7 @@ class ProductAdminController extends Controller
                 'lazada'      => $request->lazada,
                 'tokopedia'   => $request->tokopedia,
                 'shopee'      => $request->shopee,
+                'tiktokshop'      => $request->tiktokshop,
                 'keyword'     => $request->keyword,
                 'thumbnail'   => $request->file('thumbnail')
                     ? $request->file('thumbnail')->store('products', 'public')
@@ -127,6 +128,8 @@ class ProductAdminController extends Controller
             'tokopedia' => 'string',
             'lazada' => 'string',
             'shopee' => 'string',
+            'tiktokshop' => 'string',
+            
             'keyword' => 'string|nullable',
         ]);
         $slug = Str::slug($request->title);
@@ -150,6 +153,7 @@ class ProductAdminController extends Controller
                 'shopee' => $request->shopee,
                 'lazada' => $request->lazada,
                 'keyword' => $request->keyword,
+                'tiktokshop'      => $request->tiktokshop,
 
                 'discount' => $request->discount,
                 'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('products', 'public') : $product->thumbnail,
