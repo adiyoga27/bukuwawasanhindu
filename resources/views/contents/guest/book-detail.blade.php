@@ -584,8 +584,8 @@
         @endif
            @if ($book->tiktokshop)
             <a href="{{ $book->tiktokshop }}" target="_blank" class="marketplace-link lazada-link">
-                <img width="45" src="{{ url('assets/images/lazada.webp') }}" alt="Tiktokshop" class="marketplace-logo">
-                <span>Beli di Tiktok SHop</span>
+                <img width="45" src="{{ url('assets/images/tiktok.webp') }}" alt="Tiktokshop" class="marketplace-logo">
+                <span>Beli di Tiktok Shop</span>
             </a>
         @endif
     </div>
